@@ -100,7 +100,7 @@ const getUsers = async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   console.log(user.roleType);
   try {
-    if (user.roleType == "super_admin" || user.roleType == "admin") {
+    if (user) {
       const users = await User.find({
         active: true,
       }).populate("department");

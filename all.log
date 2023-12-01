@@ -8068,3 +8068,74 @@
 [30-11-2023 05:20:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: shree | responnded with Success [39m
 [30-11-2023 05:20:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: shree | responnded with Success [39m
 [30-11-2023 05:20:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: shree | responnded Empty i.e. Data was not found [39m
+[01-12-2023 12:56:36 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[01-12-2023 12:56:39 PM] [32minfo[39m: 	[32m::ffff:127.0.0.1: API /api/v1/ responnded with "Welcome to Backend API for ExpoGroup" [39m
+[01-12-2023 01:15:50 PM] [32minfo[39m: 	[32m::ffff:127.0.0.1: API /api/v1/user/login responnded with Login Successfull for the user: sunayana@gmail.com[39m
+[01-12-2023 01:32:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/login responnded with Login Successfull for the user: sunayana@gmail.com[39m
+[01-12-2023 01:32:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:32:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:32:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:32:30 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:32:30 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:32:30 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Sunayana Gawde | responnded with Success [39m
+[01-12-2023 01:33:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:33:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:33:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Sunayana Gawde | responnded with Success [39m
+[01-12-2023 01:33:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:33:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:33:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Sunayana Gawde | responnded with Success [39m
+[01-12-2023 01:33:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:33:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/role/getall | User: Sunayana Gawde | responnded with Success [39m
+[01-12-2023 01:33:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/department/getall | User: Sunayana Gawde | responnded with Success [39m
+[01-12-2023 01:34:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:34:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/add | User: Data Entry Operator | responnded with Success [39m
+[01-12-2023 01:34:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[01-12-2023 01:34:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Sunayana Gawde | responnded with Success [39m
+[01-12-2023 01:34:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/login responnded with Login Successfull for the user: deo@gmail.com[39m
+[01-12-2023 01:34:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:43 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:43 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:43 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:43 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:51 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:51 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:34:51 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:34:51 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[01-12-2023 01:38:47 PM] [32minfo[39m: 	[32m::ffff:127.0.0.1: API /api/v1/link | User: Data Entry Operator | responnded with Link Api Successful [39m
+[01-12-2023 01:39:00 PM] [32minfo[39m: 	[32m::ffff:127.0.0.1: API /api/v1/link/getall | User: Data Entry Operator | responnded with Success [39m
+[01-12-2023 01:39:35 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:39:35 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:39:35 PM] [31merror[39m: 	[31m::1: API /api/v1/user/getall | User: Data Entry Operator | responnded with User is not Autherized [39m
+[01-12-2023 01:40:01 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/user/getall | User: Data Entry Operator | responnded with User is not Autherized [39m
+[01-12-2023 01:40:13 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/user/getall | User: Data Entry Operator | responnded with User is not Autherized [39m
+[01-12-2023 01:40:46 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[01-12-2023 01:40:51 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:40:51 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:40:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Data Entry Operator | responnded with Success [39m
+[01-12-2023 01:40:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Data Entry Operator | responnded with Success [39m
+[01-12-2023 01:40:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Data Entry Operator | responnded with Success [39m
+[01-12-2023 01:40:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Data Entry Operator | responnded Empty i.e. Data was not found [39m
+[01-12-2023 01:41:14 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:41:14 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Data Entry Operator | responnded with Success [39m
+[01-12-2023 01:41:14 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Data Entry Operator | responnded with Success [39m
+[01-12-2023 01:41:35 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:41:35 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Data Entry Operator | responnded with Success [39m
+[01-12-2023 01:41:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:65699382278aed815d0a1acd  responnded with Success [39m
+[01-12-2023 01:41:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Data Entry Operator | responnded with Success [39m
