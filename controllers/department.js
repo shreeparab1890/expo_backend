@@ -49,11 +49,11 @@ const createDepartment = async (req, res) => {
     await Department.create({
       name: data.name,
     })
-      .then((role) => {
+      .then((department) => {
         logger.info(
           `${ip}: API /api/v1/department/add | User: ${user.name} | responnded with Success `
         );
-        return res.status(201).json(role);
+        return res.status(201).json(department);
       })
       .catch((err) => {
         logger.error(
@@ -190,7 +190,7 @@ const getDepartments = async (req, res) => {
   const user = req.user;
 
   try {
-    if (user.roleType == "super_admin") {
+    if (user) {
       const departments = await Department.find({
         active: true,
       });
@@ -222,7 +222,7 @@ const getDepartment = async (req, res) => {
   const loggedin_user = req.user;
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   try {
-    if (loggedin_user.roleType == "super_admin") {
+    if (loggedin_user) {
       const { id } = req.params;
       const department = await Department.find({
         _id: id,

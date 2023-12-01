@@ -33,6 +33,34 @@ const UserSchema = new Schema({
     type: String,
     default: "data_entry_operator",
   },
+  userUIEnable: {
+    type: Boolean,
+    default: false,
+  },
+  roleUIEnable: {
+    type: Boolean,
+    default: false,
+  },
+  departmentUIEnable: {
+    type: Boolean,
+    default: false,
+  },
+  linkUIEnable: {
+    type: Boolean,
+    default: false,
+  },
+  qaUIEnable: {
+    type: Boolean,
+    default: false,
+  },
+  daUIEnable: {
+    type: Boolean,
+    default: false,
+  },
+  retriveUIEnable: {
+    type: Boolean,
+    default: false,
+  },
   createDate: {
     type: Date,
     default: Date.now,

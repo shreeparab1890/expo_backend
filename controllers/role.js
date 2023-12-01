@@ -182,7 +182,7 @@ const getRoles = async (req, res) => {
   const user = req.user;
 
   try {
-    if (user.roleType == "super_admin") {
+    if (user) {
       const roles = await Role.find({
         active: true,
       });
@@ -214,7 +214,7 @@ const getRole = async (req, res) => {
   const loggedin_user = req.user;
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   try {
-    if (loggedin_user.roleType == "super_admin") {
+    if (loggedin_user) {
       const { id } = req.params;
       const role = await Role.find({
         _id: id,

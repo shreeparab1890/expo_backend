@@ -44,6 +44,7 @@ const createUser = async (req, res) => {
 
   if (user.roleType == "super_admin" || user.roleType == "admin") {
     const data = matchedData(req);
+    console.log(data);
 
     const oldUser = await User.findOne({ email: data.email });
     if (oldUser) {
@@ -63,6 +64,13 @@ const createUser = async (req, res) => {
       roleType: data.roleType,
       joining_date: data.joining_date,
       department: data.department,
+      userUIEnable: data.userUIEnable,
+      roleUIEnable: data.roleUIEnable,
+      departmentUIEnable: data.departmentUIEnable,
+      linkUIEnable: data.linkUIEnable,
+      qaUIEnable: data.qaUIEnable,
+      daUIEnable: data.daUIEnable,
+      retriveUIEnable: data.retriveUIEnable,
     })
       .then((user) => {
         logger.info(
@@ -168,7 +176,20 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const loggedin_user = req.user;
   const { id } = req.params;
-  const { name, whatsapp_no, joining_date, roleType, department } = req.body;
+  const {
+    name,
+    whatsapp_no,
+    joining_date,
+    roleType,
+    department,
+    userUIEnable,
+    roleUIEnable,
+    departmentUIEnable,
+    linkUIEnable,
+    qaUIEnable,
+    daUIEnable,
+    retriveUIEnable,
+  } = req.body;
 
   const errors = validationResult(req);
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -191,6 +212,13 @@ const updateUser = async (req, res) => {
         joining_date,
         roleType,
         department,
+        userUIEnable,
+        roleUIEnable,
+        departmentUIEnable,
+        linkUIEnable,
+        qaUIEnable,
+        daUIEnable,
+        retriveUIEnable,
       };
       const oldUser = await User.findOne({ _id: id });
       if (oldUser) {

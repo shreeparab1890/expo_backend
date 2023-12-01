@@ -1,0 +1,368 @@
+const { validationResult, matchedData } = require("express-validator");
+const logger = require("../config/logger.js");
+const Link = require("../models/Link.js");
+
+//@desc Test Link API
+//@route GET /api/v1/link
+//@access Private: Role Admin / superadmin
+const testLinkAPI = async (req, res) => {
+  const user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (user) {
+    logger.info(
+      `${ip}: API /api/v1/link | User: ${user.name} | responnded with Link Api Successful `
+    );
+    return res.status(200).send({ data: user, message: "Link Api Successful" });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link | User: ${user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Create New Link
+//@route GET /api/v1/link/add
+//@access Private: Role Admin / superadmin
+const createLink = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(`${ip}: API /api/v1/link/add responnded with Error `);
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  if (user) {
+    const data = matchedData(req);
+
+    const oldLink = await Link.findOne({ name: data.name, value: data.value });
+    if (oldLink) {
+      logger.error(
+        `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Link already Exists! for Link: ${data.value} `
+      );
+      return res.status(400).json({ message: "Link already Exists!" });
+    }
+
+    await Link.create({
+      name: data.name,
+      value: data.value,
+      priority: data.priority,
+      link_type: data.link_type,
+      start_date: data.start_date,
+      end_date: data.end_date,
+      month: data.month,
+      year: data.year,
+      mode: data.mode,
+      country: data.country,
+      link_comment: data.link_comment,
+    })
+      .then((link) => {
+        logger.info(
+          `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Success `
+        );
+        return res
+          .status(201)
+          .json({ link, message: "Link Added Successfully" });
+      })
+      .catch((err) => {
+        logger.error(
+          `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Error `
+        );
+        return res.status(500).json({ error: "Error", message: err.message });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Update  Link
+//@route POST /api/v1/link/update/:id
+//@access Private: Role Admin / superadmin
+const UpdateLink = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const linkId = req.params.id;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(`${ip}: API /api/v1/link/update/:id responnded with Error `);
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const data = matchedData(req);
+  const updatedLink = {
+    priority: data.priority,
+    link_type: data.link_type,
+    start_date: data.start_date,
+    end_date: data.end_date,
+    month: data.month,
+    year: data.year,
+    mode: data.mode,
+    country: data.country,
+    link_comment: data.link_comment,
+  };
+
+  const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+    new: true,
+  });
+  logger.info(
+    `${ip}: API /api/v1/link/update/:id | User: ${user.name} | Link with Id:${linkId} Updated`
+  );
+
+  return res.status(200).json({ result, message: "Link Updated." });
+};
+
+//@desc Assign Link to user
+//@route POST /api/v1/link/assign
+//@access Private: Role Admin / superadmin
+const assignLink = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const linkId = req.params.id;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(`${ip}: API /api/v1/link/assign responnded with Error `);
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  if (user.roleType == "super_admin" || user.roleType == "admin") {
+    const data = matchedData(req);
+
+    const updatedLink = {
+      assign_user: data.assign_user,
+      remark: data.remark,
+      assign_status: "Assigned",
+    };
+
+    const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+      new: true,
+    });
+    const final_result = await result.populate("assign_user");
+    logger.info(
+      `${ip}: API /api/v1/link/assign | User: ${user.name} | Link with Id:${linkId} Assigned to the User with Id:${data.assign_user}`
+    );
+    return res
+      .status(200)
+      .json({ final_result, message: "Link Assigned to the User." });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/assign | User: ${user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Assign Link to user
+//@route POST /api/v1/link/unassign
+//@access Private: Role Admin / superadmin
+const unassignLink = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const linkId = req.params.id;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(`${ip}: API /api/v1/link/unassign responnded with Error `);
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  if (user.roleType == "super_admin" || user.roleType == "admin") {
+    const data = matchedData(req);
+    const updatedLink = {
+      assign_status: "UnAssigned",
+      remark: data.remark,
+    };
+
+    const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+      new: true,
+    });
+    logger.info(
+      `${ip}: API /api/v1/link/unassign | User: ${user.name} | Link with Id:${linkId} UnAssigned`
+    );
+
+    const final_result = await result.populate("assign_user");
+    return res.status(200).json({ final_result, message: "Link UnAssigned." });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/unassign | User: ${user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Get all Links
+//@route POST /api/v1/link/getall
+//@access Private: Role Admin / superadmin
+const getAllLinks = async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const user = req.user;
+  if (user) {
+    const links = await Link.find({
+      active: true,
+    }).populate("assign_user");
+    logger.info(
+      `${ip}: API /api/v1/link/getall | User: ${user.name} | responnded with Success `
+    );
+    return await res.status(200).json({
+      data: links,
+      message: "Links retrived successfully",
+    });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/getall | User: ${user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Get Link by id
+//@route GET /api/v1/link/get/:id
+//@access private: Admin/Superadmin
+const getLink = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const { id } = req.params;
+    const link = await Link.find({
+      _id: id,
+    }).populate("assign_user");
+    if (link.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/link/get/:${id} | User: ${loggedin_user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: link,
+        message: "Link retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/link/get/:${id} | User: ${loggedin_user.name} | responnded Empty i.e. Link was not found `
+      );
+      return await res.status(200).json({
+        message: "Link Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/Link/get/ | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Get Links by user id
+//@route GET /api/v1/link/get/user/:id
+//@access private: login required
+const getAllLinksbyUser = async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const user = req.user;
+
+  if (user) {
+    const links = await Link.find({
+      assign_user: user._id,
+      active: true,
+    }).populate("assign_user");
+    logger.info(
+      `${ip}: API /api/v1/link/get/user/ | User: ${user.name} | responnded with Success `
+    );
+    return await res.status(200).json({
+      data: links,
+      message: "User links retrived successfully",
+    });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/get/user | User: ${user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Change remark by link id
+//@route GET /api/v1/link/change/remark/:id
+//@access private: login required
+const changeRemark = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const linkId = req.params.id;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(
+      `${ip}: API /api/v1/link/change/remark/:id responnded with Error `
+    );
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const data = matchedData(req);
+  const updatedLink = {
+    remark: data.remark,
+  };
+
+  const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+    new: true,
+  });
+  logger.info(
+    `${ip}: API /api/v1/link/change/remark/:id | User: ${user.name} | Remark for the Link with Id:${linkId} Updated`
+  );
+
+  const final_result = await result.populate("assign_user");
+  return res
+    .status(200)
+    .json({ final_result, message: "Link Remark Updated." });
+};
+
+//@desc Change status by link id
+//@route GET /api/v1/link/change/status/:id
+//@access private: login required
+const changeStatus = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const linkId = req.params.id;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(
+      `${ip}: API /api/v1/link/change/status/:id responnded with Error `
+    );
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const data = matchedData(req);
+  const updatedLink = {
+    assign_status: data.status,
+    compeleted_date: data.compeleted_date,
+  };
+
+  const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+    new: true,
+  });
+  logger.info(
+    `${ip}: API /api/v1/link/change/status/:id | User: ${user.name} | Status of the Link with Id:${linkId} Updated`
+  );
+
+  const final_result = await result.populate("assign_user");
+  return res
+    .status(200)
+    .json({ final_result, message: "Link Status Updated." });
+};
+
+module.exports = {
+  testLinkAPI,
+  createLink,
+  assignLink,
+  unassignLink,
+  getAllLinks,
+  getLink,
+  getAllLinksbyUser,
+  changeRemark,
+  changeStatus,
+  UpdateLink,
+};

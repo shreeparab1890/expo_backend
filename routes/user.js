@@ -35,6 +35,13 @@ router.post(
     body("roleType", "Select a valid role type").notEmpty(),
     body("joining_date", "Enter a Valid Joining Date").notEmpty(),
     body("department", "Enter a Valid Department").notEmpty(),
+    body("linkUIEnable"),
+    body("userUIEnable"),
+    body("roleUIEnable"),
+    body("qaUIEnable"),
+    body("daUIEnable"),
+    body("retriveUIEnable"),
+    body("departmentUIEnable"),
   ],
   validateToken,
   createUser
