@@ -63,7 +63,9 @@ const createData = async (req, res) => {
       mobile: data.mobile,
       city: data.city,
       address: data.address,
+      exhibitor_type: data.exhibitor_type,
       comment: data.comment,
+      comment1: data.comment1,
       user: data.user,
       link: data.link,
     })
@@ -242,7 +244,9 @@ const updateData = async (req, res) => {
     mobile,
     city,
     address,
+    exhibitor_type,
     comment,
+    comment1,
   } = req.body;
 
   const errors = validationResult(req);
@@ -271,7 +275,9 @@ const updateData = async (req, res) => {
       mobile,
       city,
       address,
+      exhibitor_type,
       comment,
+      comment1,
     };
     const olddata = await Data.findOne({ _id: id });
     if (olddata) {
@@ -337,6 +343,133 @@ const getDataByUserId = async (req, res) => {
   }
 };
 
+//@desc Get Data by created date
+//@route GET /api/v1/data/date/get/
+//@access private: login required
+const getDataByCreatedDate = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const { startDate, endDate } = req.body;
+
+  if (loggedin_user) {
+    const data = await Data.find({
+      createDate: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    })
+      .populate("user")
+      .populate("link");
+    if (data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/data/date/get/ | User: ${loggedin_user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: data,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/data/date/get/ | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/date/get/ | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Get Data by created date and link
+//@route GET /api/v1/data/date/link/get/
+//@access private: login required
+const getDataByCreatedDate_link = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const { startDate, endDate, link_id } = req.body;
+
+  if (loggedin_user) {
+    const data = await Data.find({
+      createDate: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+      link: link_id,
+    })
+      .populate("user")
+      .populate("link");
+    if (data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/data/date/link/get/ | User: ${loggedin_user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: data,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/data/date/link/get/ | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/date/link/get/ | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Get Data by generalise filter
+//@route GET /api/v1/data/generalise/get
+//@access private: login required
+const getDataByGeneraliseFilter = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const { firstvar, secondvar, sq1, sq2 } = req.body;
+  console.log(firstvar);
+  console.log(secondvar);
+  console.log(sq1);
+  console.log(sq2);
+
+  if (loggedin_user) {
+    const query = {};
+    query[firstvar] = sq1;
+    query[secondvar] = sq2;
+    const data = await Data.find(query).populate("user").populate("link");
+    if (data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/data/generalise/get | User: ${loggedin_user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: data,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/data/generalise/get | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/generalise/get | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -346,4 +479,7 @@ module.exports = {
   approveData,
   updateData,
   getDataByUserId,
+  getDataByCreatedDate,
+  getDataByCreatedDate_link,
+  getDataByGeneraliseFilter,
 };

@@ -14,7 +14,7 @@ const testUserAPI = async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const user = req.user;
 
-  if (user.roleType == "super_admin" || user.roleType == "admin") {
+  if (user) {
     logger.info(
       `${ip}: API /api/v1/user | User: ${user.name} | responnded with "User API Test Successfully" `
     );
@@ -42,7 +42,7 @@ const createUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  if (user.roleType == "super_admin" || user.roleType == "admin") {
+  if (user) {
     const data = matchedData(req);
     console.log(data);
 

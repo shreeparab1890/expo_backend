@@ -52,10 +52,16 @@ const DataSchema = new Schema({
   city: {
     type: String,
   },
+  exhibitor_type: {
+    type: String,
+  },
   address: {
     type: String,
   },
   comment: {
+    type: String,
+  },
+  comment1: {
     type: String,
   },
   user: {

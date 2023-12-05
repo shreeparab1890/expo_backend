@@ -10,6 +10,9 @@ const {
   approveData,
   updateData,
   getDataByUserId,
+  getDataByCreatedDate,
+  getDataByCreatedDate_link,
+  getDataByGeneraliseFilter,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -37,8 +40,10 @@ router.post(
     body("tel", "Enter a valid tel"),
     body("mobile", "Enter a valid mobile"),
     body("city", "Enter a valid city"),
+    body("exhibitor_type", "Enter a valid Exhibitor Type"),
     body("address", "Enter a valid address"),
     body("comment", "Enter a valid commnet"),
+    body("comment1", "Enter a valid commnet1"),
     body("user", "Enter a valid User ID").notEmpty(),
     body("link", "Enter a valid link ID").notEmpty(),
   ],
@@ -85,8 +90,10 @@ router.put(
     body("tel", "Enter a valid tel"),
     body("mobile", "Enter a valid mobile"),
     body("city", "Enter a valid city"),
+    body("exhibitor_type", "Enter a valid Exhibitor Type"),
     body("address", "Enter a valid address"),
     body("comment", "Enter a valid commnet"),
+    body("comment1", "Enter a valid commnet1"),
   ],
   validateToken,
   updateData
@@ -96,5 +103,20 @@ router.put(
 //@route GET /api/v1/data/user/get
 //@access private: login required
 router.get("/user/get", validateToken, getDataByUserId);
+
+//@desc Get Data by created date
+//@route GET /api/v1/data/date/get/
+//@access private: login required
+router.post("/date/get", validateToken, getDataByCreatedDate);
+
+//@desc Get Data by created date and link
+//@route GET /api/v1/data/date/link/get/
+//@access private: login required
+router.post("/date/link/get", validateToken, getDataByCreatedDate_link);
+
+//@desc Get Data by generalise filter
+//@route GET /api/v1/data/generalise/get
+//@access private: login required
+router.post("/generalise/get", validateToken, getDataByGeneraliseFilter);
 
 module.exports = router;
