@@ -6,19 +6,25 @@ const Link = require("../models/Link.js");
 //@route GET /api/v1/link
 //@access Private: Role Admin / superadmin
 const testLinkAPI = async (req, res) => {
-  const user = req.user;
-  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  try {
+    const user = req.user;
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
-  if (user) {
-    logger.info(
-      `${ip}: API /api/v1/link | User: ${user.name} | responnded with Link Api Successful `
-    );
-    return res.status(200).send({ data: user, message: "Link Api Successful" });
-  } else {
-    logger.error(
-      `${ip}: API /api/v1/link | User: ${user.name} | responnded with User is not Autherized `
-    );
-    return res.status(401).send({ message: "User is not Autherized" });
+    if (user) {
+      logger.info(
+        `${ip}: API /api/v1/link | User: ${user.name} | responnded with Link Api Successful `
+      );
+      return res
+        .status(200)
+        .send({ data: user, message: "Link Api Successful" });
+    } else {
+      logger.error(
+        `${ip}: API /api/v1/link | User: ${user.name} | responnded with User is not Autherized `
+      );
+      return res.status(401).send({ message: "User is not Autherized" });
+    }
+  } catch (err) {
+    return res.status(500).json({ error: "Error", message: err.message });
   }
 };
 
@@ -136,14 +142,21 @@ const assignLink = async (req, res) => {
     const data = matchedData(req);
 
     const updatedLink = {
-      assign_user: data.assign_user,
+      $push: {
+        assign_user: {
+          user: data.assign_user,
+          remark: data.remark,
+          active: true,
+        },
+      },
       remark: data.remark,
       assign_status: "Assigned",
     };
 
     const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
       new: true,
-    });
+    }).populate("assign_user");
+
     const final_result = await result.populate("assign_user");
     logger.info(
       `${ip}: API /api/v1/link/assign | User: ${user.name} | Link with Id:${linkId} Assigned to the User with Id:${data.assign_user}`
@@ -165,7 +178,8 @@ const assignLink = async (req, res) => {
 const unassignLink = async (req, res) => {
   const errors = validationResult(req);
   const user = req.user;
-  const linkId = req.params.id;
+  const linkId = req.params.link_id;
+  const assign_id = req.params.assign_id;
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
   if (!errors.isEmpty()) {
@@ -175,19 +189,35 @@ const unassignLink = async (req, res) => {
 
   if (user.roleType == "super_admin" || user.roleType == "admin") {
     const data = matchedData(req);
-    const updatedLink = {
-      assign_status: "UnAssigned",
-      remark: data.remark,
-    };
 
-    const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
-      new: true,
-    });
+    const result = await Link.findOneAndUpdate(
+      { _id: linkId, "assign_user._id": assign_id },
+      { $set: { "assign_user.$.active": false } },
+      { new: true }
+    ).populate("assign_user");
     logger.info(
       `${ip}: API /api/v1/link/unassign | User: ${user.name} | Link with Id:${linkId} UnAssigned`
     );
 
     const final_result = await result.populate("assign_user");
+    console.log(final_result);
+    const activeAssignUserCount = final_result.assign_user.filter(
+      (user) => user.active
+    ).length;
+
+    console.log(activeAssignUserCount);
+    if (activeAssignUserCount == 0) {
+      const result = await Link.findByIdAndUpdate(
+        linkId,
+        {
+          assign_status: "UnAssigned",
+        },
+        {
+          new: true,
+        }
+      ).populate("assign_user");
+      return res.status(200).json({ result, message: "Link UnAssigned." });
+    }
     return res.status(200).json({ final_result, message: "Link UnAssigned." });
   } else {
     logger.error(
@@ -231,9 +261,51 @@ const getLink = async (req, res) => {
 
   if (loggedin_user) {
     const { id } = req.params;
-    const link = await Link.find({
-      _id: id,
-    }).populate("assign_user");
+
+    const link = await Link.find({ _id: id }).populate({
+      path: "assign_user.user",
+    });
+
+    const activeAssignUsers = link[0].assign_user.filter((user) => user.active);
+
+    if (link.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/link/get/:${id} | User: ${loggedin_user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: activeAssignUsers,
+        message: "Link retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/link/get/:${id} | User: ${loggedin_user.name} | responnded Empty i.e. Link was not found `
+      );
+      return await res.status(200).json({
+        message: "Link Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/Link/get/ | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Get Link by id
+//@route GET /api/v1/link/get/:id
+//@access private: Admin/Superadmin
+const getLink_generalise = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const { id } = req.params;
+
+    const link = await Link.find({ _id: id }).populate({
+      path: "assign_user.user",
+    });
+
     if (link.length > 0) {
       logger.info(
         `${ip}: API /api/v1/link/get/:${id} | User: ${loggedin_user.name} | responnded with Success `
@@ -267,7 +339,8 @@ const getAllLinksbyUser = async (req, res) => {
 
   if (user) {
     const links = await Link.find({
-      assign_user: user._id,
+      "assign_user.user": user._id,
+      "assign_user.active": true,
       active: true,
     }).populate("assign_user");
     logger.info(
@@ -365,4 +438,5 @@ module.exports = {
   changeRemark,
   changeStatus,
   UpdateLink,
+  getLink_generalise,
 };

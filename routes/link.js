@@ -12,6 +12,7 @@ const {
   changeRemark,
   changeStatus,
   UpdateLink,
+  getLink_generalise,
 } = require("../controllers/link.js");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -78,12 +79,7 @@ router.put(
 //@desc Assign Link to user
 //@route POST /api/v1/link/unassign
 //@access Private: Role Admin / superadmin
-router.put(
-  "/unassign/:id",
-  [body("remark", "Enter a valid Remark").isLength({ min: 3 })],
-  validateToken,
-  unassignLink
-);
+router.put("/unassign/:link_id/:assign_id", validateToken, unassignLink);
 
 //@desc Get all Links
 //@route POST /api/v1/link/assign
@@ -93,7 +89,12 @@ router.get("/getall", validateToken, getAllLinks);
 //@desc Get Link by id
 //@route GET /api/v1/link/get/:id
 //@access private: Admin/Superadmin
-router.get("/get/:id", validateToken, getLink);
+router.get("/get/:id", validateToken, getLink_generalise);
+
+//@desc Get Link by id
+//@route GET /api/v1/link/get/assign/:id
+//@access private: Admin/Superadmin
+router.get("/get/assign/:id", validateToken, getLink);
 
 //@desc Get Links by user id
 //@route GET /api/v1/link/get/user/:id

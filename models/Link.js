@@ -55,13 +55,17 @@ const LinkSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  assign_user: {
-    type: "ObjectId",
-    ref: User,
-  },
+  assign_user: [
+    {
+      user: { type: "ObjectId", ref: User },
+      remark: String,
+      active: { type: Boolean, default: false },
+    },
+  ],
   remark: {
-    type: "String",
+    type: String,
   },
+
   approved: {
     type: Boolean,
     default: true,
