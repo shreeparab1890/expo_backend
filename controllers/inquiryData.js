@@ -356,8 +356,8 @@ const getDataByUserId = async (req, res) => {
   }
 };
 
-//@desc Get Data by created date
-//@route GET /api/v1/data/date/get/
+//@desc Get inquiry Data by created date
+//@route GET /api/v1/inquiry/data/date/get/
 //@access private: login required
 const getDataByCreatedDate = async (req, res) => {
   const loggedin_user = req.user;
@@ -366,25 +366,24 @@ const getDataByCreatedDate = async (req, res) => {
   const { startDate, endDate } = req.body;
 
   if (loggedin_user) {
-    const data = await Data.find({
+    const data = await InquiryData.find({
       createDate: {
         $gte: startDate,
         $lte: endDate,
       },
-    })
-      .populate("user")
-      .populate("link");
+    }).populate("user");
+
     if (data.length > 0) {
       logger.info(
-        `${ip}: API /api/v1/data/date/get/ | User: ${loggedin_user.name} | responnded with Success `
+        `${ip}: API /api/v1/inquiry/data/date/get/ | User: ${loggedin_user.name} | responnded with Success `
       );
       return await res.status(200).json({
         data: data,
-        message: "Data retrived successfully",
+        message: "Inquiry Data retrived successfully",
       });
     } else {
       logger.info(
-        `${ip}: API /api/v1/data/date/get/ | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+        `${ip}: API /api/v1/inquiry/data/date/get/ | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
       );
       return await res.status(200).json({
         message: "Data Not Found",
@@ -392,7 +391,7 @@ const getDataByCreatedDate = async (req, res) => {
     }
   } else {
     logger.error(
-      `${ip}: API /api/v1/data/date/get/ | User: ${loggedin_user.name} | responnded with User is not Autherized `
+      `${ip}: API /api/v1/inquiry/data/date/get/ | User: ${loggedin_user.name} | responnded with User is not Autherized `
     );
     return res.status(401).send({ message: "User is not Autherized" });
   }

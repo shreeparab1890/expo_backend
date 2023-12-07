@@ -100,4 +100,9 @@ router.put(
   updateData
 );
 
+//@desc Get inquiry Data by created date
+//@route GET /api/v1/inquiry/data/date/get/
+//@access private: login required
+router.post("/date/get", validateToken, getDataByCreatedDate);
+
 module.exports = router;
