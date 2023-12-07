@@ -71,6 +71,7 @@ const createUser = async (req, res) => {
       qaUIEnable: data.qaUIEnable,
       daUIEnable: data.daUIEnable,
       retriveUIEnable: data.retriveUIEnable,
+      CRMUIEnable: data.CRMUIEnable,
     })
       .then((user) => {
         logger.info(
@@ -189,6 +190,7 @@ const updateUser = async (req, res) => {
     qaUIEnable,
     daUIEnable,
     retriveUIEnable,
+    CRMUIEnable,
   } = req.body;
 
   const errors = validationResult(req);
@@ -219,6 +221,7 @@ const updateUser = async (req, res) => {
         qaUIEnable,
         daUIEnable,
         retriveUIEnable,
+        CRMUIEnable,
       };
       const oldUser = await User.findOne({ _id: id });
       if (oldUser) {

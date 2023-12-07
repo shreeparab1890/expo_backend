@@ -9,7 +9,7 @@ const testDepartmentAPI = async (req, res) => {
   const user = req.user;
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
-  if (user.roleType == "super_admin") {
+  if (user) {
     logger.info(
       `${ip}: API /api/v1/department | User: ${user.name} | responnded with Department Api Successful `
     );
@@ -35,7 +35,7 @@ const createDepartment = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  if (user.roleType == "super_admin") {
+  if (user) {
     const data = matchedData(req);
 
     const oldDepartment = await Department.findOne({ name: data.name });
@@ -89,7 +89,7 @@ const updateDepartment = async (req, res) => {
   }
 
   try {
-    if (user.roleType == "super_admin") {
+    if (user) {
       const updatedDepartment = {
         name,
       };
@@ -141,7 +141,7 @@ const deleteDepartment = async (req, res) => {
   const user = req.user;
 
   try {
-    if (user.roleType == "super_admin") {
+    if (user) {
       const updatedDepartment = {
         active: false,
       };

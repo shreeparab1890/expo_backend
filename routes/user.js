@@ -42,6 +42,7 @@ router.post(
     body("daUIEnable"),
     body("retriveUIEnable"),
     body("departmentUIEnable"),
+    body("CRMUIEnable"),
   ],
   validateToken,
   createUser

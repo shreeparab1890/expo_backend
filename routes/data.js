@@ -13,6 +13,7 @@ const {
   getDataByCreatedDate,
   getDataByCreatedDate_link,
   getDataByGeneraliseFilter,
+  getDataByLinkId_user,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -70,6 +71,11 @@ router.get("/get/:id", validateToken, getDataById);
 //@route GET /api/v1/data/get/link/:id
 //@access private: login required
 router.get("/get/link/:id", validateToken, getDataByLinkId);
+
+//@desc Get Data by Link id and user id
+//@route GET /api/v1/data/get/link/user/:id
+//@access private: login required
+router.get("/get/link/user/:id", validateToken, getDataByLinkId_user);
 
 //@desc update Data by data id
 //@route put /api/v1/data/update/:id

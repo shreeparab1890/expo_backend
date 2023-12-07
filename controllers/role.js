@@ -9,7 +9,7 @@ const testRoleAPI = async (req, res) => {
   const user = req.user;
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
-  if (user.roleType == "super_admin") {
+  if (user) {
     logger.info(
       `${ip}: API /api/v1/role | User: ${user.name} | responnded with Role Api Successful `
     );
@@ -35,7 +35,7 @@ const createRole = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-  if (user.roleType == "super_admin") {
+  if (user) {
     const data = matchedData(req);
 
     const oldRole = await Role.findOne({ name: data.name });
@@ -89,7 +89,7 @@ const updateRole = async (req, res) => {
   }
 
   try {
-    if (user.roleType == "super_admin") {
+    if (user) {
       const updatedRole = {
         name,
       };
@@ -137,7 +137,7 @@ const deleteRole = async (req, res) => {
   const user = req.user;
 
   try {
-    if (user.roleType == "super_admin") {
+    if (user) {
       const updatedRole = {
         active: false,
       };

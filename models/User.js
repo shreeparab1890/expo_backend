@@ -61,6 +61,10 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  CRMUIEnable: {
+    type: Boolean,
+    default: false,
+  },
   createDate: {
     type: Date,
     default: Date.now,

@@ -192,6 +192,48 @@ const getDataByLinkId = async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
   if (loggedin_user) {
+    console.log(loggedin_user._id);
+    const { id } = req.params;
+    const data = await Data.find({
+      link: id,
+    })
+      .populate("user")
+      .populate("link");
+    console.log(data);
+    if (data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/data/get/link/:${id} | User: ${loggedin_user.name} | responnded with Success `
+      );
+
+      return await res.status(200).json({
+        data: data,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/data/get/link/:${id} | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/get/link/:${id} | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Get Data by Link id
+//@route GET /api/v1/data/get/link/user/:id
+//@access private: login required
+const getDataByLinkId_user = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    console.log(loggedin_user._id);
     const { id } = req.params;
     const data = await Data.find({
       link: id,
@@ -199,10 +241,12 @@ const getDataByLinkId = async (req, res) => {
     })
       .populate("user")
       .populate("link");
+    console.log(data);
     if (data.length > 0) {
       logger.info(
         `${ip}: API /api/v1/data/get/link/:${id} | User: ${loggedin_user.name} | responnded with Success `
       );
+
       return await res.status(200).json({
         data: data,
         message: "Data retrived successfully",
@@ -482,4 +526,5 @@ module.exports = {
   getDataByCreatedDate,
   getDataByCreatedDate_link,
   getDataByGeneraliseFilter,
+  getDataByLinkId_user,
 };
