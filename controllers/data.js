@@ -61,6 +61,7 @@ const createData = async (req, res) => {
       products: data.products,
       tel: data.tel,
       mobile: data.mobile,
+      whatsApp: data.whatsApp,
       city: data.city,
       address: data.address,
       exhibitor_type: data.exhibitor_type,
@@ -233,7 +234,6 @@ const getDataByLinkId_user = async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
   if (loggedin_user) {
-    console.log(loggedin_user._id);
     const { id } = req.params;
     const data = await Data.find({
       link: id,
@@ -241,7 +241,7 @@ const getDataByLinkId_user = async (req, res) => {
     })
       .populate("user")
       .populate("link");
-    console.log(data);
+
     if (data.length > 0) {
       logger.info(
         `${ip}: API /api/v1/data/get/link/:${id} | User: ${loggedin_user.name} | responnded with Success `
@@ -286,6 +286,7 @@ const updateData = async (req, res) => {
     products,
     tel,
     mobile,
+    whatsApp,
     city,
     address,
     exhibitor_type,
@@ -317,6 +318,7 @@ const updateData = async (req, res) => {
       products,
       tel,
       mobile,
+      whatsApp,
       city,
       address,
       exhibitor_type,

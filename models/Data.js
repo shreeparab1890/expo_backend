@@ -46,6 +46,9 @@ const DataSchema = new Schema({
   mobile: {
     type: String,
   },
+  whatsApp: {
+    type: String,
+  },
   city: {
     type: String,
   },
