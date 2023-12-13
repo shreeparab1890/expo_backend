@@ -7,11 +7,9 @@ const { Schema } = mongoose;
 const DataSchema = new Schema({
   company_name: {
     type: String,
-    required: true,
   },
   website: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -41,7 +39,6 @@ const DataSchema = new Schema({
   },
   products: {
     type: String,
-    required: true,
   },
   tel: {
     type: String,

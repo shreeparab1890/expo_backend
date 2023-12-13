@@ -237,6 +237,7 @@ const getAllLinks = async (req, res) => {
     const links = await Link.find({
       active: true,
     }).populate("assign_user");
+
     logger.info(
       `${ip}: API /api/v1/link/getall | User: ${user.name} | responnded with Success `
     );
@@ -427,6 +428,53 @@ const changeStatus = async (req, res) => {
     .json({ final_result, message: "Link Status Updated." });
 };
 
+//@desc Delete link with id (we are updating active to false )
+//@route PUT /api/v1/link/delete/:id
+//@access private: Role Super Admin
+const deleteLink = async (req, res) => {
+  const { id } = req.params;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const user = req.user;
+
+  try {
+    if (user.roleType == "super_admin") {
+      const updatedLink = {
+        active: false,
+      };
+      const oldLink = await Link.findOne({ _id: id });
+      if (oldLink) {
+        const result = await Link.findByIdAndUpdate(id, updatedLink, {
+          new: true,
+        });
+        logger.info(
+          `${ip}: API /api/v1/link/delete/:${id} | User: ${user.name} | responnded with Success `
+        );
+        return res
+          .status(200)
+          .json({ data: result, message: "Link Deleted Successfully" });
+      } else {
+        logger.info(
+          `${ip}: API /api/v1/link/delete/:${id} | User: ${user.name} | responnded with Link Not Found `
+        );
+        return res.status(200).json({ message: "Link Not Found" });
+      }
+    } else {
+      logger.error(
+        `${ip}: API /api/v1/link/delete/:${id} | User: ${user.name} | responnded with User is not Autherized `
+      );
+      return res.status(401).send({ message: "User is not Autherized" });
+    }
+  } catch (error) {
+    logger.error(
+      `${ip}: API /api/v1/link/delete/:${id} | User: ${user.name} | responnded with Error `
+    );
+    return res
+      .status(500)
+      .json({ data: error, message: "Something went wrong" });
+  }
+};
+
 module.exports = {
   testLinkAPI,
   createLink,
@@ -439,4 +487,5 @@ module.exports = {
   changeStatus,
   UpdateLink,
   getLink_generalise,
+  deleteLink,
 };

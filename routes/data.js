@@ -28,8 +28,8 @@ router.get("/", validateToken, testUserAPI);
 router.post(
   "/add",
   [
-    body("company_name", "Enter a valid Company name").isLength({ min: 1 }),
-    body("website", "Enter a valid website url").notEmpty(),
+    body("company_name", "Enter a valid Company name"),
+    body("website", "Enter a valid website url"),
     body("email", "Enter a valid Email").isEmail(),
     body("category", "Enter a valid category").notEmpty(),
     body("status", "Enter a valid status").notEmpty(),
@@ -37,7 +37,7 @@ router.post(
     body("region", "Enter a valid region").notEmpty(),
     body("contact_person", "Enter a valid contact person"),
     body("designation", "Enter a valid designation"),
-    body("products", "Enter a valid products").notEmpty(),
+    body("products", "Enter a valid products"),
     body("tel", "Enter a valid tel"),
     body("mobile", "Enter a valid mobile"),
     body("city", "Enter a valid city"),

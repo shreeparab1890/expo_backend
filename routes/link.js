@@ -13,6 +13,7 @@ const {
   changeStatus,
   UpdateLink,
   getLink_generalise,
+  deleteLink,
 } = require("../controllers/link.js");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -123,5 +124,10 @@ router.put(
   validateToken,
   changeStatus
 );
+
+//@desc Delete link with id (we are updating active to false )
+//@route PUT /api/v1/link/delete/:id
+//@access private: Role Super Admin
+router.put("/delete/:id", validateToken, deleteLink);
 
 module.exports = router;
