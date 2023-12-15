@@ -236,7 +236,13 @@ const getAllLinks = async (req, res) => {
   if (user) {
     const links = await Link.find({
       active: true,
-    }).populate("assign_user");
+    })
+
+      .sort({ start_date: 1 })
+      .sort({ month: -1 })
+      .sort({ year: -1 })
+      .populate("assign_user")
+      .populate("assign_user.user");
 
     logger.info(
       `${ip}: API /api/v1/link/getall | User: ${user.name} | responnded with Success `

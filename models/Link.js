@@ -20,16 +20,16 @@ const LinkSchema = new Schema({
     required: true,
   },
   start_date: {
-    type: String,
+    type: Date,
   },
   end_date: {
-    type: String,
+    type: Date,
   },
   month: {
-    type: String,
+    type: Number,
   },
   year: {
-    type: String,
+    type: Number,
   },
   compeleted_date: {
     type: String,
