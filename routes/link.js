@@ -122,6 +122,7 @@ router.put(
   [
     body("status", "Enter a valid Status").isLength({ min: 1 }),
     body("compeleted_date"),
+    body("object_id"),
   ],
   validateToken,
   changeStatus

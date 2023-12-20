@@ -148,6 +148,7 @@ const assignLink = async (req, res) => {
         assign_user: {
           user: data.assign_user,
           remark: data.remark,
+          status: "Assigned",
           active: true,
         },
       },
@@ -194,7 +195,12 @@ const unassignLink = async (req, res) => {
 
     const result = await Link.findOneAndUpdate(
       { _id: linkId, "assign_user._id": assign_id },
-      { $set: { "assign_user.$.active": false } },
+      {
+        $set: {
+          "assign_user.$.active": false,
+          "assign_user.$.status": "UnAssigned",
+        },
+      },
       { new: true }
     ).populate("assign_user");
     logger.info(
@@ -348,8 +354,12 @@ const getAllLinksbyUser = async (req, res) => {
 
   if (user) {
     const links = await Link.find({
-      "assign_user.user": user._id,
-      "assign_user.active": true,
+      assign_user: {
+        $elemMatch: {
+          user: user._id,
+          active: true,
+        },
+      },
       active: true,
     }).populate("assign_user");
     logger.info(
@@ -423,9 +433,18 @@ const changeStatus = async (req, res) => {
     compeleted_date: data.compeleted_date,
   };
 
-  const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+  /* const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
     new: true,
-  });
+  }); */
+  const result = await Link.findOneAndUpdate(
+    { _id: linkId, "assign_user._id": data.object_id },
+    {
+      $set: {
+        "assign_user.$.status": data.status,
+      },
+    },
+    { new: true }
+  );
   logger.info(
     `${ip}: API /api/v1/link/change/status/:id | User: ${user.name} | Status of the Link with Id:${linkId} Updated`
   );
