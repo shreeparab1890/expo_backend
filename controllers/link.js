@@ -57,6 +57,7 @@ const createLink = async (req, res) => {
       value: data.value,
       priority: data.priority,
       link_type: data.link_type,
+      category: data.category,
       start_date: data.start_date,
       end_date: data.end_date,
       month: data.month,
@@ -105,6 +106,7 @@ const UpdateLink = async (req, res) => {
   const updatedLink = {
     priority: data.priority,
     link_type: data.link_type,
+    category: data.category,
     start_date: data.start_date,
     end_date: data.end_date,
     month: data.month,

@@ -32,6 +32,7 @@ router.post(
     body("value", "Enter a valid Link").isLength({ min: 3 }),
     body("priority", "Enter a valid Link").isLength({ min: 1 }),
     body("link_type", "Enter a valid Link").isLength({ min: 1 }),
+    body("category", "Enter a valid Link Category").isLength({ min: 1 }),
     body("start_date"),
     body("end_date"),
     body("month"),
@@ -52,6 +53,7 @@ router.put(
   [
     body("priority", "Enter a valid Link").isLength({ min: 1 }),
     body("link_type", "Enter a valid Link").isLength({ min: 1 }),
+    body("category", "Enter a valid Link Category").isLength({ min: 1 }),
     body("start_date"),
     body("end_date"),
     body("month"),

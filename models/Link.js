@@ -19,6 +19,10 @@ const LinkSchema = new Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   start_date: {
     type: Date,
   },
