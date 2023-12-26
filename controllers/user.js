@@ -331,6 +331,12 @@ const logIn = async (req, res) => {
       return res.status(404).json({ message: "User Not Found, Please Signup" });
     }
 
+    if (!oldUser.approved) {
+      logger.error(
+        `${ip}: API /api/v1/user/login responnded with user Disabled: ${email}`
+      );
+      return res.status(402).json({ status: 402, message: "User Disabled" });
+    }
     const isPasswordCorrect = await bcrypt.compare(password, oldUser.password);
 
     if (!isPasswordCorrect) {
