@@ -14,6 +14,7 @@ const {
   getDataByCreatedDate_link,
   getDataByGeneraliseFilter,
   getDataByLinkId_user,
+  getFilterData,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -126,5 +127,10 @@ router.post("/date/link/get", validateToken, getDataByCreatedDate_link);
 //@route GET /api/v1/data/generalise/get
 //@access private: login required
 router.post("/generalise/get", validateToken, getDataByGeneraliseFilter);
+
+//@desc filter Data
+//@route GET /api/v1/data/filter
+//@access private: login required
+router.post("/filter", validateToken, getFilterData);
 
 module.exports = router;

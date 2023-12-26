@@ -516,6 +516,112 @@ const getDataByGeneraliseFilter = async (req, res) => {
   }
 };
 
+//@desc filter Data
+//@route GET /api/v1/data/filter
+//@access private: login required
+const getFilterData = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const {
+    link_value,
+    email,
+    category,
+    status,
+    country,
+    region,
+    designation,
+    products,
+    created_from,
+    created_to,
+    approved_type,
+  } = req.body;
+
+  if (loggedin_user) {
+    /* console.log(
+      link_value,
+      email,
+      category,
+      status,
+      country,
+      region,
+      designation,
+      products,
+      created_from,
+      created_to,
+      approved_type
+    ); */
+    const filterQuery = {};
+
+    if (link_value) {
+      filterQuery.link = link_value;
+    }
+
+    if (email) {
+      filterQuery.email = email;
+    }
+
+    if (category != "1") {
+      filterQuery.category = category;
+    }
+
+    if (status != "1") {
+      filterQuery.status = status;
+    }
+
+    if (country != "1") {
+      filterQuery.country = country;
+    }
+
+    if (region) {
+      filterQuery.region = region;
+    }
+
+    if (designation) {
+      filterQuery.designation = designation;
+    }
+
+    if (products) {
+      filterQuery.products = products;
+    }
+
+    if (created_from && created_to) {
+      filterQuery.createDate = { $gte: created_from, $lte: created_to };
+    }
+
+    if (approved_type != "1") {
+      filterQuery.approved = approved_type;
+    }
+    const no_of_keys = Object.keys(filterQuery).length;
+    let filteredData = [];
+    if (no_of_keys > 0) {
+      filteredData = await Data.find(filterQuery).populate("link");
+    }
+
+    if (filteredData.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/data/generalise/get | User: ${loggedin_user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: filteredData,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/data/generalise/get | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/generalise/get | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -529,4 +635,5 @@ module.exports = {
   getDataByCreatedDate_link,
   getDataByGeneraliseFilter,
   getDataByLinkId_user,
+  getFilterData,
 };
