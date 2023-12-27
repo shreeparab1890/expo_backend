@@ -16,6 +16,7 @@ const {
   getDataByLinkId_user,
   getFilterData,
   getDataByEmail_LinkID,
+  getDataByEmail,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -130,7 +131,7 @@ router.post("/date/link/get", validateToken, getDataByCreatedDate_link);
 router.post("/generalise/get", validateToken, getDataByGeneraliseFilter);
 
 //@desc filter Data
-//@route GET /api/v1/data/filter
+//@route POST /api/v1/data/filter
 //@access private: login required
 router.post("/filter", validateToken, getFilterData);
 
@@ -138,5 +139,10 @@ router.post("/filter", validateToken, getFilterData);
 //@route POST /api/v1/data/get/byemail
 //@access private: login required
 router.post("/get/byemail", validateToken, getDataByEmail_LinkID);
+
+//@desc Get Data by email and category
+//@route POST /api/v1/data/get/byemail/cat
+//@access private: login required
+router.post("/get/byemail/cat", validateToken, getDataByEmail);
 
 module.exports = router;

@@ -14,6 +14,7 @@ const {
   getDataByCreatedDate_link,
   getDataByGeneraliseFilter,
   getDataByEmail,
+  getDataByEmail_1,
 } = require("../controllers/inquiryData");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -110,5 +111,10 @@ router.post("/date/get", validateToken, getDataByCreatedDate);
 //@route POST /api/v1/inquiry/data/get/byemail
 //@access private: login required
 router.post("/get/byemail", validateToken, getDataByEmail);
+
+//@desc Get inq Data by email
+//@route POST /api/v1/inquiry/data/get/byemail/1
+//@access private: login required
+router.post("/get/byemail/1", validateToken, getDataByEmail_1);
 
 module.exports = router;

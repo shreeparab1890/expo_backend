@@ -485,7 +485,7 @@ const getDataByGeneraliseFilter = async (req, res) => {
   }
 };
 
-//@desc Get inq Data by email
+//@desc Get inq Data by email and cat
 //@route POST /api/v1/inquiry/data/get/byemail
 //@access private: login required
 const getDataByEmail = async (req, res) => {
@@ -523,6 +523,43 @@ const getDataByEmail = async (req, res) => {
   }
 };
 
+//@desc Get inq Data by email
+//@route POST /api/v1/inquiry/data/get/byemail/1
+//@access private: login required
+const getDataByEmail_1 = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const { email } = req.body;
+  if (loggedin_user) {
+    const data = await InquiryData.find({
+      email,
+    }).populate("user");
+
+    if (data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/get/byemail/1 | User: ${loggedin_user.name} | responnded with Success `
+      );
+
+      return await res.status(200).json({
+        data: data,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/get/byemail/1 | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/inquiry/data/get/byemail/1 | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -536,4 +573,5 @@ module.exports = {
   getDataByCreatedDate_link,
   getDataByGeneraliseFilter,
   getDataByEmail,
+  getDataByEmail_1,
 };

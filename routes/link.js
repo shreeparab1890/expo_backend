@@ -14,6 +14,7 @@ const {
   UpdateLink,
   getLink_generalise,
   deleteLink,
+  getFilterLinks,
 } = require("../controllers/link.js");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -132,5 +133,10 @@ router.put(
 //@route PUT /api/v1/link/delete/:id
 //@access private: Role Super Admin
 router.put("/delete/:id", validateToken, deleteLink);
+
+//@desc filter Links
+//@route post /api/v1/link/filter
+//@access private: login required
+router.post("/filter", validateToken, getFilterLinks);
 
 module.exports = router;

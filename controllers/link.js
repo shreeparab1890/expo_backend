@@ -502,6 +502,122 @@ const deleteLink = async (req, res) => {
   }
 };
 
+//@desc filter Links
+//@route post /api/v1/link/filter
+//@access private: login required
+const getFilterLinks = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const {
+    name,
+    value,
+    link_type,
+    category,
+    assign_status,
+    country,
+    mode,
+    start_date,
+    end_date,
+    month,
+    year,
+    created_from,
+    created_to,
+  } = req.body;
+
+  if (loggedin_user) {
+    console.log(
+      name,
+      value,
+      link_type,
+      category,
+      assign_status,
+      country,
+      mode,
+      start_date,
+      end_date,
+      month,
+      year,
+      created_from,
+      created_to
+    );
+    const filterQuery = {};
+
+    if (name) {
+      filterQuery.name = name;
+    }
+
+    if (value) {
+      filterQuery.value = value;
+    }
+
+    if (link_type != "0") {
+      filterQuery.link_type = link_type;
+    }
+
+    if (category != "1") {
+      filterQuery.category = category;
+    }
+
+    if (assign_status != "1") {
+      filterQuery.assign_status = assign_status;
+    }
+
+    if (country != "0") {
+      filterQuery.country = country;
+    }
+
+    if (mode != "0") {
+      filterQuery.mode = mode;
+    }
+
+    if (month != "0") {
+      filterQuery.month = month;
+    }
+
+    if (year != "0") {
+      filterQuery.year = year;
+    }
+
+    if (start_date & end_date) {
+      filterQuery.startDate = { $gte: startDate };
+      filterQuery.end_date = { $lte: end_date };
+    }
+
+    if (created_from && created_to) {
+      filterQuery.createDate = { $gte: created_from, $lte: created_to };
+    }
+
+    const no_of_keys = Object.keys(filterQuery).length;
+    let filteredData = [];
+    if (no_of_keys > 0) {
+      filteredData = await Link.find(filterQuery);
+    }
+
+    if (filteredData.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/link/filter | User: ${loggedin_user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: filteredData,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/link/filter | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/filter | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testLinkAPI,
   createLink,
@@ -515,4 +631,5 @@ module.exports = {
   UpdateLink,
   getLink_generalise,
   deleteLink,
+  getFilterLinks,
 };
