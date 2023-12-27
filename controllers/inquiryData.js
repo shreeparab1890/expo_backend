@@ -40,7 +40,10 @@ const createData = async (req, res) => {
   if (user) {
     const data = matchedData(req);
 
-    const oldData = await InquiryData.findOne({ email: data.email });
+    const oldData = await InquiryData.findOne({
+      email: data.email,
+      category: data.category,
+    });
     if (oldData) {
       logger.error(
         `${ip}: API /api/v1/inquiry/data/add | User: ${user.name} | responnded with Data already Exists! for Data: ${data.email} `
@@ -482,6 +485,44 @@ const getDataByGeneraliseFilter = async (req, res) => {
   }
 };
 
+//@desc Get inq Data by email
+//@route POST /api/v1/inquiry/data/get/byemail
+//@access private: login required
+const getDataByEmail = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const { email, category } = req.body;
+  if (loggedin_user) {
+    const data = await InquiryData.find({
+      email,
+      category,
+    }).populate("user");
+
+    if (data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/get/byemail | User: ${loggedin_user.name} | responnded with Success `
+      );
+
+      return await res.status(200).json({
+        data: data,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/get/byemail | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/inquiry/data/get/byemail | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -494,4 +535,5 @@ module.exports = {
   getDataByCreatedDate,
   getDataByCreatedDate_link,
   getDataByGeneraliseFilter,
+  getDataByEmail,
 };
