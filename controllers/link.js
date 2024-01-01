@@ -450,6 +450,97 @@ const changeStatus = async (req, res) => {
   );
 
   const final_result = await result.populate("assign_user");
+
+  // Check if only items with active true have the status 'Accepted'
+  const onlyActiveAccepted = final_result.assign_user.every((item) => {
+    if (item.active) {
+      return item.status === "Accepted";
+    } else {
+      return true;
+    }
+  });
+
+  // Check if only items with active true have the status 'Completed'
+  const onlyActiveCompleted = final_result.assign_user.every((item) => {
+    if (item.active) {
+      return item.status === "Completed";
+    } else {
+      return true;
+    }
+  });
+
+  // Check if only items with active true have the status 'OnHold'
+  const onlyActiveOnHold = final_result.assign_user.every((item) => {
+    if (item.active) {
+      return item.status === "OnHold";
+    } else {
+      return true;
+    }
+  });
+
+  // Check if only items with active true have the status 'Aborted'
+  const onlyActiveAborted = final_result.assign_user.every((item) => {
+    if (item.active) {
+      return item.status === "Aborted";
+    } else {
+      return true;
+    }
+  });
+
+  if (onlyActiveAccepted) {
+    const updatedLink1 = {
+      assign_status: "Accepted",
+    };
+    const su_res = await Link.findByIdAndUpdate(linkId, updatedLink1, {
+      new: true,
+    });
+    const final_result1 = await su_res.populate("assign_user");
+    return res
+      .status(200)
+      .json({ final_result1, message: "Link Status Updated." });
+  }
+  if (onlyActiveCompleted) {
+    const updatedLink1 = {
+      assign_status: "Completed",
+    };
+    const su_res = await Link.findByIdAndUpdate(linkId, updatedLink1, {
+      new: true,
+    });
+    const final_result1 = await su_res.populate("assign_user");
+    return res
+      .status(200)
+      .json({ final_result1, message: "Link Status Updated." });
+  }
+  if (onlyActiveOnHold) {
+    const updatedLink1 = {
+      assign_status: "OnHold",
+    };
+    const su_res = await Link.findByIdAndUpdate(linkId, updatedLink1, {
+      new: true,
+    });
+    const final_result1 = await su_res.populate("assign_user");
+    return res
+      .status(200)
+      .json({ final_result1, message: "Link Status Updated." });
+  }
+  if (onlyActiveAborted) {
+    const updatedLink1 = {
+      assign_status: "Aborted",
+    };
+    const su_res = await Link.findByIdAndUpdate(linkId, updatedLink1, {
+      new: true,
+    });
+    const final_result1 = await su_res.populate("assign_user");
+    return res
+      .status(200)
+      .json({ final_result1, message: "Link Status Updated." });
+  }
+
+  /* console.log(onlyActiveAccepted);
+  console.log(onlyActiveCompleted);
+  console.log(onlyActiveOnHold);
+  console.log(onlyActiveAborted); */
+
   return res
     .status(200)
     .json({ final_result, message: "Link Status Updated." });
