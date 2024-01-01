@@ -27,6 +27,9 @@ app.use("/api/v1/department", require("./routes/department.js"));
 app.use("/api/v1/link", require("./routes/link.js"));
 app.use("/api/v1/data", require("./routes/data.js"));
 app.use("/api/v1/inquiry/data", require("./routes/inquiryData.js"));
+app.use("/api/v1/events", require("./routes/events.js"));
+
+//Tripytoe
 app.use("/api/v1/tripytoe", require("./routes/tripytoe.js"));
 
 app.listen(port, () => {

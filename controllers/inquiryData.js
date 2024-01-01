@@ -231,7 +231,9 @@ const getAllData = async (req, res) => {
   if (user) {
     const all_data = await InquiryData.find({
       active: true,
-    }).populate("user");
+    })
+      .populate("user")
+      .populate("inquired_event_name");
     logger.info(
       `${ip}: API /api/v1/inquiry/data/getall | User: ${user.name} | responnded with Success `
     );

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-//const Link = require("../models/Link.js");
+const Events = require("../models/Events.js");
 const User = require("../models/User.js");
 
 const { Schema } = mongoose;
@@ -34,8 +34,8 @@ const InquiryDataSchema = new Schema({
     required: true,
   },
   inquired_event_name: {
-    type: String,
-    required: true,
+    type: "ObjectId",
+    ref: Events,
   },
   consultant_name: {
     type: String,
@@ -50,11 +50,11 @@ const InquiryDataSchema = new Schema({
     required: true,
   },
   inquiry_date: {
-    type: String,
+    type: Date,
     required: true,
   },
   exhibitor_date: {
-    type: String,
+    type: Date,
   },
   contact_person: {
     type: String,
