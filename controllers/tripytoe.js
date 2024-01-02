@@ -6,7 +6,8 @@ openai.apiKey = OPENAI_API_KEY;
 client = new OpenAI();
 const logger = require("../config/logger.js");
 
-const prompt = "Translate the following English text to French: ";
+prompt1 =
+  "Act as a Travel Agent and follow the below prompt: Generate a detailed travel itinerary with perfect Punctuation importantly ending each sentence with a full stop w.r.t. the title format below: Breakfast, Morning Activity, Lunch, Evening Activity, Night. Each day starting with Breakfast; suggest a good breakfast. After breakfast, suggest an activity to do in the first half naming it as 'Morning Activity'. Suggest a good Lunch naming it as 'Lunch'. After Lunch, suggest an activity to do in the second half naming it as 'Evening Activity'. Finally, suggest me how to spend the night naming it as 'Night'. for 3 days in goa w.r.t. the user interests in offbeat. and compulsorily end every day with &&.";
 
 //@desc Test Triptoe API
 //@route GET /api/v1/tripytoe
@@ -30,7 +31,8 @@ const getItinerary = async (req, res) => {
     } = req.body;
     response = await client.completions.create({
       model: "text-davinci-003",
-      prompt: `Generate a travel itineray at destination ${destination} for ${no_of_days} days and the number of people are ${no_of_ppl} w.r.t. user interest ${preference}.`,
+      //prompt: `Generate a travel itineray at destination ${destination} for ${no_of_days} days and the number of people are ${no_of_ppl} w.r.t. user interest ${preference}.`,
+      prompt: prompt1,
       temperature: 0.6,
       max_tokens: 2550,
       top_p: 1.0,

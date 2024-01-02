@@ -635,11 +635,11 @@ const getFilterLinks = async (req, res) => {
     const filterQuery = {};
 
     if (name) {
-      filterQuery.name = name;
+      filterQuery.name = { $regex: new RegExp(`.*${name}.*`, "i") };
     }
 
     if (value) {
-      filterQuery.value = value;
+      filterQuery.value = { $regex: new RegExp(`.*${value}.*`, "i") };
     }
 
     if (link_type != "0") {
