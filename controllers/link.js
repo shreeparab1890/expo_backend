@@ -617,7 +617,7 @@ const getFilterLinks = async (req, res) => {
   } = req.body;
 
   if (loggedin_user) {
-    console.log(
+    /* console.log(
       name,
       value,
       link_type,
@@ -631,7 +631,7 @@ const getFilterLinks = async (req, res) => {
       year,
       created_from,
       created_to
-    );
+    ); */
     const filterQuery = {};
 
     if (name) {
@@ -667,7 +667,15 @@ const getFilterLinks = async (req, res) => {
     }
 
     if (year != "0") {
-      filterQuery.year = year;
+      filterQuery.$or = [
+        { year: year },
+        {
+          start_date: {
+            $gte: new Date(`${year}-01-01`),
+            $lt: new Date(`${parseInt(year, 10) + 1}-01-01`),
+          },
+        },
+      ];
     }
 
     if (start_date & end_date) {
