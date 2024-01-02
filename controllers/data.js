@@ -567,6 +567,8 @@ const getFilterData = async (req, res) => {
 
     if (status != "1") {
       filterQuery.status = status;
+    } else if (status == "1") {
+      filterQuery.status = { $ne: "Removes" };
     }
 
     if (country != "1") {
@@ -592,6 +594,7 @@ const getFilterData = async (req, res) => {
     if (approved_type != "1") {
       filterQuery.approved = approved_type;
     }
+
     const no_of_keys = Object.keys(filterQuery).length;
     let filteredData = [];
     if (no_of_keys > 0) {
