@@ -367,7 +367,10 @@ const getAllLinksbyUser = async (req, res) => {
         },
       },
       active: true,
-    }).populate("assign_user");
+    })
+      .populate("assign_user")
+      .populate("assign_user.user");
+
     logger.info(
       `${ip}: API /api/v1/link/get/user/ | User: ${user.name} | responnded with Success `
     );
