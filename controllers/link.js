@@ -65,6 +65,7 @@ const createLink = async (req, res) => {
       mode: data.mode,
       country: data.country,
       link_comment: data.link_comment,
+      source_user: user._id,
     })
       .then((link) => {
         logger.info(
@@ -158,7 +159,9 @@ const assignLink = async (req, res) => {
 
     const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
       new: true,
-    }).populate("assign_user");
+    })
+      .populate("assign_user")
+      .populate("source_user");
 
     const final_result = await result.populate("assign_user");
     logger.info(
@@ -207,8 +210,10 @@ const unassignLink = async (req, res) => {
       `${ip}: API /api/v1/link/unassign | User: ${user.name} | Link with Id:${linkId} UnAssigned`
     );
 
-    const final_result = await result.populate("assign_user");
-    console.log(final_result);
+    const final_result = await result
+      .populate("assign_user")
+      .populate("source_user");
+    /* console.log(final_result); */
     const activeAssignUserCount = final_result.assign_user.filter(
       (user) => user.active
     ).length;
@@ -250,6 +255,7 @@ const getAllLinks = async (req, res) => {
       .sort({ month: -1 })
       .sort({ year: -1 })
       .populate("assign_user")
+      .populate("source_user")
       .populate("assign_user.user");
 
     logger.info(
@@ -614,6 +620,7 @@ const getFilterLinks = async (req, res) => {
     year,
     created_from,
     created_to,
+    source_user,
   } = req.body;
 
   if (loggedin_user) {
@@ -666,6 +673,10 @@ const getFilterLinks = async (req, res) => {
       filterQuery.month = month;
     }
 
+    if (source_user != "0") {
+      filterQuery.source_user = source_user;
+    }
+
     if (year != "0") {
       filterQuery.$or = [
         { year: year },
@@ -687,6 +698,7 @@ const getFilterLinks = async (req, res) => {
       filterQuery.createDate = { $gte: created_from, $lte: created_to };
     }
 
+    //console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
     let filteredData = [];
     if (no_of_keys > 0) {

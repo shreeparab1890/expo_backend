@@ -70,7 +70,10 @@ const LinkSchema = new Schema({
   remark: {
     type: String,
   },
-
+  source_user: {
+    type: "ObjectId",
+    ref: User,
+  },
   approved: {
     type: Boolean,
     default: true,

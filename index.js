@@ -28,6 +28,7 @@ app.use("/api/v1/link", require("./routes/link.js"));
 app.use("/api/v1/data", require("./routes/data.js"));
 app.use("/api/v1/inquiry/data", require("./routes/inquiryData.js"));
 app.use("/api/v1/events", require("./routes/events.js"));
+app.use("/api/v1/consultant", require("./routes/consultant.js"));
 
 //Tripytoe
 app.use("/api/v1/tripytoe", require("./routes/tripytoe.js"));
