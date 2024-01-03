@@ -713,7 +713,7 @@ const getFilterLinks = async (req, res) => {
     const no_of_keys = Object.keys(filterQuery).length;
     let filteredData = [];
     if (no_of_keys > 0) {
-      filteredData = await Link.find(filterQuery);
+      filteredData = await Link.find(filterQuery).populate("source_user");
     }
 
     if (filteredData.length > 0) {
