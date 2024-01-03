@@ -64,6 +64,7 @@ const LinkSchema = new Schema({
       user: { type: "ObjectId", ref: User },
       remark: String,
       status: String,
+      compeleted_date: String,
       active: { type: Boolean, default: false },
     },
   ],

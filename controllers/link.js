@@ -450,6 +450,7 @@ const changeStatus = async (req, res) => {
     {
       $set: {
         "assign_user.$.status": data.status,
+        "assign_user.$.compeleted_date": data.compeleted_date,
       },
     },
     { new: true }
@@ -511,6 +512,7 @@ const changeStatus = async (req, res) => {
   if (onlyActiveCompleted) {
     const updatedLink1 = {
       assign_status: "Completed",
+      compeleted_date: data.compeleted_date,
     };
     const su_res = await Link.findByIdAndUpdate(linkId, updatedLink1, {
       new: true,
@@ -624,6 +626,7 @@ const getFilterLinks = async (req, res) => {
     created_from,
     created_to,
     source_user,
+    assign_user,
   } = req.body;
 
   if (loggedin_user) {
@@ -680,6 +683,11 @@ const getFilterLinks = async (req, res) => {
       filterQuery.source_user = source_user;
     }
 
+    if (assign_user != "0") {
+      filterQuery.assign_user = {};
+      filterQuery.assign_user.$elemMatch = { user: assign_user };
+    }
+
     if (year != "0") {
       filterQuery.$or = [
         { year: year },
@@ -701,7 +709,7 @@ const getFilterLinks = async (req, res) => {
       filterQuery.createDate = { $gte: created_from, $lte: created_to };
     }
 
-    //console.log(filterQuery);
+    /* console.log(filterQuery); */
     const no_of_keys = Object.keys(filterQuery).length;
     let filteredData = [];
     if (no_of_keys > 0) {
