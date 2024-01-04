@@ -1,6 +1,7 @@
 const { validationResult, matchedData } = require("express-validator");
 const logger = require("../config/logger.js");
 const Link = require("../models/Link.js");
+const User = require("../models/User");
 
 //@desc Test Link API
 //@route GET /api/v1/link
