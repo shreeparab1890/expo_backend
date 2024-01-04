@@ -262,7 +262,7 @@ const unassignLink = async (req, res) => {
       ).populate("assign_user");
       return res.status(200).json({ result, message: "Link UnAssigned." });
     }
-    return res.status(200).json({ final_result, message: "Link UnAssigned." });
+    return res.status(200).json({ result, message: "Link UnAssigned." });
   } else {
     logger.error(
       `${ip}: API /api/v1/link/unassign | User: ${user.name} | responnded with User is not Autherized `
