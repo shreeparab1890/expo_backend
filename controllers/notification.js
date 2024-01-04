@@ -222,10 +222,55 @@ const dismissNotification = async (req, res) => {
   }
 };
 
+//@desc get notification by user_id
+//@route PUT /api/v1/notification/get/byuser/:id
+//@access private: Login Required
+const getNotificationByUser = async (req, res) => {
+  console.log("In vvv");
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  try {
+    if (loggedin_user) {
+      const notification = await Notifications.find({
+        to_user: loggedin_user._id,
+        active: true,
+        dismissed: false,
+      });
+      if (notification.length > 0) {
+        logger.info(
+          `${ip}: API /api/v1/notification/get/byuser | User: ${loggedin_user.name} | responnded with Success `
+        );
+        return await res.status(200).json({
+          data: notification,
+          message: "Notifications retrived successfully",
+        });
+      } else {
+        logger.info(
+          `${ip}: API /api/v1/notification/get/byuser | User: ${loggedin_user.name} | responnded Empty i.e. Notification was not found `
+        );
+        return await res.status(200).json({
+          message: "Notifications Not Found",
+        });
+      }
+    } else {
+      logger.error(
+        `${ip}: API /api/v1/notification/get/byuser | User: ${loggedin_user.name} | responnded with User is not Autherized `
+      );
+      return res.status(401).send({ message: "User is not Autherized" });
+    }
+  } catch (error) {
+    logger.error(
+      `${ip}: API /api/v1/notification/get/byuser | User: ${loggedin_user.name} | responnded with Error `
+    );
+    return res.status(500).json({ error, message: "Something went wrong1aa" });
+  }
+};
+
 module.exports = {
   addNotification,
   deleteNotification,
   getNotifications,
   getNotification,
   dismissNotification,
+  getNotificationByUser,
 };

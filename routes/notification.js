@@ -7,6 +7,7 @@ const {
   getNotifications,
   getNotification,
   dismissNotification,
+  getNotificationByUser,
 } = require("../controllers/notification.js");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -40,8 +41,13 @@ router.get("/getall", validateToken, getNotifications);
 router.get("/get/:id", validateToken, getNotification);
 
 //@desc dismiss a notification  y id
-//@route GET /api/v1/notification/dismiss/:id
+//@route PUT /api/v1/notification/dismiss/:id
 //@access private: Login Required
 router.put("/dismiss/:id", validateToken, dismissNotification);
+
+//@desc get notification by user_id
+//@route PUT /api/v1/notification/user/get
+//@access private: Login Required
+router.get("/user/get", validateToken, getNotificationByUser);
 
 module.exports = router;

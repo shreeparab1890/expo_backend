@@ -21418,3 +21418,562 @@
 [04-01-2024 02:40:15 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
 [04-01-2024 02:41:04 PM] [32minfo[39m: 	[32m::ffff:127.0.0.1: API /api/v1/notification/dismiss/:65966e72947baf1e79b4d3e5 | User: Super Admin | responnded with Success [39m
 [04-01-2024 02:41:14 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:42:26 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:42:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:42:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 02:42:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:42:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:42:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 02:42:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:42:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:42:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:44:43 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:46:03 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:48:40 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:49:08 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:49:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:49:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:49:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:49:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:49:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:49:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:49:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:49:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:49:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 02:49:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:49:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:49:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:49:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:50:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/add | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:50:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:50:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:50:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:50:23 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:50:23 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:50:23 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:50:26 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:50:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:50:51 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:650ae53b4e394d64307444b4[39m
+[04-01-2024 02:50:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:50:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:50:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:50:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:51:49 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:51:54 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:52:03 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:65699382278aed815d0a1acd[39m
+[04-01-2024 02:52:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:52:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:52:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:52:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:52:36 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:52:55 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:53:58 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:54:29 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:55:00 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:55:07 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:55:12 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:55:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:6571822afce7ab992f899c75[39m
+[04-01-2024 02:55:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:55:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 02:55:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:55:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 02:55:57 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:56:51 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 02:59:40 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:00:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:00:06 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 03:00:54 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:01:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:01:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:01:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:01:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:01:06 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:01:16 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 03:02:05 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:02:19 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:02:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:02:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:02:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:02:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:02:59 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:03:12 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:03:29 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:03:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:03:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:03:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:03:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:03:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:03:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 03:03:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:03:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:03:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:03:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:04:10 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:04:39 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:05:03 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:05:10 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:650ae53b4e394d64307444b4[39m
+[04-01-2024 03:05:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:05:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:05:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:05:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:05:13 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:05:17 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 03:05:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:05:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:05:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:05:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:08:49 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:08:54 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:09:00 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:650ae53b4e394d64307444b4[39m
+[04-01-2024 03:09:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:09:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:09:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:09:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:09:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:09:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 03:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:12:16 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:12:35 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:12:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:12:44 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:650ae53b4e394d64307444b4[39m
+[04-01-2024 03:12:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:12:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:12:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:12:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:12:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:12:51 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 03:15:09 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:15:24 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:15:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:15:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:15:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:15:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:15:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:15:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:650ae53b4e394d64307444b4[39m
+[04-01-2024 03:15:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:15:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:15:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:15:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:16:03 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:16:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 03:16:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:16:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:16:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:16:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:17:03 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:17:12 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:17:31 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:17:35 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:17:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:650ae53b4e394d64307444b4[39m
+[04-01-2024 03:17:42 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:17:42 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:17:42 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:17:42 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:17:44 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:17:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 03:17:47 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:17:47 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 03:17:47 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:17:47 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 03:18:42 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:20:25 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:20:44 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:21:32 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:24:46 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:25:00 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:25:08 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:25:55 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:26:09 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:26:38 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:26:50 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:27:15 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:28:47 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:29:32 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:29:35 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:29:42 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:30:05 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:30:40 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:31:10 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:31:12 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:31:28 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:31:30 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:31:41 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:31:42 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:31:44 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:32:01 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:32:04 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:32:54 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:32:57 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:33:25 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:33:27 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:34:08 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:34:28 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:34:57 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:34:58 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:35:02 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:35:22 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:35:30 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:36:05 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:36:09 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:36:15 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 03:36:47 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 03:36:50 PM] [31merror[39m: 	[31m::ffff:127.0.0.1: API /api/v1/notification/get/:id | User: Super Admin | responnded with Error [39m
+[04-01-2024 04:11:19 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 04:11:25 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 04:11:34 PM] [32minfo[39m: 	[32m::ffff:127.0.0.1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:12:43 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 04:13:03 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 04:13:33 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 04:13:36 PM] [32minfo[39m: 	[32m::ffff:127.0.0.1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:19:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:19:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:19:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:19:53 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:21:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:21:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:21:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:21:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:21:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:21:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:22:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:22:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:22:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:22:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:22:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:22:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:22:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:22:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:22:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:22:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:23:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:23:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:23:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:23:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:23:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:23:46 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:29:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:29:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:29:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:29:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:29:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:29:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:29:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:29:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:29:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:29:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:29:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:29:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:47:33 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[04-01-2024 04:47:33 PM] [32minfo[39m: 	[32m::ffff:127.0.0.1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:48:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:48:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:50:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:50:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:50:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:50:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:51:00 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:51:00 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:51:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:51:18 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:51:24 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:65967bce7d9f2fb90550f0fd | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:51:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:51:49 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:51:54 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:65967cb492518444c8647d89 | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:51:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:51:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:51:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:51:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:51:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:51:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:00 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:00 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:65967d94ec12eecc70ae7ab3 | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:65967e50b598ff2f734a13ed | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:28 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:28 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:28 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:28 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:28 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:28 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:56 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:56 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:56 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:53:56 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:53:56 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:53:56 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:54:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 04:54:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 04:54:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:12 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:650ae53b4e394d64307444b4[39m
+[04-01-2024 04:55:13 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:13 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:13 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:13 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:13 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:13 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:21 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:6596959848527bb475c6c435 | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:22 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:22 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:22 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:22 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:55:22 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:22 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:55:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 04:55:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 04:55:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:55:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:43 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:43 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:43 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:55:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:55:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:55:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:57:01 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:57:01 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:57:06 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:57:06 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:57:06 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:57:06 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:57:06 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:57:06 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:58:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:58:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:58:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:58:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:58:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:58:45 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:58:56 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:58:57 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 04:58:58 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:58:58 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:58:58 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:58:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:58:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:58:59 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:59:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:6596967948527bb475c6c530 | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:59:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:59:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:59:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 04:59:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 04:59:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 04:59:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:02:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:02:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:02:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:02:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 05:02:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:02:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 05:05:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 05:05:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:39 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 05:05:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 05:05:50 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 05:05:52 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:06:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:09 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:650ae53b4e394d64307444b4[39m
+[04-01-2024 05:06:10 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:06:10 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:06:10 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:06:10 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:10 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:10 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:06:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 05:06:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 05:06:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:09:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:09:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:09:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 05:09:08 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:20:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:20:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:20:14 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:20:14 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:20:14 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:20:17 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:20:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 05:20:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:20:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:20:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:20:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:20:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:20:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:10 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:6596982948527bb475c6c605 | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:65969b7b48527bb475c6c6be | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:26 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:26 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:26 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:26 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 05:24:26 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:26 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:33 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/assign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 Assigned to the User with Id:650ae53b4e394d64307444b4[39m
+[04-01-2024 05:24:33 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:33 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:65969c7948527bb475c6c72e | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:24:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 05:24:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:24:37 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:22 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:6596784f87b2613f5b663d94 | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:24 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/unassign | User: Super Admin | Link with Id:6596784f87b2613f5b663d94 UnAssigned[39m
+[04-01-2024 05:25:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:28 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/dismiss/:65969cac48527bb475c6c780 | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 05:25:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 05:25:32 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[04-01-2024 05:25:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[04-01-2024 05:25:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m
+[04-01-2024 05:25:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent responnded with the Error: No token[39m

@@ -1,7 +1,7 @@
 const { validationResult, matchedData } = require("express-validator");
 const logger = require("../config/logger.js");
 const Link = require("../models/Link.js");
-const User = require("../models/User");
+const Notifications = require("../models/Notification.js");
 
 //@desc Test Link API
 //@route GET /api/v1/link
@@ -165,6 +165,17 @@ const assignLink = async (req, res) => {
       .populate("source_user");
 
     const final_result = await result.populate("assign_user");
+
+    const link_dtl = await Link.find({ _id: linkId });
+    const link_value = link_dtl[0].value;
+
+    const res_notification = await Notifications.create({
+      text: `New Link is Assigned to you for Data Entry, Link:${link_value}`,
+      type: "success",
+      to_user: data.assign_user,
+      by_user: user._id,
+    });
+
     logger.info(
       `${ip}: API /api/v1/link/assign | User: ${user.name} | Link with Id:${linkId} Assigned to the User with Id:${data.assign_user}`
     );
@@ -206,20 +217,39 @@ const unassignLink = async (req, res) => {
         },
       },
       { new: true }
-    ).populate("assign_user");
+    )
+      .populate("assign_user")
+      .populate("source_user");
     logger.info(
       `${ip}: API /api/v1/link/unassign | User: ${user.name} | Link with Id:${linkId} UnAssigned`
     );
 
-    const final_result = await result
+    /* console.log("result");
+    console.log(result); */
+    const unassign_user = result.assign_user.filter(
+      (user) => user._id == assign_id
+    );
+    /* console.log("unassign_user[0].user");
+    console.log(unassign_user[0].user); */
+    const link_dtl = await Link.find({ _id: linkId });
+    const link_value = link_dtl[0].value;
+
+    const res_notification = await Notifications.create({
+      text: `Link has been unassigned, Link:${link_value}`,
+      type: "danger",
+      to_user: unassign_user[0].user,
+      by_user: user._id,
+    });
+
+    /* const final_result = await result
       .populate("assign_user")
-      .populate("source_user");
+      .populate("source_user"); */
     /* console.log(final_result); */
-    const activeAssignUserCount = final_result.assign_user.filter(
+    const activeAssignUserCount = result.assign_user.filter(
       (user) => user.active
     ).length;
 
-    console.log(activeAssignUserCount);
+    /* console.log(activeAssignUserCount); */
     if (activeAssignUserCount == 0) {
       const result = await Link.findByIdAndUpdate(
         linkId,
