@@ -246,6 +246,7 @@ const getDataByLinkId_user = async (req, res) => {
         { link: id, update_user: loggedin_user._id },
       ],
     })
+      .sort({ createDate: -1 })
       .populate("user")
       .populate("update_user")
       .populate("link");
