@@ -76,6 +76,14 @@ const DataSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  UpdatedDate: {
+    type: Date,
+    default: Date.now,
+  },
+  update_user: {
+    type: "ObjectId",
+    ref: User,
+  },
   approved: {
     type: Boolean,
     default: false,

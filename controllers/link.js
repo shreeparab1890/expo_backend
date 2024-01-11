@@ -29,6 +29,14 @@ const testLinkAPI = async (req, res) => {
   }
 };
 
+//Function get month and year from a date string
+function getMonthAndYear(dateString) {
+  var date = new Date(dateString);
+  var month = date.getMonth() + 1;
+  var year = date.getFullYear();
+  return { month: month, year: year };
+}
+
 //@desc Create New Link
 //@route GET /api/v1/link/add
 //@access Private: Role Admin / superadmin
@@ -52,36 +60,71 @@ const createLink = async (req, res) => {
       );
       return res.status(400).json({ message: "Link already Exists!" });
     }
+    console.log("data.start_date");
+    console.log(data.start_date);
+    const month_year = getMonthAndYear(data.start_date);
 
-    await Link.create({
-      name: data.name,
-      value: data.value,
-      priority: data.priority,
-      link_type: data.link_type,
-      category: data.category,
-      start_date: data.start_date,
-      end_date: data.end_date,
-      month: data.month,
-      year: data.year,
-      mode: data.mode,
-      country: data.country,
-      link_comment: data.link_comment,
-      source_user: user._id,
-    })
-      .then((link) => {
-        logger.info(
-          `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Success `
-        );
-        return res
-          .status(201)
-          .json({ link, message: "Link Added Successfully" });
+    if (data.link_type == "Exhibition") {
+      await Link.create({
+        name: data.name,
+        value: data.value,
+        priority: data.priority,
+        link_type: data.link_type,
+        category: data.category,
+        start_date: data.start_date,
+        end_date: data.end_date,
+        month: month_year.month,
+        year: month_year.year,
+        mode: data.mode,
+        country: data.country,
+        link_comment: data.link_comment,
+        source_user: user._id,
       })
-      .catch((err) => {
-        logger.error(
-          `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Error `
-        );
-        return res.status(500).json({ error: "Error", message: err.message });
-      });
+        .then((link) => {
+          logger.info(
+            `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Success `
+          );
+          return res
+            .status(201)
+            .json({ link, message: "Link Added Successfully" });
+        })
+        .catch((err) => {
+          logger.error(
+            `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Error `
+          );
+          return res.status(500).json({ error: "Error", message: err.message });
+        });
+    } else {
+      await Link.create({
+        name: data.name,
+        value: data.value,
+        priority: data.priority,
+        link_type: data.link_type,
+        category: data.category,
+        start_date: data.start_date,
+        end_date: data.end_date,
+        month: data.month,
+        year: data.year,
+        mode: data.mode,
+        country: data.country,
+        link_comment: data.link_comment,
+        source_user: user._id,
+      })
+        .then((link) => {
+          logger.info(
+            `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Success `
+          );
+          return res
+            .status(201)
+            .json({ link, message: "Link Added Successfully" });
+        })
+        .catch((err) => {
+          logger.error(
+            `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Error `
+          );
+          return res.status(500).json({ error: "Error", message: err.message });
+        });
+    }
   } else {
     logger.error(
       `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with User is not Autherized `

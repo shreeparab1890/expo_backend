@@ -40,7 +40,8 @@ const createData = async (req, res) => {
   if (user) {
     const data = matchedData(req);
 
-    const oldData = await Data.findOne({ email: data.email, link: data.link });
+    //const oldData = await Data.findOne({ email: data.email, link: data.link });
+    const oldData = await Data.findOne({ email: data.email });
     if (oldData) {
       logger.error(
         `${ip}: API /api/v1/data/add | User: ${user.name} | responnded with Data already Exists! for Data: ${data.email} `
@@ -235,11 +236,18 @@ const getDataByLinkId_user = async (req, res) => {
 
   if (loggedin_user) {
     const { id } = req.params;
-    const data = await Data.find({
+    /* const data = await Data.find({
       link: id,
       user: loggedin_user._id,
+    }) */
+    const data = await Data.find({
+      $or: [
+        { link: id, user: loggedin_user._id },
+        { link: id, update_user: loggedin_user._id },
+      ],
     })
       .populate("user")
+      .populate("update_user")
       .populate("link");
 
     if (data.length > 0) {
@@ -324,6 +332,8 @@ const updateData = async (req, res) => {
       exhibitor_type,
       comment,
       comment1,
+      UpdatedDate: Date.now(),
+      update_user: loggedin_user._id,
     };
     const olddata = await Data.findOne({ _id: id });
     if (olddata) {
@@ -634,7 +644,7 @@ const getDataByEmail_LinkID = async (req, res) => {
   const { link_id, email, link_value } = req.body;
   if (loggedin_user) {
     const data = await Data.find({
-      link: link_id,
+      //link: link_id,
       email,
     })
       .populate("user")

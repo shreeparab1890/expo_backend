@@ -30,7 +30,8 @@ const getItinerary = async (req, res) => {
       budget,
     } = req.body;
     response = await client.completions.create({
-      model: "text-davinci-003",
+      //model: "text-davinci-003",
+      model: "gpt-3.5-turbo-instruct",
       //prompt: `Generate a travel itineray at destination ${destination} for ${no_of_days} days and the number of people are ${no_of_ppl} w.r.t. user interest ${preference}.`,
       prompt: prompt1,
       temperature: 0.6,
@@ -43,13 +44,39 @@ const getItinerary = async (req, res) => {
       `${ip}: API /api/v1/tripytoe  | responnded with "Itinerary Generated Successfull" `
     );
 
-    //return res.status(200).send(response.choices[0].text);
+    /* //return res.status(200).send(response.choices[0].text);
+    const iti = response.choices[0].text;
+    const iti_list = iti.split("&&");
+    //console.log(iti_list);
+
+    const itineraryDict = {};
+
+    let currentDay = "";
+    let currentActivity = "";
+
+    for (const line of iti_list) {
+      if (line.startsWith("Day")) {
+        currentDay = line.trim();
+        itineraryDict[currentDay] = {};
+      } else if (line.includes(":")) {
+        const [timeOfDay, activity] = line
+          .split(":")
+          .map((item) => item.trim());
+        currentActivity = timeOfDay;
+        itineraryDict[currentDay][currentActivity] = activity;
+      }
+    }
+
+    console.log(JSON.stringify(itineraryDict, null, 2)); */
+    /* for (let i = 0; i < iti_list.length; i++) {
+      console.log(iti_list[i]);
+    } */
     return await res.status(200).json({
       itinerary: response.choices[0].text,
       message: "Itinerary Generated successfully",
     });
   } catch (error) {
-    logger.error(`${ip}: API /api/v1/tripytoe | responnded with Error `);
+    logger.error(`API /api/v1/tripytoe | responnded with Error `);
     return res
       .status(500)
       .json({ data: error, message: "Something went wrong" });
