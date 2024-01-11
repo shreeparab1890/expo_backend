@@ -8,6 +8,8 @@ const {
   deleteEvent,
   getEvents,
   getEvent,
+  disapproveEvent,
+  approveEvent,
 } = require("../controllers/events.js");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -48,6 +50,16 @@ router.put(
 //@route PUT /api/v1/events/delete/:id
 //@access private: Role Admin
 router.put("/delete/:id", validateToken, deleteEvent);
+
+//@desc disapprove event with id (we are updating approve to false )
+//@route PUT /api/v1/events/disapprove/:id
+//@access private: Role Admin
+router.put("/disapprove/:id", validateToken, disapproveEvent);
+
+//@desc approve event with id (we are updating approve to true )
+//@route PUT /api/v1/events/approve/:id
+//@access private: Role Admin
+router.put("/approve/:id", validateToken, approveEvent);
 
 //@desc Get all events
 //@route GET /api/v1/events/getall
