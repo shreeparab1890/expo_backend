@@ -33,10 +33,12 @@ const InquiryDataSchema = new Schema({
     type: String,
     required: true,
   },
-  inquired_event_name: {
-    type: "ObjectId",
-    ref: Events,
-  },
+  inquired_event_name: [
+    {
+      type: "ObjectId",
+      ref: Events,
+    },
+  ],
   consultant_name: {
     type: String,
     required: true,

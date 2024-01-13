@@ -11,6 +11,7 @@ const {
   getAllLinksbyUser,
   changeRemark,
   changeStatus,
+  changeAllStatus,
   UpdateLink,
   getLink_generalise,
   deleteLink,
@@ -127,6 +128,16 @@ router.put(
   ],
   validateToken,
   changeStatus
+);
+
+//@desc Change status for all by link id
+//@route GET /api/v1/link/change/all/status/:id
+//@access private: login required
+router.put(
+  "/change/all/status/:id",
+  [body("status", "Enter a valid Status").isLength({ min: 1 })],
+  validateToken,
+  changeAllStatus
 );
 
 //@desc Delete link with id (we are updating active to false )

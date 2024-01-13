@@ -631,6 +631,62 @@ const changeStatus = async (req, res) => {
     .json({ final_result, message: "Link Status Updated." });
 };
 
+//@desc Change status for all by link id
+//@route GET /api/v1/link/change/all/status/:id
+//@access private: login required
+const changeAllStatus = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const linkId = req.params.id;
+  console.log(linkId);
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(
+      `${ip}: API /api/v1/link/change/all/status/:id responnded with Error `
+    );
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const data = matchedData(req);
+  const updatedLink = {
+    assign_status: data.status,
+  };
+
+  /* const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+    new: true,
+  }); */
+  const result = await Link.findOneAndUpdate(
+    { _id: linkId },
+    {
+      $set: {
+        "assign_user.$[].status": data.status,
+      },
+    },
+    { new: true }
+  );
+  logger.info(
+    `${ip}: API /api/v1/link/change/all/status/:id | User: ${user.name} | Status of the Link with Id:${linkId} Updated`
+  );
+
+  const final_result = await result.populate("assign_user");
+
+  const updatedLink1 = {
+    assign_status: data.status,
+  };
+  const su_res = await Link.findByIdAndUpdate(linkId, updatedLink1, {
+    new: true,
+  });
+  const final_result1 = await su_res.populate("assign_user");
+  return res
+    .status(200)
+    .json({ final_result1, message: "Link Status Updated." });
+
+  return res
+    .status(200)
+    .json({ final_result, message: "Link Status Updated." });
+};
+
 //@desc Delete link with id (we are updating active to false )
 //@route PUT /api/v1/link/delete/:id
 //@access private: Role Super Admin
@@ -824,6 +880,7 @@ module.exports = {
   getAllLinksbyUser,
   changeRemark,
   changeStatus,
+  changeAllStatus,
   UpdateLink,
   getLink_generalise,
   deleteLink,
