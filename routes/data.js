@@ -8,6 +8,7 @@ const {
   getDataById,
   getDataByLinkId,
   approveData,
+  bulkApproveData,
   updateData,
   getDataByUserId,
   getDataByCreatedDate,
@@ -15,6 +16,7 @@ const {
   getDataByGeneraliseFilter,
   getDataByLinkId_user,
   getFilterData,
+  getRetriveFilterData,
   getDataByEmail_LinkID,
   getDataByEmail,
 } = require("../controllers/data");
@@ -60,6 +62,11 @@ router.post(
 //@route GET /api/v1/data/approve/:id
 //@access private: login required
 router.put("/approve/:id", validateToken, approveData);
+
+//@desc bulk Approve by data id
+//@route POST /api/v1/data/bulk/approve/:id
+//@access private: login required
+router.post("/bulk/approve", [body("dataIds")], validateToken, bulkApproveData);
 
 //@desc Get all Data
 //@route POST /api/v1/data/getall
@@ -134,6 +141,11 @@ router.post("/generalise/get", validateToken, getDataByGeneraliseFilter);
 //@route POST /api/v1/data/filter
 //@access private: login required
 router.post("/filter", validateToken, getFilterData);
+
+//@desc retrive filter Data
+//@route POST /api/v1/data/retrive/filter
+//@access private: login required
+router.post("/retrive/filter", validateToken, getRetriveFilterData);
 
 //@desc Get Data by email and link id
 //@route POST /api/v1/data/get/byemail

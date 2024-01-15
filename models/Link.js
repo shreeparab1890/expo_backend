@@ -65,6 +65,7 @@ const LinkSchema = new Schema({
       remark: String,
       status: String,
       compeleted_date: String,
+      assign_date: Date,
       active: { type: Boolean, default: false },
     },
   ],

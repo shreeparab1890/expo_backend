@@ -195,6 +195,7 @@ const assignLink = async (req, res) => {
           remark: data.remark,
           status: "Assigned",
           active: true,
+          assign_date: Date.now(),
         },
       },
       remark: data.remark,

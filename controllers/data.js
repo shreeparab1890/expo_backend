@@ -121,6 +121,59 @@ const approveData = async (req, res) => {
   return res.status(200).json({ result, message: "Data Approved." });
 };
 
+//@desc bulk Approve by data id
+//@route post /api/v1/data/bulk/approve/:id
+//@access private: login required
+const bulkApproveData = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(
+      `${ip}: API /api/v1/data/bulk/approve/:id responnded with Error `
+    );
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const data = matchedData(req);
+  const { dataIds } = data;
+
+  if (!dataIds || !Array.isArray(dataIds) || dataIds.length === 0) {
+    logger.error(
+      `${ip}: API /api/v1/data/bulk/approve/:id Invalid or missing dataIds `
+    );
+    return res.status(400).json({ message: "Invalid or missing dataIds" });
+  }
+  const updatedData = {
+    approved: true,
+  };
+  console.log(dataIds);
+  const results = await Promise.all(
+    dataIds.map(async (dataId) => {
+      const result = await Data.findByIdAndUpdate(dataId, updatedData, {
+        new: true,
+      });
+
+      logger.info(
+        `${ip}: API /api/v1/data/bulk/approve/:id | User: ${user.name} | Data with Id:${dataId} Updated`
+      );
+
+      return result;
+    })
+  );
+
+  return res.status(200).json({ results, message: "Bulk Data Approved." });
+
+  /* const result = await Data.findByIdAndUpdate(dataId, updatedData, {
+    new: true,
+  });
+  logger.info(
+    `${ip}: API /api/v1/data/approve/:id | User: ${user.name} | Data with Id:${dataId} Updated`
+  );
+  return res.status(200).json({ result, message: "Data Approved." }); */
+};
+
 //@desc Get all Data
 //@route POST /api/v1/data/getall
 //@access Private: login required
@@ -194,14 +247,13 @@ const getDataByLinkId = async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
   if (loggedin_user) {
-    console.log(loggedin_user._id);
     const { id } = req.params;
     const data = await Data.find({
       link: id,
     })
       .populate("user")
       .populate("link");
-    console.log(data);
+
     if (data.length > 0) {
       logger.info(
         `${ip}: API /api/v1/data/get/link/:${id} | User: ${loggedin_user.name} | responnded with Success `
@@ -536,6 +588,7 @@ const getFilterData = async (req, res) => {
 
   const {
     link_value,
+    website,
     email,
     category,
     status,
@@ -546,6 +599,7 @@ const getFilterData = async (req, res) => {
     created_from,
     created_to,
     approved_type,
+    user,
   } = req.body;
 
   if (loggedin_user) {
@@ -564,16 +618,20 @@ const getFilterData = async (req, res) => {
     ); */
     const filterQuery = {};
 
-    if (link_value) {
+    if (link_value != "0") {
       filterQuery.link = link_value;
     }
 
+    if (website) {
+      filterQuery.website = { $regex: new RegExp(`.*${website}.*`, "i") };
+    }
+
     if (email) {
-      filterQuery.email = email;
+      filterQuery.email = { $regex: new RegExp(`.*${email}.*`, "i") };
     }
 
     if (category != "1") {
-      filterQuery.category = category;
+      filterQuery.category = { $regex: new RegExp(`.*${category}.*`, "i") };
     }
 
     if (status != "1") {
@@ -595,7 +653,7 @@ const getFilterData = async (req, res) => {
     }
 
     if (products) {
-      filterQuery.products = products;
+      filterQuery.products = { $regex: new RegExp(`.*${products}.*`, "i") };
     }
 
     if (created_from && created_to) {
@@ -606,15 +664,27 @@ const getFilterData = async (req, res) => {
       filterQuery.approved = approved_type;
     }
 
+    /*  if (user != "0") {
+      filterQuery.user = user;
+    } */
+
+    if (
+      loggedin_user.roleType != "super_admin" &&
+      loggedin_user.roleType != "admin"
+    ) {
+      filterQuery.user = loggedin_user._id; //User Specific
+    }
+
     const no_of_keys = Object.keys(filterQuery).length;
+
     let filteredData = [];
-    if (no_of_keys > 0) {
+    if (no_of_keys > 1) {
       filteredData = await Data.find(filterQuery).populate("link");
     }
 
     if (filteredData.length > 0) {
       logger.info(
-        `${ip}: API /api/v1/data/generalise/get | User: ${loggedin_user.name} | responnded with Success `
+        `${ip}: API /api/v1/data/filter | User: ${loggedin_user.name} | responnded with Success `
       );
       return await res.status(200).json({
         data: filteredData,
@@ -622,7 +692,7 @@ const getFilterData = async (req, res) => {
       });
     } else {
       logger.info(
-        `${ip}: API /api/v1/data/generalise/get | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+        `${ip}: API /api/v1/data/filter | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
       );
       return await res.status(200).json({
         message: "Data Not Found",
@@ -630,7 +700,125 @@ const getFilterData = async (req, res) => {
     }
   } else {
     logger.error(
-      `${ip}: API /api/v1/data/generalise/get | User: ${loggedin_user.name} | responnded with User is not Autherized `
+      `${ip}: API /api/v1/data/filter | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc retrive filter Data
+//@route POST /api/v1/data/retrive/filter
+//@access private: login required
+const getRetriveFilterData = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const {
+    link_value,
+    website,
+    email,
+    category,
+    status,
+    country,
+    region,
+    designation,
+    products,
+    created_from,
+    created_to,
+    approved_type,
+    user,
+  } = req.body;
+
+  if (loggedin_user) {
+    const filterQuery = {};
+
+    /*  if (link_value) {
+      filterQuery.link = {};
+      filterQuery.link.$elemMatch = { value: link_value };
+    } */
+    if (link_value != "0") {
+      filterQuery.link = link_value;
+    }
+
+    if (website) {
+      filterQuery.website = { $regex: new RegExp(`.*${website}.*`, "i") };
+    }
+
+    if (email) {
+      filterQuery.email = { $regex: new RegExp(`.*${email}.*`, "i") };
+    }
+
+    if (category != "1") {
+      filterQuery.category = { $regex: new RegExp(`.*${category}.*`, "i") };
+    }
+
+    if (status != "1") {
+      filterQuery.status = status;
+    } else if (status == "1") {
+      filterQuery.status = { $ne: "Removes" };
+    }
+
+    if (country != "1") {
+      filterQuery.country = country;
+    }
+
+    if (region) {
+      filterQuery.region = region;
+    }
+
+    if (designation) {
+      filterQuery.designation = designation;
+    }
+
+    if (products) {
+      filterQuery.products = { $regex: new RegExp(`.*${products}.*`, "i") };
+    }
+
+    if (created_from && created_to) {
+      filterQuery.createDate = { $gte: created_from, $lte: created_to };
+    }
+
+    if (approved_type != "1") {
+      filterQuery.approved = approved_type;
+    }
+
+    if (user != "0") {
+      filterQuery.user = user;
+    }
+
+    /*  if (
+      loggedin_user.roleType != "super_admin" &&
+      loggedin_user.roleType != "admin"
+    ) {
+      filterQuery.user = loggedin_user._id; //User Specific
+    } */
+    console.log(filterQuery);
+    const no_of_keys = Object.keys(filterQuery).length;
+
+    let filteredData = [];
+    if (no_of_keys > 1) {
+      filteredData = await Data.find(filterQuery).populate("link");
+    }
+
+    if (filteredData.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/data/retrive/filter | User: ${loggedin_user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: filteredData,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/data/retrive/filter | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/retrive/filter | User: ${loggedin_user.name} | responnded with User is not Autherized `
     );
     return res.status(401).send({ message: "User is not Autherized" });
   }
@@ -723,6 +911,7 @@ module.exports = {
   getDataById,
   getDataByLinkId,
   approveData,
+  bulkApproveData,
   updateData,
   getDataByUserId,
   getDataByCreatedDate,
@@ -730,6 +919,7 @@ module.exports = {
   getDataByGeneraliseFilter,
   getDataByLinkId_user,
   getFilterData,
+  getRetriveFilterData,
   getDataByEmail_LinkID,
   getDataByEmail,
 };
