@@ -89,7 +89,7 @@ const createData = async (req, res) => {
     logger.error(
       `${ip}: API /api/v1/data/add | User: ${user.name} | responnded with User is not Autherized `
     );
-    return res.status(401).send({ message: "User is not Autherized" });
+    return res.status(400).send({ message: "User is not Autherized" });
   }
 };
 
