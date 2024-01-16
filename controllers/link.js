@@ -60,11 +60,18 @@ const createLink = async (req, res) => {
       );
       return res.status(400).json({ message: "Link already Exists!" });
     }
-    console.log("data.start_date");
-    console.log(data.start_date);
+
     const month_year = getMonthAndYear(data.start_date);
 
     if (data.link_type == "Exhibition") {
+      if (data.start_date == "" || data.end_date == "") {
+        logger.error(
+          `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Error `
+        );
+        return res
+          .status(500)
+          .json({ error: "Error", message: "Enter Valid Start and End Date" });
+      }
       await Link.create({
         name: data.name,
         value: data.value,
@@ -148,27 +155,60 @@ const UpdateLink = async (req, res) => {
   }
 
   const data = matchedData(req);
-  const updatedLink = {
-    priority: data.priority,
-    link_type: data.link_type,
-    category: data.category,
-    start_date: data.start_date,
-    end_date: data.end_date,
-    month: data.month,
-    year: data.year,
-    mode: data.mode,
-    country: data.country,
-    link_comment: data.link_comment,
-  };
+  if (data.link_type == "Exhibition") {
+    if (data.start_date == "" || data.end_date == "") {
+      logger.error(
+        `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Error `
+      );
+      return res
+        .status(500)
+        .json({ error: "Error", message: "Enter Valid Start and End Date" });
+    }
+    const month_year = getMonthAndYear(data.start_date);
+    const updatedLink = {
+      priority: data.priority,
+      link_type: data.link_type,
+      category: data.category,
+      start_date: data.start_date,
+      end_date: data.end_date,
+      month: month_year.month,
+      year: month_year.year,
+      mode: data.mode,
+      country: data.country,
+      link_comment: data.link_comment,
+    };
 
-  const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
-    new: true,
-  });
-  logger.info(
-    `${ip}: API /api/v1/link/update/:id | User: ${user.name} | Link with Id:${linkId} Updated`
-  );
+    const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+      new: true,
+    });
+    logger.info(
+      `${ip}: API /api/v1/link/update/:id | User: ${user.name} | Link with Id:${linkId} Updated`
+    );
 
-  return res.status(200).json({ result, message: "Link Updated." });
+    return res.status(200).json({ result, message: "Link Updated." });
+  } else {
+    const updatedLink = {
+      priority: data.priority,
+      link_type: data.link_type,
+      category: data.category,
+      start_date: null,
+      end_date: null,
+      month: data.month,
+      year: data.year,
+      mode: data.mode,
+      country: data.country,
+      link_comment: data.link_comment,
+    };
+
+    const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+      new: true,
+    });
+    logger.info(
+      `${ip}: API /api/v1/link/update/:id | User: ${user.name} | Link with Id:${linkId} Updated`
+    );
+
+    return res.status(200).json({ result, message: "Link Updated." });
+  }
 };
 
 //@desc Assign Link to user

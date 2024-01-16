@@ -871,9 +871,10 @@ const getDataByEmail = async (req, res) => {
   const loggedin_user = req.user;
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const { email, category } = req.body;
+
   if (loggedin_user) {
     const data = await Data.find({
-      category,
+      category: { $regex: new RegExp(category, "i") },
       email,
     })
       .populate("user")
