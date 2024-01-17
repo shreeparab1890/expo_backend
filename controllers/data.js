@@ -3,6 +3,7 @@ const dotenv = require("dotenv").config();
 const { validationResult, matchedData } = require("express-validator");
 const Data = require("../models/Data");
 const logger = require("../config/logger.js");
+var axios = require("axios");
 
 //@desc Test Data API
 //@route GET /api/v1/data
@@ -22,6 +23,32 @@ const testUserAPI = async (req, res) => {
     );
     return res.status(401).send({ message: "User is not Autherized" });
   }
+};
+
+//@desc verify whatsapp number
+//@route GET /api/v1/data/verify/whatsapp
+//@access Private: Login Required
+const verifyWhatsappNumber = async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const user = req.user;
+
+  var config = {
+    method: "get",
+    url: "https://api.p.2chat.io/open/whatsapp/check-number/+919923826906/+917498164417",
+    headers: {
+      "X-User-API-Key": "UAK7d2b8687-35a7-473c-93e1-24047989edfc",
+    },
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      return res.status(200).send({ data: response.data });
+    })
+    .catch(function (error) {
+      console.log(error);
+      return res.status(401).send("Data API Test Successfully");
+    });
 };
 
 //@desc Create New Data
@@ -335,6 +362,7 @@ const updateData = async (req, res) => {
   const loggedin_user = req.user;
   const { id } = req.params;
   const {
+    link,
     company_name,
     website,
     email,
@@ -366,6 +394,7 @@ const updateData = async (req, res) => {
   }
 
   try {
+    const olddata = await Data.findOne({ _id: id });
     const updateddata = {
       company_name,
       website,
@@ -387,8 +416,9 @@ const updateData = async (req, res) => {
       comment1,
       UpdatedDate: Date.now(),
       update_user: loggedin_user._id,
+      link: [...new Set([...olddata.link, link])],
     };
-    const olddata = await Data.findOne({ _id: id });
+
     if (olddata) {
       const result = await Data.findByIdAndUpdate(id, updateddata, {
         new: true,
@@ -600,6 +630,7 @@ const getFilterData = async (req, res) => {
     created_to,
     approved_type,
     user,
+    company_name,
   } = req.body;
 
   if (loggedin_user) {
@@ -620,6 +651,12 @@ const getFilterData = async (req, res) => {
 
     if (link_value != "0") {
       filterQuery.link = link_value;
+    }
+
+    if (company_name) {
+      filterQuery.company_name = {
+        $regex: new RegExp(`.*${company_name}.*`, "i"),
+      };
     }
 
     if (website) {
@@ -715,6 +752,7 @@ const getRetriveFilterData = async (req, res) => {
 
   const {
     link_value,
+    company_name,
     website,
     email,
     category,
@@ -738,6 +776,12 @@ const getRetriveFilterData = async (req, res) => {
     } */
     if (link_value != "0") {
       filterQuery.link = link_value;
+    }
+
+    if (company_name) {
+      filterQuery.company_name = {
+        $regex: new RegExp(`.*${company_name}.*`, "i"),
+      };
     }
 
     if (website) {
@@ -923,4 +967,5 @@ module.exports = {
   getRetriveFilterData,
   getDataByEmail_LinkID,
   getDataByEmail,
+  verifyWhatsappNumber,
 };

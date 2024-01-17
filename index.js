@@ -30,6 +30,7 @@ app.use("/api/v1/inquiry/data", require("./routes/inquiryData.js"));
 app.use("/api/v1/events", require("./routes/events.js"));
 app.use("/api/v1/consultant", require("./routes/consultant.js"));
 app.use("/api/v1/notification", require("./routes/notification.js"));
+app.use("/api/v1/extra", require("./routes/extra_api.js"));
 
 //Tripytoe
 app.use("/api/v1/tripytoe", require("./routes/tripytoe.js"));

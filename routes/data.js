@@ -19,6 +19,7 @@ const {
   getRetriveFilterData,
   getDataByEmail_LinkID,
   getDataByEmail,
+  verifyWhatsappNumber,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -26,6 +27,11 @@ const validateToken = require("../middleware/validateTokenHandler");
 //@route GET /api/v1/data
 //@access Private: Login Required
 router.get("/", validateToken, testUserAPI);
+
+//@desc verify whatsapp number
+//@route GET /api/v1/data/verify/whatsapp
+//@access Private: Login Required
+router.get("/verify/whatsapp", verifyWhatsappNumber);
 
 //@desc Create New Data
 //@route GET /api/v1/data/add

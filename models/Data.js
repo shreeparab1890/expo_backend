@@ -68,10 +68,12 @@ const DataSchema = new Schema({
     type: "ObjectId",
     ref: User,
   },
-  link: {
-    type: "ObjectId",
-    ref: Link,
-  },
+  link: [
+    {
+      type: "ObjectId",
+      ref: Link,
+    },
+  ],
   createDate: {
     type: Date,
     default: Date.now,
