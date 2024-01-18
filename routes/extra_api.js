@@ -4,6 +4,7 @@ const { body } = require("express-validator");
 const {
   verifyWhatsappNumber,
   getCodebyCountry,
+  getCodeCountry,
   getYears,
   getMonths,
   getCountries,
@@ -20,6 +21,11 @@ router.post("/verify/whatsapp", validateToken, verifyWhatsappNumber);
 //@route GET /api/v1/extra/get/code/bycountry
 //@access Private: Login Required
 router.get("/get/code/bycountry/:country", validateToken, getCodebyCountry);
+
+//@desc get countries code
+//@route GET /api/v1/extra/get/code/country
+//@access Private: Login Required
+router.get("/get/code/country", validateToken, getCodeCountry);
 
 //@desc get years
 //@route GET /api/v1/extra/get/years
