@@ -7,6 +7,8 @@ var axios = require("axios");
 //@route POST /api/v1/data/verify/whatsapp
 //@access Private: Login Required
 const verifyWhatsappNumber = async (req, res) => {
+  /* console.log("In verify");
+  console.log(CHAT_USER_API); */
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const user = req.user;
   const { mobile_no } = req.body;
@@ -16,22 +18,22 @@ const verifyWhatsappNumber = async (req, res) => {
       method: "get",
       url: `https://api.p.2chat.io/open/whatsapp/check-number/+919923826906/${mobile_no}`,
       headers: {
-        "X-User-API-Key": "UAK7d2b8687-35a7-473c-93e1-24047989edfc",
+        "X-User-API-Key": process.env.CHAT_USER_API,
       },
     };
 
     axios(config)
       .then(function (response) {
         logger.info(
-          `${ip}: API /api/v1/extra/verify/whatsapp responnded with Number Check SUccesfully: ${mobile_no} `
+          `${ip}: API /api/v1/extra/verify/whatsapp responnded with Number Check Succesfully: ${mobile_no} `
         );
         return res
           .status(200)
-          .send({ data: response.data, message: "Number Check SUccesfully" });
+          .send({ data: response.data, message: "Number Check Succesfull" });
       })
       .catch(function (error) {
         console.log(error);
-        return res.status(401).send("Data API Test Successfully");
+        return res.status(401).send("Error!");
       });
   } else {
     logger.error(
