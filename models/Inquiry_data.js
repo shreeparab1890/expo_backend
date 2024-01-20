@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Events = require("../models/Events.js");
 const User = require("../models/User.js");
+const Consultant = require("../models/Consultant.js");
 
 const { Schema } = mongoose;
 
@@ -38,9 +39,10 @@ const InquiryDataSchema = new Schema({
     },
   ],
   consultant_name: {
-    type: String,
-    required: true,
+    type: "ObjectId",
+    ref: Consultant,
   },
+
   inquiry_type: {
     type: String,
     required: true,

@@ -178,7 +178,7 @@ const updateData = async (req, res) => {
         `${ip}: API /api/v1/inquiry/data/update/:${id} | User: ${loggedin_user.name} | responnded with Success `
       );
       return res
-        .status(200)
+        .status(201)
         .json({ data: result, message: "Inquiry Data Updated Successfully" });
     } else {
       logger.info(
@@ -235,7 +235,9 @@ const getAllData = async (req, res) => {
       active: true,
     })
       .populate("user")
-      .populate("inquired_event_name");
+      .populate("inquired_event_name")
+      .populate("consultant_name")
+      .sort({ createDate: -1 });
     logger.info(
       `${ip}: API /api/v1/inquiry/data/getall | User: ${user.name} | responnded with Success `
     );
