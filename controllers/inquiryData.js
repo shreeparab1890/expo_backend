@@ -50,7 +50,9 @@ const createData = async (req, res) => {
       );
       return res.status(400).json({ message: "Data already Exists!" });
     }
-
+    if (data.exhibitor_type == 1) {
+      data.exhibitor_type = "";
+    }
     await InquiryData.create({
       company_name: data.company_name,
       website: data.website,
@@ -497,7 +499,7 @@ const getDataByEmail = async (req, res) => {
   if (loggedin_user) {
     const data = await InquiryData.find({
       email,
-      category,
+      category: { $regex: new RegExp(`.*${category}.*`, "i") },
     }).populate("user");
 
     if (data.length > 0) {

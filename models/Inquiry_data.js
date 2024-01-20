@@ -7,11 +7,9 @@ const { Schema } = mongoose;
 const InquiryDataSchema = new Schema({
   company_name: {
     type: String,
-    required: true,
   },
   website: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -66,7 +64,6 @@ const InquiryDataSchema = new Schema({
   },
   products: {
     type: String,
-    required: true,
   },
   tel: {
     type: String,
