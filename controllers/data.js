@@ -712,6 +712,7 @@ const getFilterData = async (req, res) => {
       filterQuery.user = loggedin_user._id; //User Specific
     }
 
+    /* console.log(filterQuery); */
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];

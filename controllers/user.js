@@ -331,6 +331,13 @@ const logIn = async (req, res) => {
       return res.status(404).json({ message: "User Not Found, Please Signup" });
     }
 
+    if (!oldUser.active) {
+      logger.error(
+        `${ip}: API /api/v1/user/login responnded with User Deleted for the user: ${email}`
+      );
+      return res.status(404).json({ message: "User Deleted" });
+    }
+
     if (!oldUser.approved) {
       logger.error(
         `${ip}: API /api/v1/user/login responnded with user Disabled: ${email}`

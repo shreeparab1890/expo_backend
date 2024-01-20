@@ -856,7 +856,7 @@ const getFilterLinks = async (req, res) => {
 
     if (assign_user != "0") {
       filterQuery.assign_user = {};
-      filterQuery.assign_user.$elemMatch = { user: assign_user };
+      filterQuery.assign_user.$elemMatch = { user: assign_user, active: true };
     }
 
     if (year != "0") {

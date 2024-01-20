@@ -7,6 +7,7 @@ const {
   updateEvent,
   deleteEvent,
   getEvents,
+  getEvents_inq,
   getEvent,
   disapproveEvent,
   approveEvent,
@@ -65,6 +66,11 @@ router.put("/approve/:id", validateToken, approveEvent);
 //@route GET /api/v1/events/getall
 //@access private: Role Admin
 router.get("/getall", validateToken, getEvents);
+
+//@desc Get all events inq
+//@route GET /api/v1/events/inq/getall
+//@access private: Role Admin
+router.get("/inq/getall", validateToken, getEvents_inq);
 
 //@desc Get event by id
 //@route GET /api/v1/events/get/:id

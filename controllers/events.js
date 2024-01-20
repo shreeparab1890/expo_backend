@@ -215,6 +215,40 @@ const getEvents = async (req, res) => {
   }
 };
 
+//@desc Get all events inq
+//@route GET /api/v1/events/inq/getall
+//@access private: Role Admin
+const getEvents_inq = async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const user = req.user;
+
+  try {
+    if (user) {
+      const events = await Events.find({
+        active: true,
+        approve: true,
+      });
+      logger.info(
+        `${ip}: API /api/v1/events/getall | User: ${user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: events,
+        message: "Events retrived successfully",
+      });
+    } else {
+      logger.error(
+        `${ip}: API /api/v1/events/getall | User: ${user.name} | responnded with User is not Autherized `
+      );
+      return res.status(401).send({ message: "User is not Autherized" });
+    }
+  } catch (error) {
+    logger.error(
+      `${ip}: API /api/v1/events/getall | User: ${user.name} | responnded with Error `
+    );
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
 //@desc Get event by id
 //@route GET /api/v1/events/get/:id
 //@access private: Role Admin
@@ -359,6 +393,7 @@ module.exports = {
   updateEvent,
   deleteEvent,
   getEvents,
+  getEvents_inq,
   getEvent,
   disapproveEvent,
   approveEvent,
