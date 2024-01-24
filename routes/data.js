@@ -20,6 +20,8 @@ const {
   getDataByEmail_LinkID,
   getDataByEmail,
   verifyWhatsappNumber,
+  getDataLeaderboard,
+  getDataLeaderToday,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -162,5 +164,15 @@ router.post("/get/byemail", validateToken, getDataByEmail_LinkID);
 //@route POST /api/v1/data/get/byemail/cat
 //@access private: login required
 router.post("/get/byemail/cat", validateToken, getDataByEmail);
+
+//@desc get add data leader board
+//@route get /api/v1/data/get/leader
+//@access private: login required
+router.post("/get/leader", validateToken, getDataLeaderboard);
+
+//@desc get add data leader board today
+//@route post /api/v1/data/get/leader/today
+//@access private: login required
+router.post("/get/leader/today", validateToken, getDataLeaderToday);
 
 module.exports = router;

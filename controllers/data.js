@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
 const { validationResult, matchedData } = require("express-validator");
 const Data = require("../models/Data");
+const User = require("../models/User.js");
 const logger = require("../config/logger.js");
 var axios = require("axios");
 
@@ -950,6 +951,134 @@ const getDataByEmail = async (req, res) => {
   }
 };
 
+//@desc get add data leader board
+//@route get /api/v1/link/get/data/leader
+//@access private: login required
+const getDataLeaderboard = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const pipeline = [
+      {
+        $lookup: {
+          from: "datas",
+          localField: "_id",
+          foreignField: "user",
+          as: "datas",
+        },
+      },
+      {
+        $unwind: "$datas",
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          dataCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { dataCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/data/get/leader | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/data/get/leader | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/get/leader | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc get add add leader board
+//@route post /api/v1/link/get/leader/today
+//@access private: login required
+const getDataLeaderToday = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+
+    const pipeline = [
+      {
+        $lookup: {
+          from: "datas",
+          localField: "_id",
+          foreignField: "user",
+          as: "datas",
+        },
+      },
+      {
+        $unwind: "$datas",
+      },
+      {
+        $match: {
+          "datas.createDate": {
+            $gte: todayStart,
+            $lte: todayEnd,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          dataCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { dataCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/data/get/leader/today | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/data/get/leader/today | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/get/leader/today | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -969,4 +1098,6 @@ module.exports = {
   getDataByEmail_LinkID,
   getDataByEmail,
   verifyWhatsappNumber,
+  getDataLeaderboard,
+  getDataLeaderToday,
 };

@@ -16,6 +16,8 @@ const {
   getLink_generalise,
   deleteLink,
   getFilterLinks,
+  getLinkLeaderboard,
+  getLinkLeaderToday,
 } = require("../controllers/link.js");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -149,5 +151,15 @@ router.put("/delete/:id", validateToken, deleteLink);
 //@route post /api/v1/link/filter
 //@access private: login required
 router.post("/filter", validateToken, getFilterLinks);
+
+//@desc get add link leader
+//@route get /api/v1/link/get/link/leaderboard
+//@access private: login required
+router.get("/get/link/leaderboard", validateToken, getLinkLeaderboard);
+
+//@desc get add link leader board
+//@route get /api/v1/link/get/leader/today
+//@access private: login required
+router.get("/get/leader/today", validateToken, getLinkLeaderToday);
 
 module.exports = router;

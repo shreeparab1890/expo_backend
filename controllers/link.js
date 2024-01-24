@@ -2,6 +2,7 @@ const { validationResult, matchedData } = require("express-validator");
 const logger = require("../config/logger.js");
 const Link = require("../models/Link.js");
 const Notifications = require("../models/Notification.js");
+const User = require("../models/User.js");
 
 //@desc Test Link API
 //@route GET /api/v1/link
@@ -911,6 +912,133 @@ const getFilterLinks = async (req, res) => {
   }
 };
 
+//@desc get add link leader board
+//@route get /api/v1/link/get/link/leaderboard
+//@access private: login required
+const getLinkLeaderboard = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const pipeline = [
+      {
+        $lookup: {
+          from: "links",
+          localField: "_id",
+          foreignField: "source_user",
+          as: "links",
+        },
+      },
+      {
+        $unwind: "$links",
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          linkCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { linkCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/link/get/link/leaderboard | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/link/get/link/leaderboard | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/get/link/leaderboard | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc get add link leader board
+//@route get /api/v1/link/get/leader/today
+//@access private: login required
+const getLinkLeaderToday = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const todayEnd = new Date();
+    todayEnd.setHours(23, 59, 59, 999);
+    const pipeline = [
+      {
+        $lookup: {
+          from: "links",
+          localField: "_id",
+          foreignField: "source_user",
+          as: "links",
+        },
+      },
+      {
+        $unwind: "$links",
+      },
+      {
+        $match: {
+          "links.createDate": {
+            $gte: todayStart,
+            $lte: todayEnd,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          linkCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { linkCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testLinkAPI,
   createLink,
@@ -926,4 +1054,6 @@ module.exports = {
   getLink_generalise,
   deleteLink,
   getFilterLinks,
+  getLinkLeaderboard,
+  getLinkLeaderToday,
 };
