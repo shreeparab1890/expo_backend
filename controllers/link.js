@@ -1,6 +1,7 @@
 const { validationResult, matchedData } = require("express-validator");
 const logger = require("../config/logger.js");
 const Link = require("../models/Link.js");
+const Data = require("../models/Data.js");
 const Notifications = require("../models/Notification.js");
 const User = require("../models/User.js");
 
@@ -384,6 +385,60 @@ const getAllLinks = async (req, res) => {
   } else {
     logger.error(
       `${ip}: API /api/v1/link/getall | User: ${user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc Get all Links with data
+//@route POST /api/v1/link/getall/data
+//@access Private: Role Admin / superadmin
+const getAllLinksData = async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const user = req.user;
+  if (user) {
+    const datas = await Data.find({
+      active: true,
+    }).populate("link");
+
+    const data_links = [];
+    for (let i = 0; i < datas.length; i++) {
+      data_links.push(datas[i].link);
+    }
+    const links = [];
+    for (let i = 0; i < data_links.length; i++) {
+      links.push(data_links[i]);
+    }
+    const all_links = [];
+    links.forEach((dataArray, index) => {
+      dataArray.forEach((link) => {
+        all_links.push(link._id);
+      });
+    });
+    const uniqueLinkIds = [...new Set(all_links)];
+
+    const all_links_data = [];
+    for (i = 0; i < uniqueLinkIds.length; i++) {
+      const link = await Link.find({
+        active: true,
+        _id: uniqueLinkIds[i],
+      })
+        .populate("assign_user")
+        .populate("source_user")
+        .populate("assign_user.user");
+      all_links_data.push(link[0]);
+    }
+
+    logger.info(
+      `${ip}: API /api/v1/link/getall/data | User: ${user.name} | responnded with Success `
+    );
+    return await res.status(200).json({
+      data: all_links_data,
+      message: "Links with data retrived successfully",
+    });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/getall/data | User: ${user.name} | responnded with User is not Autherized `
     );
     return res.status(401).send({ message: "User is not Autherized" });
   }
@@ -1045,6 +1100,7 @@ module.exports = {
   assignLink,
   unassignLink,
   getAllLinks,
+  getAllLinksData,
   getLink,
   getAllLinksbyUser,
   changeRemark,
