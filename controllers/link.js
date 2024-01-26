@@ -513,18 +513,39 @@ const getLinksByEmail = async (req, res) => {
   }
   if (user) {
     const data = matchedData(req);
-    console.log(data.email);
+
     const datas = await Data.find({
       email: data.email,
     }).populate("link");
 
-    logger.info(
-      `${ip}: API /api/v1/link/getall/data/qa | User: ${user.name} | responnded with Success `
-    );
-    return await res.status(200).json({
-      data: datas[0].link,
-      message: "Links with Email retrived successfully",
-    });
+    if (datas.length > 0) {
+      const data_links = datas[0].link;
+      const all_links_data = [];
+      for (let i = 0; i < data_links.length; i++) {
+        const link = await Link.find({
+          active: true,
+          _id: data_links[i],
+        })
+          .populate("assign_user")
+          .populate("source_user")
+          .populate("assign_user.user");
+        all_links_data.push(link[0]);
+      }
+      logger.info(
+        `${ip}: API /api/v1/link/getall/data/qa | User: ${user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: all_links_data,
+        message: "Links with Email retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/link/getall/data/qa | User: ${user.name} | responnded with No Data `
+      );
+      return await res.status(201).json({
+        message: "No Data With the email found",
+      });
+    }
   } else {
     logger.error(
       `${ip}: API /api/v1/link/getall/data/qa | User: ${user.name} | responnded with User is not Autherized `
