@@ -8,6 +8,7 @@ const {
   unassignLink,
   getAllLinks,
   getAllLinksData,
+  getAllLinksDataQA,
   getLink,
   getAllLinksbyUser,
   changeRemark,
@@ -98,6 +99,11 @@ router.get("/getall", validateToken, getAllLinks);
 //@route POST /api/v1/link/getall/data
 //@access Private: Role Admin / superadmin
 router.get("/getall/data", validateToken, getAllLinksData);
+
+//@desc Get all Links with data QA (approved = false)
+//@route POST /api/v1/link/getall/data/qa
+//@access Private: Role Admin / superadmin
+router.get("/getall/data/qa", validateToken, getAllLinksDataQA);
 
 //@desc Get Link by id
 //@route GET /api/v1/link/get/:id
