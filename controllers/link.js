@@ -520,11 +520,12 @@ const getLinksByEmail = async (req, res) => {
 
     if (datas.length > 0) {
       const data_links = datas[0].link;
+      const uniqueLinkIds = [...new Set(data_links)];
       const all_links_data = [];
-      for (let i = 0; i < data_links.length; i++) {
+      for (let i = 0; i < uniqueLinkIds.length; i++) {
         const link = await Link.find({
           active: true,
-          _id: data_links[i],
+          _id: uniqueLinkIds[i],
         })
           .populate("assign_user")
           .populate("source_user")
