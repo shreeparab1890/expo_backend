@@ -702,6 +702,10 @@ const getFilterData = async (req, res) => {
       filterQuery.approved = approved_type;
     }
 
+    /*  if (data_type != "1") {
+      filterQuery["link.0"] = { $exists: true };
+    } */
+
     /*  if (user != "0") {
       filterQuery.user = user;
     } */
@@ -713,7 +717,7 @@ const getFilterData = async (req, res) => {
       filterQuery.user = loggedin_user._id; //User Specific
     }
 
-    /* console.log(filterQuery); */
+    console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];
