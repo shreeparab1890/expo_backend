@@ -499,6 +499,40 @@ const getAllLinksDataQA = async (req, res) => {
   }
 };
 
+//@desc Get all Links by email
+//@route POST /api/v1/link/get/email
+//@access Private: Role Admin / superadmin
+const getLinksByEmail = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(`${ip}: API /api/v1/link/get/email responnded with Error `);
+    return res.status(400).json({ errors: errors.array() });
+  }
+  if (user) {
+    const data = matchedData(req);
+    console.log(data.email);
+    const datas = await Data.find({
+      email: data.email,
+    }).populate("link");
+
+    logger.info(
+      `${ip}: API /api/v1/link/getall/data/qa | User: ${user.name} | responnded with Success `
+    );
+    return await res.status(200).json({
+      data: datas[0].link,
+      message: "Links with Email retrived successfully",
+    });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/getall/data/qa | User: ${user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 //@desc Get Link by id
 //@route GET /api/v1/link/get/:id
 //@access private: Admin/Superadmin
@@ -1168,4 +1202,5 @@ module.exports = {
   getFilterLinks,
   getLinkLeaderboard,
   getLinkLeaderToday,
+  getLinksByEmail,
 };

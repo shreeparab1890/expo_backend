@@ -20,6 +20,7 @@ const {
   getFilterLinks,
   getLinkLeaderboard,
   getLinkLeaderToday,
+  getLinksByEmail,
 } = require("../controllers/link.js");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -163,6 +164,16 @@ router.put("/delete/:id", validateToken, deleteLink);
 //@route post /api/v1/link/filter
 //@access private: login required
 router.post("/filter", validateToken, getFilterLinks);
+
+//@desc Get all Links by email
+//@route POST /api/v1/link/get/email
+//@access Private: Role Admin / superadmin
+router.post(
+  "/get/email",
+  [body("email", "Enter a valid email").isEmail()],
+  validateToken,
+  getLinksByEmail
+);
 
 //@desc get add link leader
 //@route get /api/v1/link/get/link/leaderboard
