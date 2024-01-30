@@ -1083,6 +1083,78 @@ const getDataLeaderToday = async (req, res) => {
   }
 };
 
+//@desc get new or old data
+//@route POST /api/v1/data/new/filter
+//@access private: login required
+const getNewData = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const { givenLink, data_type } = req.body;
+
+    let filteredData = [];
+    if (
+      loggedin_user.roleType != "super_admin" &&
+      loggedin_user.roleType != "admin"
+    ) {
+      if (data_type == "new_data") {
+        filteredData = await Data.find({
+          "link.0": givenLink,
+          user: loggedin_user._id,
+        });
+      } else if (data_type == "old_data") {
+        filteredData = await Data.find({
+          "link.0": { $ne: givenLink },
+          link: {
+            $elemMatch: { $eq: givenLink },
+          },
+          user: loggedin_user._id,
+        });
+      } else if (data_type == "both") {
+        filteredData = await Data.find({
+          link: {
+            $elemMatch: { $eq: givenLink },
+          },
+          user: loggedin_user._id,
+        });
+      }
+    } else {
+      if (data_type == "new_data") {
+        filteredData = await Data.find({
+          "link.0": givenLink,
+        });
+      } else if (data_type == "old_data") {
+        filteredData = await Data.find({
+          "link.0": { $ne: givenLink },
+          link: {
+            $elemMatch: { $eq: givenLink },
+          },
+        });
+      } else if (data_type == "both") {
+        filteredData = await Data.find({
+          link: {
+            $elemMatch: { $eq: givenLink },
+          },
+        });
+      }
+    }
+
+    if (filteredData.length > 0) {
+      return res
+        .status(200)
+        .send({ data: filteredData, message: "Data Retrived Successfully" });
+    } else {
+      return res.status(200).send({ data: [], message: "No Data Found" });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/new/filter | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -1104,4 +1176,5 @@ module.exports = {
   verifyWhatsappNumber,
   getDataLeaderboard,
   getDataLeaderToday,
+  getNewData,
 };

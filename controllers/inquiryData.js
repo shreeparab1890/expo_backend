@@ -588,19 +588,6 @@ const getFilterData = async (req, res) => {
   } = req.body;
 
   if (loggedin_user) {
-    console.log(
-      event_name,
-      website,
-      email,
-      category,
-      status,
-      country,
-      region,
-      products,
-      created_from,
-      created_to,
-      company_name
-    );
     const filterQuery = {};
 
     if (event_name != "0") {
@@ -652,7 +639,7 @@ const getFilterData = async (req, res) => {
       filterQuery.user = loggedin_user._id; //User Specific
     }
 
-    console.log(filterQuery);
+    /* console.log(filterQuery); */
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];
@@ -662,7 +649,7 @@ const getFilterData = async (req, res) => {
         .populate("consultant_name")
         .populate("user");
     }
-    console.log(filteredData);
+
     if (filteredData.length > 0) {
       logger.info(
         `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responnded with Success `

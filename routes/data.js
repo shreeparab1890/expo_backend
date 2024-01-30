@@ -22,6 +22,7 @@ const {
   verifyWhatsappNumber,
   getDataLeaderboard,
   getDataLeaderToday,
+  getNewData,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -149,6 +150,11 @@ router.post("/generalise/get", validateToken, getDataByGeneraliseFilter);
 //@route POST /api/v1/data/filter
 //@access private: login required
 router.post("/filter", validateToken, getFilterData);
+
+//@desc get new or old data
+//@route POST /api/v1/data/new/filter
+//@access private: login required
+router.post("/new/filter", validateToken, getNewData);
 
 //@desc retrive filter Data
 //@route POST /api/v1/data/retrive/filter
