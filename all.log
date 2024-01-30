@@ -3936,3 +3936,6 @@
 [30-01-2024 04:41:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
 [30-01-2024 04:41:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/events/getall | User: Super Admin | responnded with Success [39m
 [30-01-2024 04:41:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/consultant/getall | User: Super Admin | responnded with Success [39m
+[30-01-2024 04:53:16 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[30-01-2024 04:54:06 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[30-01-2024 04:54:50 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
