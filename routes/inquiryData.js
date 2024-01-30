@@ -15,6 +15,7 @@ const {
   getDataByGeneraliseFilter,
   getDataByEmail,
   getDataByEmail_1,
+  getFilterData,
 } = require("../controllers/inquiryData");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -120,5 +121,10 @@ router.post("/get/byemail", validateToken, getDataByEmail);
 //@route POST /api/v1/inquiry/data/get/byemail/1
 //@access private: login required
 router.post("/get/byemail/1", validateToken, getDataByEmail_1);
+
+//@desc filter inq Data
+//@route POST /api/v1/inquiry/data/filter
+//@access private: login required
+router.post("/filter", validateToken, getFilterData);
 
 module.exports = router;

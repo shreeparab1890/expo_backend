@@ -566,6 +566,128 @@ const getDataByEmail_1 = async (req, res) => {
   }
 };
 
+//@desc filter inq Data
+//@route POST /api/v1/inquiry/data/filter
+//@access private: login required
+const getFilterData = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const {
+    event_name,
+    website,
+    email,
+    category,
+    status,
+    country,
+    region,
+    products,
+    created_from,
+    created_to,
+    company_name,
+  } = req.body;
+
+  if (loggedin_user) {
+    console.log(
+      event_name,
+      website,
+      email,
+      category,
+      status,
+      country,
+      region,
+      products,
+      created_from,
+      created_to,
+      company_name
+    );
+    const filterQuery = {};
+
+    if (event_name != "0") {
+      filterQuery.inquired_event_name = { $in: event_name };
+    }
+
+    if (company_name) {
+      filterQuery.company_name = {
+        $regex: new RegExp(`.*${company_name}.*`, "i"),
+      };
+    }
+
+    if (website) {
+      filterQuery.website = { $regex: new RegExp(`.*${website}.*`, "i") };
+    }
+
+    if (email) {
+      filterQuery.email = { $regex: new RegExp(`.*${email}.*`, "i") };
+    }
+
+    if (category != "1") {
+      filterQuery.category = { $regex: new RegExp(`.*${category}.*`, "i") };
+    }
+
+    if (status != "1") {
+      filterQuery.status = status;
+    }
+
+    if (country != "1") {
+      filterQuery.country = country;
+    }
+
+    if (region) {
+      filterQuery.region = region;
+    }
+
+    if (products) {
+      filterQuery.products = { $regex: new RegExp(`.*${products}.*`, "i") };
+    }
+
+    if (created_from && created_to) {
+      filterQuery.createDate = { $gte: created_from, $lte: created_to };
+    }
+
+    if (
+      loggedin_user.roleType != "super_admin" &&
+      loggedin_user.roleType != "admin"
+    ) {
+      filterQuery.user = loggedin_user._id; //User Specific
+    }
+
+    console.log(filterQuery);
+    const no_of_keys = Object.keys(filterQuery).length;
+
+    let filteredData = [];
+    if (no_of_keys > 0) {
+      filteredData = await InquiryData.find(filterQuery)
+        .populate("inquired_event_name")
+        .populate("consultant_name")
+        .populate("user");
+    }
+    console.log(filteredData);
+    if (filteredData.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responnded with Success `
+      );
+      return await res.status(200).json({
+        data: filteredData,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        data: [],
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -580,4 +702,5 @@ module.exports = {
   getDataByGeneraliseFilter,
   getDataByEmail,
   getDataByEmail_1,
+  getFilterData,
 };
