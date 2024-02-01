@@ -74,6 +74,10 @@ const createLink = async (req, res) => {
           .status(500)
           .json({ error: "Error", message: "Enter Valid Start and End Date" });
       }
+      const users = await User.find({
+        roleType: { $in: ["admin", "super_admin"] },
+      });
+
       await Link.create({
         name: data.name,
         value: data.value,
@@ -93,6 +97,15 @@ const createLink = async (req, res) => {
           logger.info(
             `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Success `
           );
+          users.forEach(function (usr) {
+            const res_notification = Notifications.create({
+              text: `New Link:${link.name}  is Added by ${user.name}`,
+              type: "success",
+              to_user: usr._id,
+              by_user: user._id,
+            });
+          });
+
           return res
             .status(201)
             .json({ link, message: "Link Added Successfully" });
@@ -104,6 +117,10 @@ const createLink = async (req, res) => {
           return res.status(500).json({ error: "Error", message: err.message });
         });
     } else {
+      const users = await User.find({
+        roleType: { $in: ["admin", "super_admin"] },
+      });
+
       await Link.create({
         name: data.name,
         value: data.value,
@@ -123,6 +140,14 @@ const createLink = async (req, res) => {
           logger.info(
             `${ip}: API /api/v1/link/add | User: ${user.name} | responnded with Success `
           );
+          users.forEach(function (usr) {
+            const res_notification = Notifications.create({
+              text: `New Link:${link.name} is Added by ${user.name}`,
+              type: "success",
+              to_user: usr._id,
+              by_user: user._id,
+            });
+          });
           return res
             .status(201)
             .json({ link, message: "Link Added Successfully" });
