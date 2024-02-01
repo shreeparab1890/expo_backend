@@ -914,6 +914,48 @@ const getDataByEmail_LinkID = async (req, res) => {
   }
 };
 
+//@desc Get Data by email and link id
+//@route POST /api/v1/data/get/bylinkid
+//@access private: login required
+const getDataByLinkID = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const { link_id } = req.body;
+  if (loggedin_user) {
+    const data = await Data.find({
+      link: {
+        $elemMatch: { $eq: link_id },
+      },
+    })
+      .populate("user")
+      .populate("link");
+
+    if (data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/data/get/bylinkid/ | User: ${loggedin_user.name} | responnded with Success `
+      );
+
+      return await res.status(200).json({
+        data: data,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/data/get/bylinkid | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        data: [],
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/get/bylinkid | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 //@desc Get Data by email and category
 //@route POST /api/v1/data/get/byemail/cat
 //@access private: login required
@@ -1177,4 +1219,5 @@ module.exports = {
   getDataLeaderboard,
   getDataLeaderToday,
   getNewData,
+  getDataByLinkID,
 };

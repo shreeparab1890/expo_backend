@@ -23,6 +23,7 @@ const {
   getDataLeaderboard,
   getDataLeaderToday,
   getNewData,
+  getDataByLinkID,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -165,6 +166,8 @@ router.post("/retrive/filter", validateToken, getRetriveFilterData);
 //@route POST /api/v1/data/get/byemail
 //@access private: login required
 router.post("/get/byemail", validateToken, getDataByEmail_LinkID);
+
+router.post("/get/bylinkid", validateToken, getDataByLinkID);
 
 //@desc Get Data by email and category
 //@route POST /api/v1/data/get/byemail/cat
