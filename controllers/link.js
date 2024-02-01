@@ -193,6 +193,8 @@ const UpdateLink = async (req, res) => {
     }
     const month_year = getMonthAndYear(data.start_date);
     const updatedLink = {
+      name: data.name,
+      value: data.value,
       priority: data.priority,
       link_type: data.link_type,
       category: data.category,
@@ -215,6 +217,8 @@ const UpdateLink = async (req, res) => {
     return res.status(200).json({ result, message: "Link Updated." });
   } else {
     const updatedLink = {
+      name: data.name,
+      value: data.value,
       priority: data.priority,
       link_type: data.link_type,
       category: data.category,

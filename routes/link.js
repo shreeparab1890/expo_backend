@@ -58,6 +58,8 @@ router.post(
 router.put(
   "/update/:id",
   [
+    body("name", "Enter a valid Link name").isLength({ min: 2 }),
+    body("value", "Enter a valid Link").isLength({ min: 2 }),
     body("priority", "Enter a valid Link").isLength({ min: 2 }),
     body("link_type", "Enter a valid Link").isLength({ min: 2 }),
     body("category", "Enter a valid Link Category").isLength({ min: 2 }),
