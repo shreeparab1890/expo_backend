@@ -50,9 +50,16 @@ const createData = async (req, res) => {
       );
       return res.status(400).json({ message: "Data already Exists!" });
     }
+    if (data.inquired_event_name.length == 0) {
+      logger.error(
+        `${ip}: API /api/v1/inquiry/data/add | User: ${user.name} | responnded with Data already Exists! for Data: ${data.email} `
+      );
+      return res.status(401).json({ message: "Enter Inquiry Event Name!" });
+    }
     if (data.exhibitor_type == 1) {
       data.exhibitor_type = "";
     }
+
     await InquiryData.create({
       company_name: data.company_name,
       website: data.website,

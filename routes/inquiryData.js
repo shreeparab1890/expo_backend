@@ -37,7 +37,9 @@ router.post(
     body("status", "Enter a valid status").isLength({ min: 2 }),
     body("country", "Enter a valid country").isLength({ min: 2 }),
     body("region", "Enter a valid region").notEmpty(),
-    body("inquired_event_name", "Enter a valid Event Name").notEmpty(),
+    body("inquired_event_name", "Enter a valid Event Name").isLength({
+      min: 1,
+    }),
     body("consultant_name", "Enter a valid Consultant Name").isLength({
       min: 2,
     }),
