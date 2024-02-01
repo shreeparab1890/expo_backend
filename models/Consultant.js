@@ -15,6 +15,10 @@ const ConsultantSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  approve: {
+    type: Boolean,
+    default: true,
+  },
   active: {
     type: Boolean,
     default: true,

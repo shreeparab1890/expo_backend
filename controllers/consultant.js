@@ -253,6 +253,103 @@ const getEvent = async (req, res) => {
   }
 };
 
+//@desc approve cosultant with id (we are updating approve to true )
+//@route PUT /api/v1/consultant/approve/:id
+//@access private: Role Admin
+const approveEvent = async (req, res) => {
+  const { id } = req.params;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const user = req.user;
+
+  try {
+    if (user) {
+      const updatedEvent = {
+        approve: true,
+        UpdatedDate: Date.now(),
+      };
+      const oldEvent = await Consultant.findOne({ _id: id });
+      if (oldEvent) {
+        const result = await Consultant.findByIdAndUpdate(id, updatedEvent, {
+          new: true,
+        });
+        logger.info(
+          `${ip}: API /api/v1/consultant/approve/:${id} | User: ${user.name} | responnded with Success `
+        );
+        return res
+          .status(200)
+          .json({ data: result, message: "Consultant approved Successfully" });
+      } else {
+        logger.info(
+          `${ip}: API /api/v1/consultant/approve/:${id} | User: ${user.name} | responnded with Event Not Found `
+        );
+        return res.status(200).json({ message: "Consultant Not Found" });
+      }
+    } else {
+      logger.error(
+        `${ip}: API /api/v1/consultant/approve/:${id} | User: ${user.name} | responnded with User is not Autherized `
+      );
+      return res.status(401).send({ message: "User is not Autherized" });
+    }
+  } catch (error) {
+    logger.error(
+      `${ip}: API /api/v1/consultant/approve/:${id} | User: ${user.name} | responnded with Error `
+    );
+    return res
+      .status(500)
+      .json({ data: error, message: "Something went wrong" });
+  }
+};
+
+//@desc dis approve cosultant with id (we are updating approve to true )
+//@route PUT /api/v1/consultant/disapprove/:id
+//@access private: Role Admin
+const disapproveEvent = async (req, res) => {
+  const { id } = req.params;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const user = req.user;
+
+  try {
+    if (user) {
+      const updatedEvent = {
+        approve: false,
+        UpdatedDate: Date.now(),
+      };
+      const oldEvent = await Consultant.findOne({ _id: id });
+      if (oldEvent) {
+        const result = await Consultant.findByIdAndUpdate(id, updatedEvent, {
+          new: true,
+        });
+        logger.info(
+          `${ip}: API /api/v1/consultant/disapprove/:${id} | User: ${user.name} | responnded with Success `
+        );
+        return res.status(200).json({
+          data: result,
+          message: "Consultant dis approved Successfully",
+        });
+      } else {
+        logger.info(
+          `${ip}: API /api/v1/consultant/disapprove/:${id} | User: ${user.name} | responnded with Event Not Found `
+        );
+        return res.status(200).json({ message: "Consultant Not Found" });
+      }
+    } else {
+      logger.error(
+        `${ip}: API /api/v1/consultant/disapprove/:${id} | User: ${user.name} | responnded with User is not Autherized `
+      );
+      return res.status(401).send({ message: "User is not Autherized" });
+    }
+  } catch (error) {
+    logger.error(
+      `${ip}: API /api/v1/consultant/disapprove/:${id} | User: ${user.name} | responnded with Error `
+    );
+    return res
+      .status(500)
+      .json({ data: error, message: "Something went wrong" });
+  }
+};
+
 module.exports = {
   testEventsAPI,
   createEvent,
@@ -260,4 +357,6 @@ module.exports = {
   deleteEvent,
   getEvents,
   getEvent,
+  approveEvent,
+  disapproveEvent,
 };
