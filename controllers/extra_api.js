@@ -895,7 +895,7 @@ const getCountries = async (req, res) => {
     { name: "Sweden", code: "SE" },
     { name: "Switzerland", code: "CH" },
     { name: "Syrian Arab Republic", code: "SY" },
-    { name: "Taiwan, Province of China", code: "TW" },
+    { name: "Taiwan", code: "TW" },
     { name: "Tajikistan", code: "TJ" },
     { name: "Tanzania, United Republic of", code: "TZ" },
     { name: "Thailand", code: "TH" },
@@ -1792,6 +1792,11 @@ const getCountContinent = async (req, res) => {
     },
     {
       country: "Syria",
+      continent: "Asia",
+    },
+
+    {
+      country: "Taiwan",
       continent: "Asia",
     },
     {
