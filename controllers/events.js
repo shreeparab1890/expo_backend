@@ -102,7 +102,20 @@ const updateEvent = async (req, res) => {
       };
 
       const oldEvent = await Events.findOne({ _id: id });
+
       if (oldEvent) {
+        if (oldEvent.name != name) {
+          const oldEvent_name = await Events.findOne({ name });
+
+          if (oldEvent_name) {
+            logger.error(
+              `${ip}: API /api/v1/events/update | User: ${user.name} | responnded with You cannot edit as the Event with same name Exists. `
+            );
+            return res.status(401).send({
+              message: "You cannot edit as the event with same name Exists",
+            });
+          }
+        }
         const result = await Events.findByIdAndUpdate(id, updatedEvent, {
           new: true,
         });
