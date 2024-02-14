@@ -419,6 +419,46 @@ const getAllLinks = async (req, res) => {
   }
 };
 
+//@desc Get all user assigned Links
+//@route POST /api/v1/link/getall/:userId
+//@access Private: Role Admin / superadmin
+const getAllUserLinks = async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const user = req.user;
+  const userId = req.params.userId;
+  if (user) {
+    const links = await Link.find({
+      active: true,
+      assign_user: {
+        $elemMatch: {
+          user: userId,
+          active: true,
+        },
+      },
+    })
+
+      .sort({ start_date: 1 })
+      .sort({ month: -1 })
+      .sort({ year: -1 })
+      .populate("assign_user")
+      .populate("source_user")
+      .populate("assign_user.user");
+
+    logger.info(
+      `${ip}: API /api/v1/link/getall | User: ${user.name} | responnded with Success `
+    );
+    return await res.status(200).json({
+      data: links,
+      message: "Links retrived successfully",
+    });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/getall | User: ${user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 //@desc Get all Links with data
 //@route POST /api/v1/link/getall/data
 //@access Private: Role Admin / superadmin
@@ -1240,6 +1280,7 @@ module.exports = {
   assignLink,
   unassignLink,
   getAllLinks,
+  getAllUserLinks,
   getAllLinksData,
   getAllLinksDataQA,
   getLink,

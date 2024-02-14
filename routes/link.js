@@ -7,6 +7,7 @@ const {
   assignLink,
   unassignLink,
   getAllLinks,
+  getAllUserLinks,
   getAllLinksData,
   getAllLinksDataQA,
   getLink,
@@ -97,6 +98,11 @@ router.put("/unassign/:link_id/:assign_id", validateToken, unassignLink);
 //@route POST /api/v1/link/getall
 //@access Private: Role Admin / superadmin
 router.get("/getall", validateToken, getAllLinks);
+
+//@desc Get all user assigned Links
+//@route POST /api/v1/link/getall/:userId
+//@access Private: Role Admin / superadmin
+router.get("/getall/:userId", validateToken, getAllUserLinks);
 
 //@desc Get all Links with data
 //@route POST /api/v1/link/getall/data
