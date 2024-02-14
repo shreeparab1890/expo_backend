@@ -632,6 +632,7 @@ const getFilterData = async (req, res) => {
     approved_type,
     user,
     company_name,
+    created_today,
   } = req.body;
 
   if (loggedin_user) {
@@ -692,6 +693,15 @@ const getFilterData = async (req, res) => {
 
     if (products) {
       filterQuery.products = { $regex: new RegExp(`.*${products}.*`, "i") };
+    }
+
+    if (created_today) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      filterQuery.createDate = {
+        $gte: today,
+        $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
+      };
     }
 
     if (created_from && created_to) {

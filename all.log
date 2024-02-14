@@ -7811,3 +7811,118 @@
 [14-02-2024 03:29:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
 [14-02-2024 03:29:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded with Success [39m
 [14-02-2024 03:29:04 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[14-02-2024 03:29:47 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/login responnded with Login Successfull for the user: superadmin@gmail.com[39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/role/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/link/leaderboard | User: Super Admin | responnded with leaderboard [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/get/leader | User: Super Admin | responnded with leaderboard [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/get/leader/today | User: Super Admin | responnded with leaderboard [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/leader/today | User: Super Admin | responnded with leaderboard [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/inquiry/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/user/get | User: Super Admin | responnded with Success [39m
+[14-02-2024 03:32:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:39:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:39:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:39:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:39:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:39:48 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
+[14-02-2024 04:52:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:52:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:52:15 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:53:16 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:53:16 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:53:16 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:53:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:53:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:53:36 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:54:12 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:54:12 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:54:12 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:54:16 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:54:16 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:54:16 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:54:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:54:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:54:27 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:56:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/retrive/filter | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[14-02-2024 04:56:06 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/retrive/filter | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[14-02-2024 04:56:29 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/retrive/filter | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[14-02-2024 04:56:41 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/retrive/filter | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[14-02-2024 04:57:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:57:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:57:02 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:57:16 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/retrive/filter | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:58:03 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/retrive/filter | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:59:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:59:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:59:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:59:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[14-02-2024 04:59:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:59:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:59:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:59:31 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
+[14-02-2024 04:59:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:59:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:59:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 04:59:34 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[14-02-2024 04:59:35 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:59:35 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:59:35 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 04:59:35 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
+[14-02-2024 05:00:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:00:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:00:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:00:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:00:40 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
+[14-02-2024 05:01:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/filter | User: Super Admin | responnded Empty i.e. Data was not found [39m
+[14-02-2024 05:05:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:05:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:05:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:05:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:05:38 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
+[14-02-2024 05:08:44 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[14-02-2024 05:09:00 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[14-02-2024 05:09:03 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:09:03 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:09:03 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:09:03 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:09:03 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
+[14-02-2024 05:11:21 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[14-02-2024 05:11:34 PM] [32minfo[39m: 	[32mConnected to Mongo Successfully! Host: localhost, DB Name:ExpoDB [39m
+[14-02-2024 05:12:01 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/filter | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:12:05 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:12:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:65ab83be0d5b3c88b67df844 | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
+[14-02-2024 05:12:07 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/get/link/:65ab83be0d5b3c88b67df844 | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:11 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/get/:65ab841c0d5b3c88b67df889 | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:16 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/add | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:12:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/:65ab83be0d5b3c88b67df844 | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
+[14-02-2024 05:12:19 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/get/link/:65ab83be0d5b3c88b67df844 | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:12:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:12:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:12:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/notification/get/byuser | User: Super Admin | responnded Empty i.e. Notification was not found [39m
+[14-02-2024 05:12:20 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/get/user/ | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:23 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:12:23 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:23 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:23 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:12:23 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
+[14-02-2024 05:12:25 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/filter | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:13:00 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/filter | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:13:30 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getCurrent/:650ae53b4e394d64307444b4  responnded with Success [39m
+[14-02-2024 05:13:30 PM] [32minfo[39m: 	[32m::1: API /api/v1/user/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:13:30 PM] [32minfo[39m: 	[32m::1: API /api/v1/link/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:13:30 PM] [32minfo[39m: 	[32m::1: API /api/v1/data/getall | User: Super Admin | responnded with Success [39m
+[14-02-2024 05:13:30 PM] [32minfo[39m: 	[32m::1: API /api/v1/extra/get/code/countries responnded with Countries retrived [39m
