@@ -727,6 +727,48 @@ const getDataByEventID = async (req, res) => {
   }
 };
 
+//@desc Get Data by check email domain
+//@route POST /api/v1/inquiry/data/check/email/domain
+//@access private: login required
+const checkEmailDomain = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const { email } = req.body;
+  const domain = email.split("@")[1];
+  console.log(domain);
+  if (loggedin_user) {
+    const data = await InquiryData.find({
+      email: { $regex: new RegExp(domain, "i") },
+    })
+      .populate("inquired_event_name")
+      .populate("user");
+
+    if (data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/check/email/domain | User: ${loggedin_user.name} | responnded with Success `
+      );
+
+      return await res.status(200).json({
+        data: data,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/check/email/domain | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        data: [],
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/inquiry/data/check/email/domain | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -743,4 +785,5 @@ module.exports = {
   getDataByEmail_1,
   getFilterData,
   getDataByEventID,
+  checkEmailDomain,
 };
