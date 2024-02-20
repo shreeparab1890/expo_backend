@@ -24,6 +24,7 @@ const {
   getDataLeaderToday,
   getNewData,
   getDataByLinkID,
+  checkEmailDomain,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -183,5 +184,10 @@ router.post("/get/leader", validateToken, getDataLeaderboard);
 //@route post /api/v1/data/get/leader/today
 //@access private: login required
 router.post("/get/leader/today", validateToken, getDataLeaderToday);
+
+//@desc Get Data by check email domain
+//@route POST /api/v1/data/check/email/domain
+//@access private: login required
+router.post("/check/email/domain", validateToken, checkEmailDomain);
 
 module.exports = router;

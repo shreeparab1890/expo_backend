@@ -99,6 +99,10 @@ const InquiryDataSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  updateDate: {
+    type: Date,
+    default: Date.now,
+  },
   approved: {
     type: Boolean,
     default: false,

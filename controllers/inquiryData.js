@@ -178,6 +178,7 @@ const updateData = async (req, res) => {
       exhibitor_type,
       comment,
       comment1,
+      updateDate: Date.now(),
     };
     const olddata = await InquiryData.findOne({ _id: id });
     if (olddata) {
@@ -741,7 +742,8 @@ const checkEmailDomain = async (req, res) => {
       email: { $regex: new RegExp(domain, "i") },
     })
       .populate("inquired_event_name")
-      .populate("user");
+      .populate("user")
+      .sort({ updateDate: -1 });
 
     if (data.length > 0) {
       logger.info(
