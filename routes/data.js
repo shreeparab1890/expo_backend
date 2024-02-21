@@ -22,6 +22,9 @@ const {
   verifyWhatsappNumber,
   getDataLeaderboard,
   getDataLeaderToday,
+  getDataLeaderYesterday,
+  getDataLeaderThisWeek,
+  getDataLeaderLastWeek,
   getNewData,
   getDataByLinkID,
   checkEmailDomain,
@@ -184,6 +187,21 @@ router.post("/get/leader", validateToken, getDataLeaderboard);
 //@route post /api/v1/data/get/leader/today
 //@access private: login required
 router.post("/get/leader/today", validateToken, getDataLeaderToday);
+
+//@desc get add data leader board today
+//@route post /api/v1/data/get/leader/thisweek
+//@access private: login required
+router.post("/get/leader/thisweek", validateToken, getDataLeaderThisWeek);
+
+//@desc get add data leader board today
+//@route post /api/v1/data/get/leader/yesterday
+//@access private: login required
+router.post("/get/leader/yesterday", validateToken, getDataLeaderYesterday);
+
+//@desc get add data leader board today
+//@route post /api/v1/data/get/leader/lastweek
+//@access private: login required
+router.post("/get/leader/lastweek", validateToken, getDataLeaderLastWeek);
 
 //@desc Get Data by check email domain
 //@route POST /api/v1/data/check/email/domain

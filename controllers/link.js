@@ -1274,6 +1274,232 @@ const getLinkLeaderToday = async (req, res) => {
   }
 };
 
+//@desc get add link leader board
+//@route get /api/v1/link/get/leader/yesterday
+//@access private: login required
+const getLinkLeaderYesterday = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const yesterdayStart = new Date();
+    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+    yesterdayStart.setHours(0, 0, 0, 0);
+    /*  console.log(yesterdayStart.toLocaleString()); */
+
+    const yesterdayEnd = new Date(yesterdayStart);
+    yesterdayEnd.setHours(23, 59, 59, 999);
+    const pipeline = [
+      {
+        $lookup: {
+          from: "links",
+          localField: "_id",
+          foreignField: "source_user",
+          as: "links",
+        },
+      },
+      {
+        $unwind: "$links",
+      },
+      {
+        $match: {
+          "links.createDate": {
+            $gte: yesterdayStart,
+            $lte: yesterdayEnd,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          linkCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { linkCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc get add link leader board
+//@route get /api/v1/link/get/leader/thisweek
+//@access private: login required
+const getLinkLeaderThisWeek = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const today = new Date();
+    const currentDay = today.getDay();
+    const diff = today.getDate() - currentDay + (currentDay === 0 ? -6 : 1);
+
+    const thisWeekStart = new Date(today);
+    thisWeekStart.setDate(diff);
+    thisWeekStart.setHours(0, 0, 0, 0);
+
+    const thisWeekEnd = new Date(thisWeekStart);
+    thisWeekEnd.setDate(thisWeekStart.getDate() + 6);
+    thisWeekEnd.setHours(23, 59, 59, 999);
+
+    const pipeline = [
+      {
+        $lookup: {
+          from: "links",
+          localField: "_id",
+          foreignField: "source_user",
+          as: "links",
+        },
+      },
+      {
+        $unwind: "$links",
+      },
+      {
+        $match: {
+          "links.createDate": {
+            $gte: thisWeekStart,
+            $lte: thisWeekEnd,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          linkCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { linkCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc get add link leader board
+//@route get /api/v1/link/get/leader/lastweek
+//@access private: login required
+const getLinkLeaderLastWeek = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const today = new Date();
+    const currentDay = today.getDay();
+    const diff = today.getDate() - currentDay - 7;
+
+    const lastWeekStart = new Date(today);
+    lastWeekStart.setDate(diff);
+    lastWeekStart.setHours(0, 0, 0, 0);
+
+    const lastWeekEnd = new Date(lastWeekStart);
+    lastWeekEnd.setDate(lastWeekStart.getDate() + 6);
+    lastWeekEnd.setHours(23, 59, 59, 999);
+
+    const pipeline = [
+      {
+        $lookup: {
+          from: "links",
+          localField: "_id",
+          foreignField: "source_user",
+          as: "links",
+        },
+      },
+      {
+        $unwind: "$links",
+      },
+      {
+        $match: {
+          "links.createDate": {
+            $gte: lastWeekStart,
+            $lte: lastWeekEnd,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          linkCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { linkCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/get/leader/today | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testLinkAPI,
   createLink,
@@ -1294,5 +1520,8 @@ module.exports = {
   getFilterLinks,
   getLinkLeaderboard,
   getLinkLeaderToday,
+  getLinkLeaderYesterday,
+  getLinkLeaderThisWeek,
+  getLinkLeaderLastWeek,
   getLinksByEmail,
 };

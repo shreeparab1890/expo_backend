@@ -21,6 +21,9 @@ const {
   getFilterLinks,
   getLinkLeaderboard,
   getLinkLeaderToday,
+  getLinkLeaderYesterday,
+  getLinkLeaderThisWeek,
+  getLinkLeaderLastWeek,
   getLinksByEmail,
 } = require("../controllers/link.js");
 const validateToken = require("../middleware/validateTokenHandler");
@@ -192,5 +195,20 @@ router.get("/get/link/leaderboard", validateToken, getLinkLeaderboard);
 //@route get /api/v1/link/get/leader/today
 //@access private: login required
 router.get("/get/leader/today", validateToken, getLinkLeaderToday);
+
+//@desc get add link leader board
+//@route get /api/v1/link/get/leader/yesterday
+//@access private: login required
+router.get("/get/leader/yesterday", validateToken, getLinkLeaderYesterday);
+
+//@desc get add link leader board
+//@route get /api/v1/link/get/leader/thisweek
+//@access private: login required
+router.get("/get/leader/thisweek", validateToken, getLinkLeaderThisWeek);
+
+//@desc get add link leader board
+//@route get /api/v1/link/get/leader/lastweek
+//@access private: login required
+router.get("/get/leader/lastweek", validateToken, getLinkLeaderLastWeek);
 
 module.exports = router;
