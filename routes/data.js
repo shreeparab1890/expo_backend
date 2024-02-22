@@ -25,6 +25,8 @@ const {
   getDataLeaderYesterday,
   getDataLeaderThisWeek,
   getDataLeaderLastWeek,
+  getDataLeaderThisMonth,
+  getDataLeaderLastMonth,
   getNewData,
   getDataByLinkID,
   checkEmailDomain,
@@ -202,6 +204,16 @@ router.post("/get/leader/yesterday", validateToken, getDataLeaderYesterday);
 //@route post /api/v1/data/get/leader/lastweek
 //@access private: login required
 router.post("/get/leader/lastweek", validateToken, getDataLeaderLastWeek);
+
+//@desc get add data leader board today
+//@route post /api/v1/data/get/leader/thismonth
+//@access private: login required
+router.post("/get/leader/thismonth", validateToken, getDataLeaderThisMonth);
+
+//@desc get add data leader board today
+//@route post /api/v1/data/get/leader/lastmonth
+//@access private: login required
+router.post("/get/leader/lastmonth", validateToken, getDataLeaderLastMonth);
 
 //@desc Get Data by check email domain
 //@route POST /api/v1/data/check/email/domain

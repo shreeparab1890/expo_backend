@@ -1364,6 +1364,166 @@ const getDataLeaderLastWeek = async (req, res) => {
   }
 };
 
+//@desc get add add leader board
+//@route post /api/v1/link/get/leader/thismonth
+//@access private: login required
+const getDataLeaderThisMonth = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+
+    const thisMonthStart = new Date(today);
+    thisMonthStart.setDate(1);
+    thisMonthStart.setHours(0, 0, 0, 0);
+
+    const nextMonthStart = new Date(today);
+    nextMonthStart.setMonth(today.getMonth() + 1, 1);
+    nextMonthStart.setHours(0, 0, 0, 0);
+
+    const thisMonthEnd = new Date(nextMonthStart);
+    thisMonthEnd.setDate(nextMonthStart.getDate() - 1);
+    thisMonthEnd.setHours(23, 59, 59, 999);
+
+    const pipeline = [
+      {
+        $lookup: {
+          from: "datas",
+          localField: "_id",
+          foreignField: "user",
+          as: "datas",
+        },
+      },
+      {
+        $unwind: "$datas",
+      },
+      {
+        $match: {
+          "datas.createDate": {
+            $gte: thisMonthStart,
+            $lte: thisMonthEnd,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          dataCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { dataCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/data/get/leader/today | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/data/get/leader/today | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/get/leader/today | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc get add add leader board
+//@route post /api/v1/link/get/leader/lastmonth
+//@access private: login required
+const getDataLeaderLastMonth = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const today = new Date();
+
+    const lastMonthStart = new Date(today);
+    lastMonthStart.setMonth(today.getMonth() - 1, 1);
+    lastMonthStart.setHours(0, 0, 0, 0);
+
+    const firstDayOfThisMonth = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      1
+    );
+    const lastMonthEnd = new Date(firstDayOfThisMonth);
+    lastMonthEnd.setDate(firstDayOfThisMonth.getDate() - 1);
+    lastMonthEnd.setHours(23, 59, 59, 999);
+
+    const pipeline = [
+      {
+        $lookup: {
+          from: "datas",
+          localField: "_id",
+          foreignField: "user",
+          as: "datas",
+        },
+      },
+      {
+        $unwind: "$datas",
+      },
+      {
+        $match: {
+          "datas.createDate": {
+            $gte: lastMonthStart,
+            $lte: lastMonthEnd,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          dataCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { dataCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/data/get/leader/today | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/data/get/leader/today | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/get/leader/today | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 //@desc get new or old data
 //@route POST /api/v1/data/new/filter
 //@access private: login required
@@ -1503,6 +1663,8 @@ module.exports = {
   getDataLeaderYesterday,
   getDataLeaderThisWeek,
   getDataLeaderLastWeek,
+  getDataLeaderThisMonth,
+  getDataLeaderLastMonth,
   getNewData,
   getDataByLinkID,
   checkEmailDomain,
