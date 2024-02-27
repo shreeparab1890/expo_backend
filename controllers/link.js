@@ -674,9 +674,11 @@ const getLink_generalise = async (req, res) => {
   if (loggedin_user) {
     const { id } = req.params;
 
-    const link = await Link.find({ _id: id }).populate({
-      path: "assign_user.user",
-    });
+    const link = await Link.find({ _id: id })
+      .populate({
+        path: "assign_user.user",
+      })
+      .populate("source_user");
 
     if (link.length > 0) {
       logger.info(

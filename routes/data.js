@@ -30,6 +30,7 @@ const {
   getNewData,
   getDataByLinkID,
   checkEmailDomain,
+  updateStatusData,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -219,5 +220,10 @@ router.post("/get/leader/lastmonth", validateToken, getDataLeaderLastMonth);
 //@route POST /api/v1/data/check/email/domain
 //@access private: login required
 router.post("/check/email/domain", validateToken, checkEmailDomain);
+
+//@desc update status by data id
+//@route GET /api/v1/data/update/status/:id
+//@access private: login required
+router.post("/status/update/:id", validateToken, updateStatusData);
 
 module.exports = router;

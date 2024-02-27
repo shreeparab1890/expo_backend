@@ -1639,6 +1639,35 @@ const checkEmailDomain = async (req, res) => {
   }
 };
 
+//@desc update status by data id
+//@route GET /api/v1/data/update/status/:id
+//@access private: login required
+const updateStatusData = async (req, res) => {
+  try {
+    console.log("Here in Update Status");
+    const user = req.user;
+    const dataId = req.params.id;
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+    const { link_status } = req.body;
+    const updatedData = {
+      status: link_status,
+    };
+
+    const result = await Data.findByIdAndUpdate(dataId, updatedData, {
+      new: true,
+    });
+    logger.info(
+      `${ip}: API /api/v1/data/update/status/:id | User: ${user.name} | Data with Id:${dataId} Updated`
+    );
+    return res.status(200).json({ result, message: "Data Status Updated." });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ result, message: "Error While updating Data status!" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -1668,4 +1697,5 @@ module.exports = {
   getNewData,
   getDataByLinkID,
   checkEmailDomain,
+  updateStatusData,
 };
