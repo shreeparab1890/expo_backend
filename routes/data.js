@@ -31,6 +31,7 @@ const {
   getDataByLinkID,
   checkEmailDomain,
   updateStatusData,
+  checkLinkDuplicate,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -225,5 +226,11 @@ router.post("/check/email/domain", validateToken, checkEmailDomain);
 //@route GET /api/v1/data/update/status/:id
 //@access private: login required
 router.post("/status/update/:id", validateToken, updateStatusData);
+
+router.get(
+  "/duplicate/check/link/:dataId/:linkId",
+  validateToken,
+  checkLinkDuplicate
+);
 
 module.exports = router;

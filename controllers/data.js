@@ -396,29 +396,55 @@ const updateData = async (req, res) => {
 
   try {
     const olddata = await Data.findOne({ _id: id });
-    const updateddata = {
-      company_name,
-      website,
-      email,
-      category,
-      status,
-      country,
-      region,
-      contact_person,
-      designation,
-      products,
-      tel,
-      mobile,
-      whatsApp,
-      city,
-      address,
-      exhibitor_type,
-      comment,
-      comment1,
-      UpdatedDate: Date.now(),
-      update_user: loggedin_user._id,
-      link: [...new Set([...olddata.link, link])],
-    };
+    let updateddata;
+    if (link == "") {
+      updateddata = {
+        company_name,
+        website,
+        email,
+        category,
+        status,
+        country,
+        region,
+        contact_person,
+        designation,
+        products,
+        tel,
+        mobile,
+        whatsApp,
+        city,
+        address,
+        exhibitor_type,
+        comment,
+        comment1,
+        UpdatedDate: Date.now(),
+        update_user: loggedin_user._id,
+      };
+    } else {
+      updateddata = {
+        company_name,
+        website,
+        email,
+        category,
+        status,
+        country,
+        region,
+        contact_person,
+        designation,
+        products,
+        tel,
+        mobile,
+        whatsApp,
+        city,
+        address,
+        exhibitor_type,
+        comment,
+        comment1,
+        UpdatedDate: Date.now(),
+        update_user: loggedin_user._id,
+        link: [...new Set([...olddata.link, link])],
+      };
+    }
 
     if (olddata) {
       const result = await Data.findByIdAndUpdate(id, updateddata, {
@@ -1668,6 +1694,43 @@ const updateStatusData = async (req, res) => {
   }
 };
 
+//@desc update status by data id
+//@route GET /api/v1/data/duplicate/check/link/:dataId/:linkId
+//@access private: login required
+const checkLinkDuplicate = async (req, res) => {
+  try {
+    const user = req.user;
+    const linkID = req.params.linkId;
+    const dataId = req.params.dataId;
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+    Data.findOne({
+      _id: dataId,
+      link: { $in: [linkID] },
+    })
+      .then((foundData) => {
+        if (foundData) {
+          /* console.log("Link is present in the Data document:", foundData); */
+          logger.info(`${ip}: API /api/v1/data/duplicate/check/link/:id `);
+          return res.status(200).json({ result: true });
+        } else {
+          /*  console.log("Link is not present in any Data document."); */
+          logger.info(`${ip}: API /api/v1/data/duplicate/check/link/:id `);
+          return res.status(200).json({ result: false });
+        }
+      })
+      .catch((error) => {
+        return res
+          .status(500)
+          .json({ error, message: "Error While updating Data status!" });
+      });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ err, message: "Error While updating Data status!" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -1698,4 +1761,5 @@ module.exports = {
   getDataByLinkID,
   checkEmailDomain,
   updateStatusData,
+  checkLinkDuplicate,
 };

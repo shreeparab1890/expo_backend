@@ -112,7 +112,7 @@ router.get("/getall/:userId", validateToken, getAllUserLinks);
 //@desc Get all Links with data
 //@route POST /api/v1/link/getall/data
 //@access Private: Role Admin / superadmin
-router.get("/getall/data", validateToken, getAllLinksData);
+router.get("/data/getall", validateToken, getAllLinksData);
 
 //@desc Get all Links with data QA (approved = false)
 //@route POST /api/v1/link/getall/data/qa
