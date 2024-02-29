@@ -793,7 +793,7 @@ const getRetriveFilterData = async (req, res) => {
 
   const {
     link_value,
-    link_name,
+    data_type,
     company_name,
     website,
     email,
@@ -818,6 +818,15 @@ const getRetriveFilterData = async (req, res) => {
     } */
     if (link_value != "0") {
       filterQuery.link = link_value;
+    }
+
+    if (data_type == "new_data" && link_value != "0") {
+      filterQuery["link.0"] = link_value;
+    } else if (data_type == "old_data" && link_value != "0") {
+      filterQuery["link.0"] = { $ne: link_value };
+      filterQuery.link = { $elemMatch: { $eq: link_value } };
+    } else if (data_type == "both" && link_value != "0") {
+      filterQuery.link = { $elemMatch: { $eq: link_value } };
     }
 
     /* if (link_name != "") {
@@ -1564,55 +1573,108 @@ const getNewData = async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
   if (loggedin_user) {
-    const { givenLink, data_type } = req.body;
+    const { givenLink, data_type, created_from, created_to } = req.body;
 
     let filteredData = [];
-    if (
-      loggedin_user.roleType != "super_admin" &&
-      loggedin_user.roleType != "admin"
-    ) {
-      if (data_type == "new_data") {
-        filteredData = await Data.find({
-          "link.0": givenLink,
-          user: loggedin_user._id,
-        });
-      } else if (data_type == "old_data") {
-        filteredData = await Data.find({
-          "link.0": { $ne: givenLink },
-          link: {
-            $elemMatch: { $eq: givenLink },
-          },
-          user: loggedin_user._id,
-        });
-      } else if (data_type == "both") {
-        filteredData = await Data.find({
-          link: {
-            $elemMatch: { $eq: givenLink },
-          },
-          user: loggedin_user._id,
-        });
+    if ((created_from != "" && created_to) != "") {
+      if (
+        loggedin_user.roleType != "super_admin" &&
+        loggedin_user.roleType != "admin"
+      ) {
+        if (data_type == "new_data") {
+          filteredData = await Data.find({
+            "link.0": givenLink,
+            user: loggedin_user._id,
+            createDate: { $gte: created_from, $lte: created_to },
+          });
+        } else if (data_type == "old_data") {
+          filteredData = await Data.find({
+            "link.0": { $ne: givenLink },
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+            user: loggedin_user._id,
+            createDate: { $gte: created_from, $lte: created_to },
+          });
+        } else if (data_type == "both") {
+          filteredData = await Data.find({
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+            user: loggedin_user._id,
+            createDate: { $gte: created_from, $lte: created_to },
+          });
+        }
+      } else {
+        if (data_type == "new_data") {
+          filteredData = await Data.find({
+            "link.0": givenLink,
+            createDate: { $gte: created_from, $lte: created_to },
+          });
+        } else if (data_type == "old_data") {
+          filteredData = await Data.find({
+            "link.0": { $ne: givenLink },
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+            createDate: { $gte: created_from, $lte: created_to },
+          });
+        } else if (data_type == "both") {
+          filteredData = await Data.find({
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+            createDate: { $gte: created_from, $lte: created_to },
+          });
+        }
       }
     } else {
-      if (data_type == "new_data") {
-        filteredData = await Data.find({
-          "link.0": givenLink,
-        });
-      } else if (data_type == "old_data") {
-        filteredData = await Data.find({
-          "link.0": { $ne: givenLink },
-          link: {
-            $elemMatch: { $eq: givenLink },
-          },
-        });
-      } else if (data_type == "both") {
-        filteredData = await Data.find({
-          link: {
-            $elemMatch: { $eq: givenLink },
-          },
-        });
+      if (
+        loggedin_user.roleType != "super_admin" &&
+        loggedin_user.roleType != "admin"
+      ) {
+        if (data_type == "new_data") {
+          filteredData = await Data.find({
+            "link.0": givenLink,
+            user: loggedin_user._id,
+          });
+        } else if (data_type == "old_data") {
+          filteredData = await Data.find({
+            "link.0": { $ne: givenLink },
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+            user: loggedin_user._id,
+          });
+        } else if (data_type == "both") {
+          filteredData = await Data.find({
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+            user: loggedin_user._id,
+          });
+        }
+      } else {
+        if (data_type == "new_data") {
+          filteredData = await Data.find({
+            "link.0": givenLink,
+          });
+        } else if (data_type == "old_data") {
+          filteredData = await Data.find({
+            "link.0": { $ne: givenLink },
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+          });
+        } else if (data_type == "both") {
+          filteredData = await Data.find({
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+          });
+        }
       }
     }
-
     if (filteredData.length > 0) {
       return res
         .status(200)
