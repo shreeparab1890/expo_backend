@@ -16,6 +16,7 @@ const {
   changeStatus,
   changeAllStatus,
   UpdateLink,
+  UpdateLinkComment,
   getLink_generalise,
   deleteLink,
   getFilterLinks,
@@ -79,6 +80,16 @@ router.put(
   ],
   validateToken,
   UpdateLink
+);
+
+//@desc Update  Link
+//@route POST /api/v1/link/update/:id
+//@access Private: Role Admin / superadmin
+router.put(
+  "/update/comment/:id",
+  [body("link_comment", "Enter Link Comment")],
+  validateToken,
+  UpdateLinkComment
 );
 
 //@desc Assign Link to user

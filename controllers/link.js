@@ -242,6 +242,36 @@ const UpdateLink = async (req, res) => {
   }
 };
 
+//@desc Update  Link
+//@route POST /api/v1/link/update/comment/:id
+//@access Private: Role Admin / superadmin
+const UpdateLinkComment = async (req, res) => {
+  const errors = validationResult(req);
+  const user = req.user;
+  const linkId = req.params.id;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (!errors.isEmpty()) {
+    logger.error(`${ip}: API /api/v1/link/update/:id responnded with Error `);
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const data = matchedData(req);
+
+  const updatedLink = {
+    link_comment: data.link_comment,
+  };
+
+  const result = await Link.findByIdAndUpdate(linkId, updatedLink, {
+    new: true,
+  });
+  logger.info(
+    `${ip}: API /api/v1/link/update/comment/:id | User: ${user.name} | Link with Id:${linkId} Updated`
+  );
+
+  return res.status(200).json({ result, message: "Link comment Updated." });
+};
+
 //@desc Assign Link to user
 //@route POST /api/v1/link/assign
 //@access Private: Role Admin / superadmin
@@ -1679,6 +1709,7 @@ module.exports = {
   changeStatus,
   changeAllStatus,
   UpdateLink,
+  UpdateLinkComment,
   getLink_generalise,
   deleteLink,
   getFilterLinks,

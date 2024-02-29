@@ -642,7 +642,6 @@ const getDataByGeneraliseFilter = async (req, res) => {
 const getFilterData = async (req, res) => {
   const loggedin_user = req.user;
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-
   const {
     link_value,
     website,
@@ -794,6 +793,7 @@ const getRetriveFilterData = async (req, res) => {
 
   const {
     link_value,
+    link_name,
     company_name,
     website,
     email,
@@ -819,6 +819,12 @@ const getRetriveFilterData = async (req, res) => {
     if (link_value != "0") {
       filterQuery.link = link_value;
     }
+
+    /* if (link_name != "") {
+      filterQuery["link.name"] = {
+        $elemMatch: { $regex: new RegExp(`.*${link_name}.*`, "i") },
+      };
+    } */
 
     if (company_name) {
       filterQuery.company_name = {
