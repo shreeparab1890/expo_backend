@@ -16,7 +16,7 @@ const verifyWhatsappNumber = async (req, res) => {
   if (user) {
     var config = {
       method: "get",
-      url: `https://api.p.2chat.io/open/whatsapp/check-number/+919923826906/${mobile_no}`,
+      url: `https://api.p.2chat.io/open/whatsapp/check-number/+917498164417/${mobile_no}`,
       headers: {
         "X-User-API-Key": process.env.CHAT_USER_API,
       },

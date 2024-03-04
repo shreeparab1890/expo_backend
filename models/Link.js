@@ -76,6 +76,14 @@ const LinkSchema = new Schema({
     type: "ObjectId",
     ref: User,
   },
+  UpdatedDate: {
+    type: Date,
+    default: Date.now,
+  },
+  update_user: {
+    type: "ObjectId",
+    ref: User,
+  },
   approved: {
     type: Boolean,
     default: true,
