@@ -596,6 +596,8 @@ const getFilterData = async (req, res) => {
     created_from,
     created_to,
     company_name,
+    inquiry_type,
+    inq_for,
   } = req.body;
 
   if (loggedin_user) {
@@ -643,6 +645,16 @@ const getFilterData = async (req, res) => {
       filterQuery.createDate = { $gte: created_from, $lte: created_to };
     }
 
+    if (inquiry_type != "1") {
+      filterQuery.inquiry_type = inquiry_type;
+    }
+
+    if (inq_for != "1") {
+      filterQuery.inq_for = {
+        $regex: new RegExp(`.*${inq_for}.*`, "i"),
+      };
+    }
+
     if (
       loggedin_user.roleType != "super_admin" &&
       loggedin_user.roleType != "admin"
@@ -650,7 +662,7 @@ const getFilterData = async (req, res) => {
       filterQuery.user = loggedin_user._id; //User Specific
     }
 
-    /* console.log(filterQuery); */
+    console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];

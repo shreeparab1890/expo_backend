@@ -46,7 +46,7 @@ router.post(
       min: 2,
     }),
     body("inquiry_type", "Enter a valid Inquiry Type").isLength({ min: 2 }),
-    body("inq_for"),
+    body("inq_for", "Select a valid Inquiry Reason").isLength({ min: 2 }),
     body("inquiry_source", "Enter a valid Inquiry Source").notEmpty(),
     body("inquiry_date", "Enter a valid Inquiry Date").notEmpty(),
     body("exhibitor_date", "Enter a valid Exhibitor Date"),
