@@ -98,6 +98,7 @@ const createData = async (req, res) => {
       comment1: data.comment1,
       user: data.user,
       link: data.link,
+      source_user: user._id,
     })
       .then((link) => {
         logger.info(
@@ -757,7 +758,9 @@ const getFilterData = async (req, res) => {
 
     let filteredData = [];
     if (no_of_keys > 1) {
-      filteredData = await Data.find(filterQuery).populate("link");
+      filteredData = await Data.find(filterQuery)
+        .populate("link")
+        .populate("user");
     }
 
     if (filteredData.length > 0) {
@@ -898,7 +901,10 @@ const getRetriveFilterData = async (req, res) => {
 
     let filteredData = [];
     if (no_of_keys > 1) {
-      filteredData = await Data.find(filterQuery).populate("link");
+      filteredData = await Data.find(filterQuery)
+        .populate("link")
+        .populate("user")
+        .populate("update_user");
     }
 
     if (filteredData.length > 0) {
