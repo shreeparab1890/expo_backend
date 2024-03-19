@@ -1649,7 +1649,9 @@ const getNewData = async (req, res) => {
             "link.0": givenLink,
             user: loggedin_user._id,
             createDate: { $gte: created_from, $lte: created_to },
-          });
+          })
+            .populate("user")
+            .populate("link");
         } else if (data_type == "old_data") {
           filteredData = await Data.find({
             "link.0": { $ne: givenLink },
@@ -1658,7 +1660,9 @@ const getNewData = async (req, res) => {
             },
             user: loggedin_user._id,
             createDate: { $gte: created_from, $lte: created_to },
-          });
+          })
+            .populate("user")
+            .populate("link");
         } else if (data_type == "both") {
           filteredData = await Data.find({
             link: {
@@ -1666,14 +1670,18 @@ const getNewData = async (req, res) => {
             },
             user: loggedin_user._id,
             createDate: { $gte: created_from, $lte: created_to },
-          });
+          })
+            .populate("user")
+            .populate("link");
         }
       } else {
         if (data_type == "new_data") {
           filteredData = await Data.find({
             "link.0": givenLink,
             createDate: { $gte: created_from, $lte: created_to },
-          });
+          })
+            .populate("user")
+            .populate("link");
         } else if (data_type == "old_data") {
           filteredData = await Data.find({
             "link.0": { $ne: givenLink },
@@ -1681,14 +1689,18 @@ const getNewData = async (req, res) => {
               $elemMatch: { $eq: givenLink },
             },
             createDate: { $gte: created_from, $lte: created_to },
-          });
+          })
+            .populate("user")
+            .populate("link");
         } else if (data_type == "both") {
           filteredData = await Data.find({
             link: {
               $elemMatch: { $eq: givenLink },
             },
             createDate: { $gte: created_from, $lte: created_to },
-          });
+          })
+            .populate("user")
+            .populate("link");
         }
       }
     } else {
@@ -1700,7 +1712,9 @@ const getNewData = async (req, res) => {
           filteredData = await Data.find({
             "link.0": givenLink,
             user: loggedin_user._id,
-          });
+          })
+            .populate("user")
+            .populate("link");
         } else if (data_type == "old_data") {
           filteredData = await Data.find({
             "link.0": { $ne: givenLink },
@@ -1708,14 +1722,18 @@ const getNewData = async (req, res) => {
               $elemMatch: { $eq: givenLink },
             },
             user: loggedin_user._id,
-          });
+          })
+            .populate("user")
+            .populate("link");
         } else if (data_type == "both") {
           filteredData = await Data.find({
             link: {
               $elemMatch: { $eq: givenLink },
             },
             user: loggedin_user._id,
-          });
+          })
+            .populate("user")
+            .populate("link");
         }
       } else {
         if (data_type == "new_data") {
