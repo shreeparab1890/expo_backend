@@ -6,6 +6,7 @@ const {
   uploadOldData,
   getFilterData,
   getAllData,
+  getDataByEmail,
 } = require("../controllers/oldData.js");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -19,5 +20,7 @@ router.get("/upload", validateToken, uploadOldData);
 router.post("/filter", validateToken, getFilterData);
 
 router.get("/getall", validateToken, getAllData);
+
+router.post("/get/byemail", validateToken, getDataByEmail);
 
 module.exports = router;

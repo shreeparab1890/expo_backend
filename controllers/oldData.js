@@ -32,64 +32,104 @@ const testUserAPI = async (req, res) => {
 const uploadOldData = async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const user = req.user;
+  const folderPath = path.join(__dirname, "files2Upload");
+  const fileNames = fs.readdirSync(folderPath);
+  console.log(fileNames);
 
   if (user) {
-    const workbook = new excel.Workbook();
-    const filePath = path.join(__dirname, "upload_data_old.xlsx");
+    for (const fileName of fileNames) {
+      if (fileName.endsWith(".xlsx")) {
+        const workbook = new excel.Workbook();
+        const filePath = path.join(folderPath, fileName);
 
-    workbook.xlsx
-      .readFile(filePath)
-      .then(() => {
-        const worksheet = workbook.getWorksheet(1);
-        const newDataArray = [];
-
-        worksheet.eachRow((row, rowIndex) => {
-          if (rowIndex > 1) {
-            const data = {
-              company_name: String(row.getCell(1).value) || "",
-              email: String(row.getCell(2).value) || "",
-              website: String(row.getCell(3).value) || "",
-              product: String(row.getCell(4).value) || "",
-              category: String(row.getCell(5).value) || "",
-              source: String(row.getCell(6).value) || "",
-              contact: String(row.getCell(7).value) || "",
-              designation: String(row.getCell(8).value) || "",
-              tel: String(row.getCell(9).value) || "",
-              mobile: String(row.getCell(10).value) || "",
-              country: String(row.getCell(11).value) || "",
-              region: String(row.getCell(12).value) || "",
-              comment: String(row.getCell(13).value) || "",
-              address: String(row.getCell(14).value) || "",
-              feedDate: String(row.getCell(15).value) || "",
-              lastupdateddate: String(row.getCell(16).value) || "",
-              status: String(row.getCell(17).value) || "",
-            };
-
-            const email = String(row.getCell(2).value);
-            const oldEmail = OldData.findOne({ email: email });
-            if (!oldEmail) {
-              newDataArray.push(new OldData(data));
-            }
-          }
-        });
-
-        // Save all newData documents in parallel
-        Promise.all(newDataArray.map((newData) => newData.save()))
+        workbook.xlsx
+          .readFile(filePath)
           .then(() => {
-            logger.info(
-              `${ip}: API /api/v1/old/data/upload | User: ${user.name} | responded with Data uploaded successfully`
-            );
-            res.status(200).json({ message: "Data uploaded successfully" });
+            const worksheet = workbook.getWorksheet(1);
+            const newDataArray = [];
+            //F-E
+            worksheet.eachRow((row, rowIndex) => {
+              if (rowIndex > 1) {
+                //Compute Exhibitor Type
+                let exhibitor_type = "";
+                if (String(row.getCell(13).value).includes("F-E")) {
+                  exhibitor_type = "Foreign Exhibitor";
+                } else {
+                  exhibitor_type = "Local Exhibitor";
+                }
+
+                //Compute WhatsApp Number
+                let whatsapp = "";
+                if (
+                  String(row.getCell(10).value).includes("(W)") ||
+                  String(row.getCell(10).value).includes("(w)")
+                ) {
+                  const mobileNumbers = [];
+                  const numbersArray = String(row.getCell(10).value).split(
+                    ", "
+                  );
+                  for (const number of numbersArray) {
+                    if (number.includes("(W)")) {
+                      mobileNumbers.push(number.trim());
+                    }
+                  }
+                  const joined_num = mobileNumbers.join(", ");
+                  whatsapp = joined_num.replace(/\(w\)|\(W\)/gi, "");
+                } else {
+                  whatsapp = "";
+                }
+
+                const data = {
+                  company_name: String(row.getCell(1).value) || "",
+                  email: String(row.getCell(2).value) || "",
+                  website: String(row.getCell(3).value) || "",
+                  product: String(row.getCell(4).value) || "",
+                  category: String(row.getCell(5).value) || "",
+                  source: String(row.getCell(6).value) || "",
+                  contact: String(row.getCell(7).value) || "",
+                  designation: String(row.getCell(8).value) || "",
+                  tel: String(row.getCell(9).value) || "",
+                  mobile: String(row.getCell(10).value).replace(
+                    /\(w\)|\(W\)/gi,
+                    ""
+                  ), // Replace (W) or (w) from the string if exists
+                  whatsapp: whatsapp.trim(),
+                  country: String(row.getCell(11).value) || "",
+                  region: String(row.getCell(12).value) || "",
+                  comment: String(row.getCell(13).value) || "",
+                  address: String(row.getCell(14).value) || "",
+                  feedDate: String(row.getCell(15).value) || "",
+                  lastupdateddate: String(row.getCell(16).value) || "",
+                  status: String(row.getCell(17).value) || "",
+                  exhibitor_type,
+                };
+
+                //const email = String(row.getCell(2).value);
+                //const oldEmail = OldData.findOne({ email: email });
+                //if (!oldEmail) {
+                newDataArray.push(new OldData(data));
+                //}
+              }
+            });
+
+            // Save all newData documents in parallel
+            Promise.all(newDataArray.map((newData) => newData.save()))
+              .then(() => {})
+              .catch((err) => {
+                console.error("Error saving data:", err);
+                //res.status(500).json({ message: "Error saving data" });
+              });
           })
           .catch((err) => {
-            console.error("Error saving data:", err);
-            res.status(500).json({ message: "Error saving data" });
+            console.error("Error reading Excel file:", err);
+            //res.status(500).json({ message: "Internal server error" });
           });
-      })
-      .catch((err) => {
-        console.error("Error reading Excel file:", err);
-        res.status(500).json({ message: "Internal server error" });
-      });
+      }
+    }
+    logger.info(
+      `${ip}: API /api/v1/old/data/upload | User: ${user.name} | responded with Data uploaded successfully`
+    );
+    res.status(200).json({ message: "Data uploaded successfully" });
   } else {
     logger.error(
       `${ip}: API /api/v1/old/data/upload | User: ${user.name} | responded with User is not Authorized`
@@ -115,6 +155,8 @@ const getFilterData = async (req, res) => {
     country,
     region,
     status,
+    whatsapp,
+    exhibitor_type,
   } = req.body;
 
   if (loggedin_user) {
@@ -169,6 +211,10 @@ const getFilterData = async (req, res) => {
       filterQuery.mobile = { $regex: new RegExp(`.*${mobile}.*`, "i") };
     }
 
+    if (whatsapp) {
+      filterQuery.whatsapp = { $regex: new RegExp(`.*${whatsapp}.*`, "i") };
+    }
+
     if (tel) {
       filterQuery.tel = { $regex: new RegExp(`.*${tel}.*`, "i") };
     }
@@ -179,6 +225,10 @@ const getFilterData = async (req, res) => {
 
     if (country != "1") {
       filterQuery.country = country;
+    }
+
+    if (exhibitor_type != "1") {
+      filterQuery.exhibitor_type = exhibitor_type;
     }
 
     if (region) {
@@ -244,9 +294,44 @@ const getAllData = async (req, res) => {
   }
 };
 
+const getDataByEmail = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const { email } = req.body;
+  if (loggedin_user) {
+    const data = await OldData.find({
+      email,
+    });
+
+    if (data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/old/data/get/byemail/ | User: ${loggedin_user.name} | responnded with Success `
+      );
+
+      return await res.status(200).json({
+        data: data,
+        message: "Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/old/data/get/byemail | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/old/data/get/byemail | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   uploadOldData,
   getFilterData,
   getAllData,
+  getDataByEmail,
 };

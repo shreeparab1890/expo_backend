@@ -37,6 +37,9 @@ const OldDataSchema = new Schema({
   mobile: {
     type: String,
   },
+  whatsapp: {
+    type: String,
+  },
   country: {
     type: String,
   },
@@ -44,6 +47,9 @@ const OldDataSchema = new Schema({
     type: String,
   },
   status: {
+    type: String,
+  },
+  exhibitor_type: {
     type: String,
   },
   address: {
