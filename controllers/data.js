@@ -1651,6 +1651,7 @@ const getNewData = async (req, res) => {
             createDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         } else if (data_type == "old_data") {
           filteredData = await Data.find({
@@ -1662,6 +1663,7 @@ const getNewData = async (req, res) => {
             createDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         } else if (data_type == "both") {
           filteredData = await Data.find({
@@ -1672,6 +1674,7 @@ const getNewData = async (req, res) => {
             createDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         }
       } else {
@@ -1681,6 +1684,7 @@ const getNewData = async (req, res) => {
             createDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         } else if (data_type == "old_data") {
           filteredData = await Data.find({
@@ -1691,6 +1695,7 @@ const getNewData = async (req, res) => {
             createDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         } else if (data_type == "both") {
           filteredData = await Data.find({
@@ -1700,6 +1705,7 @@ const getNewData = async (req, res) => {
             createDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         }
       }
@@ -1714,6 +1720,7 @@ const getNewData = async (req, res) => {
             user: loggedin_user._id,
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         } else if (data_type == "old_data") {
           filteredData = await Data.find({
@@ -1724,6 +1731,7 @@ const getNewData = async (req, res) => {
             user: loggedin_user._id,
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         } else if (data_type == "both") {
           filteredData = await Data.find({
@@ -1733,6 +1741,7 @@ const getNewData = async (req, res) => {
             user: loggedin_user._id,
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         }
       } else {
@@ -1741,6 +1750,7 @@ const getNewData = async (req, res) => {
             "link.0": givenLink,
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         } else if (data_type == "old_data") {
           filteredData = await Data.find({
@@ -1750,6 +1760,7 @@ const getNewData = async (req, res) => {
             },
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         } else if (data_type == "both") {
           filteredData = await Data.find({
@@ -1758,11 +1769,13 @@ const getNewData = async (req, res) => {
             },
           })
             .populate("user")
+            .populate("update_user")
             .populate("link");
         }
       }
     }
     if (filteredData.length > 0) {
+      //console.log(filteredData);
       return res
         .status(200)
         .send({ data: filteredData, message: "Data Retrived Successfully" });
