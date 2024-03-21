@@ -72,6 +72,7 @@ const createData = async (req, res) => {
       consultant_name: data.consultant_name,
       inquiry_type: data.inquiry_type,
       inq_for: data.inq_for,
+      exhi_for: data.exhi_for,
       inquiry_source: data.inquiry_source,
       inquiry_date: data.inquiry_date,
       exhibitor_date: data.exhibitor_date,
@@ -127,6 +128,7 @@ const updateData = async (req, res) => {
     consultant_name,
     inquiry_type,
     inq_for,
+    exhi_for,
     inquiry_source,
     inquiry_date,
     exhibitor_date,
@@ -165,6 +167,7 @@ const updateData = async (req, res) => {
       consultant_name,
       inquiry_type,
       inq_for,
+      exhi_for,
       inquiry_source,
       inquiry_date,
       exhibitor_date,
@@ -598,6 +601,7 @@ const getFilterData = async (req, res) => {
     company_name,
     inquiry_type,
     inq_for,
+    keyword,
   } = req.body;
 
   if (loggedin_user) {
@@ -653,6 +657,37 @@ const getFilterData = async (req, res) => {
       filterQuery.inq_for = {
         $regex: new RegExp(`.*${inq_for}.*`, "i"),
       };
+    }
+
+    if (keyword) {
+      //console.log("keyword");
+      //console.log(keyword);
+      const keywordRegex = new RegExp(`.*${keyword}.*`, "i");
+      const keywordFields = [
+        "company_name",
+        "website",
+        "email",
+        "category",
+        "status",
+        "country",
+        "region",
+        "designation",
+        "products",
+        "contact_person",
+        "mobile",
+        "tel",
+        "city",
+        "exhibitor_type",
+        "address",
+        "comment",
+        "comment1",
+        "inquiry_type",
+        "inq_for",
+        "exhi_for",
+        "inquiry_source",
+      ];
+      const orQuery = keywordFields.map((field) => ({ [field]: keywordRegex }));
+      filterQuery.$or = orQuery;
     }
 
     if (

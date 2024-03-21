@@ -50,6 +50,9 @@ const InquiryDataSchema = new Schema({
   inq_for: {
     type: String,
   },
+  exhi_for: {
+    type: String,
+  },
   inquiry_source: {
     type: String,
     required: true,

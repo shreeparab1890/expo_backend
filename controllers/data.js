@@ -810,6 +810,7 @@ const getRetriveFilterData = async (req, res) => {
     created_to,
     approved_type,
     user,
+    keyword,
   } = req.body;
 
   if (loggedin_user) {
@@ -890,13 +891,40 @@ const getRetriveFilterData = async (req, res) => {
       filterQuery.user = user;
     }
 
+    if (keyword) {
+      //console.log("keyword");
+      //console.log(keyword);
+      const keywordRegex = new RegExp(`.*${keyword}.*`, "i");
+      const keywordFields = [
+        "company_name",
+        "website",
+        "email",
+        "category",
+        "status",
+        "country",
+        "region",
+        "designation",
+        "products",
+        "contact_person",
+        "mobile",
+        "tel",
+        "city",
+        "exhibitor_type",
+        "address",
+        "comment",
+        "comment1",
+      ];
+      const orQuery = keywordFields.map((field) => ({ [field]: keywordRegex }));
+      filterQuery.$or = orQuery;
+    }
+
     /*  if (
       loggedin_user.roleType != "super_admin" &&
       loggedin_user.roleType != "admin"
     ) {
       filterQuery.user = loggedin_user._id; //User Specific
     } */
-    console.log(filterQuery);
+    //console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];

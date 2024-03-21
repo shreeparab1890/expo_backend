@@ -1012,7 +1012,7 @@ const getCountContinent = async (req, res) => {
     },
     {
       country: "Bahrain",
-      continent: "Asia",
+      continent: "Gulf",
     },
     {
       country: "Bangladesh",
@@ -1396,7 +1396,7 @@ const getCountContinent = async (req, res) => {
     },
     {
       country: "Kuwait",
-      continent: "Asia",
+      continent: "Gulf",
     },
     {
       country: "Kyrgyzstan",
@@ -1596,7 +1596,7 @@ const getCountContinent = async (req, res) => {
     },
     {
       country: "Oman",
-      continent: "Asia",
+      continent: "Gulf",
     },
     {
       country: "Pakistan",
@@ -1648,7 +1648,7 @@ const getCountContinent = async (req, res) => {
     },
     {
       country: "Qatar",
-      continent: "Asia",
+      continent: "Gulf",
     },
     {
       country: "Reunion",
@@ -1700,7 +1700,7 @@ const getCountContinent = async (req, res) => {
     },
     {
       country: "Saudi Arabia",
-      continent: "Asia",
+      continent: "Gulf",
     },
     {
       country: "Scotland",
@@ -1861,7 +1861,7 @@ const getCountContinent = async (req, res) => {
     },
     {
       country: "United Arab Emirates",
-      continent: "Asia",
+      continent: "Gulf",
     },
     {
       country: "United Kingdom",
