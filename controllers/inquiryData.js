@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
 const { validationResult, matchedData } = require("express-validator");
 const InquiryData = require("../models/Inquiry_data.js");
+const Data = require("../models/Data.js");
 const logger = require("../config/logger.js");
 
 //@desc Test Inquiry Data API
@@ -818,6 +819,288 @@ const checkEmailDomain = async (req, res) => {
   }
 };
 
+const getCombinedFilterData = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  const {
+    event_name,
+    website,
+    email,
+    category,
+    status,
+    country,
+    region,
+    products,
+    created_from,
+    created_to,
+    company_name,
+    inquiry_type,
+    inq_for,
+    keyword,
+    link_value,
+    data_type,
+    designation,
+    approved_type,
+    user,
+  } = req.body;
+
+  if (loggedin_user) {
+    const filterQueryData = {};
+    const filterQueryInquiryData = {};
+    // Logic for filtering based on specific criteria for Data collection
+    // Repeat similar logic for other fields in the Data collection
+    if (link_value != "0") {
+      filterQueryData.link = link_value;
+    }
+
+    if (data_type == "new_data" && link_value != "0") {
+      filterQueryData["link.0"] = link_value;
+    } else if (data_type == "old_data" && link_value != "0") {
+      filterQueryData["link.0"] = { $ne: link_value };
+      filterQueryData.link = { $elemMatch: { $eq: link_value } };
+    } else if (data_type == "both" && link_value != "0") {
+      filterQueryData.link = { $elemMatch: { $eq: link_value } };
+    }
+
+    if (company_name) {
+      filterQueryData.company_name = {
+        $regex: new RegExp(`.*${company_name}.*`, "i"),
+      };
+    }
+
+    if (website) {
+      filterQueryData.website = { $regex: new RegExp(`.*${website}.*`, "i") };
+    }
+
+    if (email) {
+      filterQueryData.email = { $regex: new RegExp(`.*${email}.*`, "i") };
+    }
+
+    if (category != "1") {
+      filterQueryData.category = {
+        $regex: new RegExp(`.*${category}.*`, "i"),
+      };
+    }
+
+    if (status != "1") {
+      filterQueryData.status = status;
+    } else if (status == "1") {
+      filterQueryData.status = { $ne: "Removes" };
+    }
+
+    if (country != "1") {
+      filterQueryData.country = country;
+    }
+
+    if (region) {
+      filterQueryData.region = region;
+    }
+
+    if (designation) {
+      filterQueryData.designation = designation;
+    }
+
+    if (products) {
+      filterQueryData.products = {
+        $regex: new RegExp(`.*${products}.*`, "i"),
+      };
+    }
+
+    if (created_from && created_to) {
+      filterQueryData.createDate = { $gte: created_from, $lte: created_to };
+    }
+
+    if (approved_type != "1") {
+      filterQueryData.approved = approved_type;
+    }
+
+    // Logic for filtering based on specific criteria for InquiryData collection
+    // Repeat similar logic for other fields in the InquiryData collection
+    if (event_name != "0") {
+      filterQueryInquiryData.inquired_event_name = { $in: event_name };
+    }
+
+    if (company_name) {
+      filterQueryInquiryData.company_name = {
+        $regex: new RegExp(`.*${company_name}.*`, "i"),
+      };
+    }
+
+    if (website) {
+      filterQueryInquiryData.website = {
+        $regex: new RegExp(`.*${website}.*`, "i"),
+      };
+    }
+
+    if (email) {
+      filterQueryInquiryData.email = {
+        $regex: new RegExp(`.*${email}.*`, "i"),
+      };
+    }
+
+    if (category != "1") {
+      filterQueryInquiryData.category = {
+        $regex: new RegExp(`.*${category}.*`, "i"),
+      };
+    }
+
+    if (status != "1") {
+      filterQueryInquiryData.status = status;
+    }
+
+    if (country != "1") {
+      filterQueryInquiryData.country = country;
+    }
+
+    if (region) {
+      filterQueryInquiryData.region = region;
+    }
+
+    if (products) {
+      filterQueryInquiryData.products = {
+        $regex: new RegExp(`.*${products}.*`, "i"),
+      };
+    }
+
+    if (created_from && created_to) {
+      filterQueryInquiryData.createDate = {
+        $gte: created_from,
+        $lte: created_to,
+      };
+    }
+
+    if (inquiry_type != "1") {
+      filterQueryInquiryData.inquiry_type = inquiry_type;
+    }
+
+    if (inq_for != "1") {
+      filterQueryInquiryData.inq_for = {
+        $regex: new RegExp(`.*${inq_for}.*`, "i"),
+      };
+    }
+
+    // Logic for keyword search in both collections
+    if (keyword) {
+      const keywordRegex = new RegExp(`.*${keyword}.*`, "i");
+      const keywordFieldsData = [
+        "company_name",
+        "website",
+        "email",
+        "category",
+        "status",
+        "country",
+        "region",
+        "designation",
+        "products",
+        "contact_person",
+        "mobile",
+        "tel",
+        "city",
+        "exhibitor_type",
+        "address",
+        "comment",
+        "comment1",
+      ];
+      const keywordFieldsInquiryData = [
+        "company_name",
+        "website",
+        "email",
+        "category",
+        "status",
+        "country",
+        "region",
+        "designation",
+        "products",
+        "contact_person",
+        "mobile",
+        "tel",
+        "city",
+        "exhibitor_type",
+        "address",
+        "comment",
+        "comment1",
+        "inquiry_type",
+        "inq_for",
+        "exhi_for",
+        "inquiry_source",
+      ];
+
+      const orQueryData = keywordFieldsData.map((field) => ({
+        [field]: keywordRegex,
+      }));
+      const orQueryInquiryData = keywordFieldsInquiryData.map((field) => ({
+        [field]: keywordRegex,
+      }));
+
+      filterQueryData.$or = orQueryData;
+      filterQueryInquiryData.$or = orQueryInquiryData;
+    }
+    // Logic for user-specific filtering (assuming user is logged in)
+    if (
+      loggedin_user.roleType !== "super_admin" &&
+      loggedin_user.roleType !== "admin"
+    ) {
+      filterQueryData.user = loggedin_user._id; // User Specific for Data collection
+      filterQueryInquiryData.user = loggedin_user._id; // User Specific for InquiryData collection
+    }
+
+    console.log("Data Filter Query:", filterQueryData);
+    console.log("InquiryData Filter Query:", filterQueryInquiryData);
+
+    let filteredData = [];
+    let filteredInquiryData = [];
+
+    // Check if data is present in Data collection
+    if (Object.keys(filterQueryData).length > 0) {
+      filteredData = await Data.find(filterQueryData)
+        .populate("link")
+        .populate("user")
+        .populate("update_user");
+    }
+
+    // Check if data is present in InquiryData collection
+    if (Object.keys(filterQueryInquiryData).length > 0) {
+      filteredInquiryData = await InquiryData.find(filterQueryInquiryData)
+        .populate("inquired_event_name")
+        .populate("consultant_name")
+        .populate("user");
+    }
+
+    let finalFilteredData = [];
+
+    // Prioritize InquiryData results if data is present in both collections
+    if (filteredInquiryData.length > 0) {
+      finalFilteredData = filteredInquiryData;
+    } else {
+      finalFilteredData = filteredData;
+    }
+
+    if (finalFilteredData.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responded with Success`
+      );
+      return res.status(200).json({
+        data: finalFilteredData,
+        message: "Data retrieved successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responded with Empty, i.e., Data was not found`
+      );
+      return res.status(200).json({
+        data: [],
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responded with User is not Authorized`
+    );
+    return res.status(401).send({ message: "User is not Authorized" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -835,4 +1118,5 @@ module.exports = {
   getFilterData,
   getDataByEventID,
   checkEmailDomain,
+  getCombinedFilterData,
 };
