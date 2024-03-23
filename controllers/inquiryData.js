@@ -819,10 +819,9 @@ const checkEmailDomain = async (req, res) => {
   }
 };
 
-const getCombinedFilterData = async (req, res) => {
+/* const getCombinedFilterData = async (req, res) => {
   const loggedin_user = req.user;
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-
   const {
     event_name,
     website,
@@ -846,144 +845,214 @@ const getCombinedFilterData = async (req, res) => {
   } = req.body;
 
   if (loggedin_user) {
-    const filterQueryData = {};
-    const filterQueryInquiryData = {};
-    // Logic for filtering based on specific criteria for Data collection
-    // Repeat similar logic for other fields in the Data collection
+    try {
+      // Define the aggregation pipeline stages
+      const pipeline = [];
+
+      // Match stage to filter based on provided criteria
+      const matchCriteria = {};
+      if (event_name) matchCriteria.inquired_event_name = event_name;
+      if (website) matchCriteria.website = website;
+      if (email) matchCriteria.email = email;
+      if (category) matchCriteria.category = category;
+      if (status) matchCriteria.status = status;
+      if (country) matchCriteria.country = country;
+      if (region) matchCriteria.region = region;
+      if (products) matchCriteria.products = products;
+      if (created_from || created_to) {
+        matchCriteria.createDate = {};
+        if (created_from)
+          matchCriteria.createDate.$gte = new Date(created_from);
+        if (created_to) matchCriteria.createDate.$lte = new Date(created_to);
+      }
+      if (company_name) matchCriteria.company_name = company_name;
+      if (inquiry_type) matchCriteria.inquiry_type = inquiry_type;
+      if (inq_for) matchCriteria.inq_for = inq_for;
+      if (keyword) {
+        matchCriteria.$or = [
+          { company_name: { $regex: keyword, $options: "i" } },
+          { email: { $regex: keyword, $options: "i" } },
+          { products: { $regex: keyword, $options: "i" } },
+          { contact_person: { $regex: keyword, $options: "i" } },
+          { designation: { $regex: keyword, $options: "i" } },
+          { comment: { $regex: keyword, $options: "i" } },
+          { comment1: { $regex: keyword, $options: "i" } },
+        ];
+      }
+      if (link_value) matchCriteria.link = link_value;
+      if (data_type) matchCriteria.active = data_type === "active";
+      if (designation) matchCriteria.designation = designation;
+      if (approved_type !== undefined)
+        matchCriteria.approved = approved_type === "approved";
+      if (user) matchCriteria.user = user;
+
+      pipeline.push({ $match: matchCriteria });
+
+      // Add lookup stage to fetch related data from both collections
+      pipeline.push({
+        $lookup: {
+          from: "inquirydatas",
+          let: { dataUserId: "$user" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$user", "$$dataUserId"] },
+              },
+            },
+          ],
+          as: "inquiryData",
+        },
+      });
+
+      // Add project stage to prioritize inquiryData if it exists
+      pipeline.push({
+        $project: {
+          mergedData: { $concatArrays: ["$inquiryData", ["$ROOT"]] },
+        },
+      });
+
+      // Add unwind and replaceRoot stages to flatten the result
+      pipeline.push({ $unwind: "$mergedData" });
+      pipeline.push({ $replaceRoot: { newRoot: "$mergedData" } });
+
+      // Execute the aggregation pipeline
+      const results = await Data.aggregate(pipeline);
+
+      // Send the filtered results in the response
+      res.status(200).json(results);
+    } catch (error) {
+      console.error("Error in checkEmailDomain:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/inquiry/data/check/email/domain | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    res.status(401).send({ message: "User is not Autherized" });
+  }
+}; */
+
+const getCombinedFilterData = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const {
+    event_name,
+    website,
+    email,
+    category,
+    status,
+    country,
+    region,
+    products,
+    created_from,
+    created_to,
+    company_name,
+    inquiry_type,
+    inq_for,
+    exhi_for,
+    keyword,
+    link_value,
+    data_type,
+    designation,
+    approved_type,
+    user,
+  } = req.body;
+  console.log(status);
+  /* console.log(
+    event_name,
+    website,
+    email,
+    category,
+    status,
+    country,
+    region,
+    products,
+    created_from,
+    created_to,
+    company_name,
+    inquiry_type,
+    inq_for,
+    exhi_for,
+    keyword,
+    link_value,
+    data_type,
+    designation,
+    approved_type,
+    user
+  ); */
+  if (loggedin_user) {
+    // Filter Data
+
+    const filterDataQuery = {};
+
     if (link_value != "0") {
-      filterQueryData.link = link_value;
+      filterDataQuery.link = link_value;
     }
 
     if (data_type == "new_data" && link_value != "0") {
-      filterQueryData["link.0"] = link_value;
+      filterDataQuery["link.0"] = link_value;
     } else if (data_type == "old_data" && link_value != "0") {
-      filterQueryData["link.0"] = { $ne: link_value };
-      filterQueryData.link = { $elemMatch: { $eq: link_value } };
+      filterDataQuery["link.0"] = { $ne: link_value };
+      filterDataQuery.link = { $elemMatch: { $eq: link_value } };
     } else if (data_type == "both" && link_value != "0") {
-      filterQueryData.link = { $elemMatch: { $eq: link_value } };
+      filterDataQuery.link = { $elemMatch: { $eq: link_value } };
     }
 
     if (company_name) {
-      filterQueryData.company_name = {
+      filterDataQuery.company_name = {
         $regex: new RegExp(`.*${company_name}.*`, "i"),
       };
     }
 
     if (website) {
-      filterQueryData.website = { $regex: new RegExp(`.*${website}.*`, "i") };
+      filterDataQuery.website = { $regex: new RegExp(`.*${website}.*`, "i") };
     }
 
     if (email) {
-      filterQueryData.email = { $regex: new RegExp(`.*${email}.*`, "i") };
+      filterDataQuery.email = { $regex: new RegExp(`.*${email}.*`, "i") };
     }
 
     if (category != "1") {
-      filterQueryData.category = {
-        $regex: new RegExp(`.*${category}.*`, "i"),
-      };
+      filterDataQuery.category = { $regex: new RegExp(`.*${category}.*`, "i") };
     }
 
     if (status != "1") {
-      filterQueryData.status = status;
+      filterDataQuery.status = status;
     } else if (status == "1") {
-      filterQueryData.status = { $ne: "Removes" };
+      filterDataQuery.status = { $ne: "Removes" };
     }
 
     if (country != "1") {
-      filterQueryData.country = country;
+      filterDataQuery.country = country;
     }
 
     if (region) {
-      filterQueryData.region = region;
+      filterDataQuery.region = region;
     }
 
     if (designation) {
-      filterQueryData.designation = designation;
+      filterDataQuery.designation = designation;
     }
 
     if (products) {
-      filterQueryData.products = {
-        $regex: new RegExp(`.*${products}.*`, "i"),
-      };
+      filterDataQuery.products = { $regex: new RegExp(`.*${products}.*`, "i") };
     }
 
     if (created_from && created_to) {
-      filterQueryData.createDate = { $gte: created_from, $lte: created_to };
+      filterDataQuery.createDate = { $gte: created_from, $lte: created_to };
     }
 
     if (approved_type != "1") {
-      filterQueryData.approved = approved_type;
+      filterDataQuery.approved = approved_type;
     }
 
-    // Logic for filtering based on specific criteria for InquiryData collection
-    // Repeat similar logic for other fields in the InquiryData collection
-    if (event_name != "0") {
-      filterQueryInquiryData.inquired_event_name = { $in: event_name };
+    if (user != "0") {
+      filterDataQuery.user = user;
     }
 
-    if (company_name) {
-      filterQueryInquiryData.company_name = {
-        $regex: new RegExp(`.*${company_name}.*`, "i"),
-      };
-    }
-
-    if (website) {
-      filterQueryInquiryData.website = {
-        $regex: new RegExp(`.*${website}.*`, "i"),
-      };
-    }
-
-    if (email) {
-      filterQueryInquiryData.email = {
-        $regex: new RegExp(`.*${email}.*`, "i"),
-      };
-    }
-
-    if (category != "1") {
-      filterQueryInquiryData.category = {
-        $regex: new RegExp(`.*${category}.*`, "i"),
-      };
-    }
-
-    if (status != "1") {
-      filterQueryInquiryData.status = status;
-    }
-
-    if (country != "1") {
-      filterQueryInquiryData.country = country;
-    }
-
-    if (region) {
-      filterQueryInquiryData.region = region;
-    }
-
-    if (products) {
-      filterQueryInquiryData.products = {
-        $regex: new RegExp(`.*${products}.*`, "i"),
-      };
-    }
-
-    if (created_from && created_to) {
-      filterQueryInquiryData.createDate = {
-        $gte: created_from,
-        $lte: created_to,
-      };
-    }
-
-    if (inquiry_type != "1") {
-      filterQueryInquiryData.inquiry_type = inquiry_type;
-    }
-
-    if (inq_for != "1") {
-      filterQueryInquiryData.inq_for = {
-        $regex: new RegExp(`.*${inq_for}.*`, "i"),
-      };
-    }
-
-    // Logic for keyword search in both collections
     if (keyword) {
       const keywordRegex = new RegExp(`.*${keyword}.*`, "i");
-      const keywordFieldsData = [
+      const keywordFields = [
         "company_name",
         "website",
         "email",
@@ -1002,7 +1071,92 @@ const getCombinedFilterData = async (req, res) => {
         "comment",
         "comment1",
       ];
-      const keywordFieldsInquiryData = [
+      const orQuery = keywordFields.map((field) => ({ [field]: keywordRegex }));
+      filterDataQuery.$or = orQuery;
+    }
+
+    /* console.log("filterDataQuery:");
+    console.log(filterDataQuery); */
+    const no_of_keys = Object.keys(filterDataQuery).length;
+
+    let filteredData = [];
+    if (no_of_keys > 1) {
+      filteredData = await Data.find(filterDataQuery)
+        .populate("link")
+        .populate("user")
+        .populate("update_user");
+    }
+    console.log("Filter Data: ");
+    console.log(filteredData.length);
+    /*  if (filteredData.length > 0) {
+     
+    } */
+
+    // Filter Inquiry Data
+
+    const filterInqQuery = {};
+
+    if (event_name != "0") {
+      filterInqQuery.inquired_event_name = { $in: event_name };
+    }
+
+    if (company_name) {
+      filterInqQuery.company_name = {
+        $regex: new RegExp(`.*${company_name}.*`, "i"),
+      };
+    }
+
+    if (website) {
+      filterInqQuery.website = { $regex: new RegExp(`.*${website}.*`, "i") };
+    }
+
+    if (email) {
+      filterInqQuery.email = { $regex: new RegExp(`.*${email}.*`, "i") };
+    }
+
+    if (category != "1") {
+      filterInqQuery.category = { $regex: new RegExp(`.*${category}.*`, "i") };
+    }
+
+    if (status != "1") {
+      filterInqQuery.status = status;
+    }
+
+    if (country != "1") {
+      filterInqQuery.country = country;
+    }
+
+    if (region) {
+      filterInqQuery.region = region;
+    }
+
+    if (products) {
+      filterInqQuery.products = { $regex: new RegExp(`.*${products}.*`, "i") };
+    }
+
+    if (created_from && created_to) {
+      filterInqQuery.createDate = { $gte: created_from, $lte: created_to };
+    }
+
+    if (inquiry_type != "1") {
+      filterInqQuery.inquiry_type = inquiry_type;
+    }
+
+    if (inq_for) {
+      filterInqQuery.inq_for = {
+        $regex: new RegExp(`.*${inq_for}.*`, "i"),
+      };
+    }
+
+    if (exhi_for) {
+      filterInqQuery.exhi_for = {
+        $regex: new RegExp(`.*${exhi_for}.*`, "i"),
+      };
+    }
+
+    if (keyword) {
+      const keywordRegex = new RegExp(`.*${keyword}.*`, "i");
+      const keywordFields = [
         "company_name",
         "website",
         "email",
@@ -1025,79 +1179,91 @@ const getCombinedFilterData = async (req, res) => {
         "exhi_for",
         "inquiry_source",
       ];
-
-      const orQueryData = keywordFieldsData.map((field) => ({
-        [field]: keywordRegex,
-      }));
-      const orQueryInquiryData = keywordFieldsInquiryData.map((field) => ({
-        [field]: keywordRegex,
-      }));
-
-      filterQueryData.$or = orQueryData;
-      filterQueryInquiryData.$or = orQueryInquiryData;
+      const orQuery = keywordFields.map((field) => ({ [field]: keywordRegex }));
+      filterInqQuery.$or = orQuery;
     }
-    // Logic for user-specific filtering (assuming user is logged in)
+
     if (
-      loggedin_user.roleType !== "super_admin" &&
-      loggedin_user.roleType !== "admin"
+      loggedin_user.roleType != "super_admin" &&
+      loggedin_user.roleType != "admin"
     ) {
-      filterQueryData.user = loggedin_user._id; // User Specific for Data collection
-      filterQueryInquiryData.user = loggedin_user._id; // User Specific for InquiryData collection
+      filterInqQuery.user = loggedin_user._id; //User Specific
     }
 
-    console.log("Data Filter Query:", filterQueryData);
-    console.log("InquiryData Filter Query:", filterQueryInquiryData);
+    /* console.log("filterInqQuery: ");
+    console.log(filterInqQuery); */
+    const no_of_keys_inq = Object.keys(filterInqQuery).length;
 
-    let filteredData = [];
-    let filteredInquiryData = [];
-
-    // Check if data is present in Data collection
-    if (Object.keys(filterQueryData).length > 0) {
-      filteredData = await Data.find(filterQueryData)
-        .populate("link")
-        .populate("user")
-        .populate("update_user");
-    }
-
-    // Check if data is present in InquiryData collection
-    if (Object.keys(filterQueryInquiryData).length > 0) {
-      filteredInquiryData = await InquiryData.find(filterQueryInquiryData)
+    let filteredInqData = [];
+    if (no_of_keys_inq > 0) {
+      filteredInqData = await InquiryData.find(filterInqQuery)
         .populate("inquired_event_name")
         .populate("consultant_name")
         .populate("user");
     }
 
-    let finalFilteredData = [];
+    console.log("Filter Inquiry Data:");
+    console.log(filteredInqData.length);
+    /*  if (filteredInqData.length > 0) {
+      
+    } */
+    const finalData = [];
 
-    // Prioritize InquiryData results if data is present in both collections
-    if (filteredInquiryData.length > 0) {
-      finalFilteredData = filteredInquiryData;
-    } else {
-      finalFilteredData = filteredData;
-    }
+    // Merge data based on email field
+    filteredData.forEach((data1) => {
+      let data2 = filteredInqData.find((data) => {
+        return data.email === data1.email;
+      });
 
-    if (finalFilteredData.length > 0) {
+      if (data2) {
+        finalData.push({ ...data2 });
+      } else {
+        finalData.push(data1);
+      }
+    });
+
+    // Extract only the _doc field from finalData
+    const filteredFinalData = finalData.map((item) => item._doc);
+    // Add remaining data from filteredInqData
+
+    filteredInqData.forEach((data) => {
+      /* console.log(
+          !filteredFinalData.some((item) => {
+            console.log("item: ", item.email);
+            console.log("data: ", data.email);
+            item.email === data.email;
+          })
+        ); */
+      if (!filteredFinalData.some((item) => item.email === data.email)) {
+        /* console.log("in Data");
+          console.log(data); */
+        filteredFinalData.push(data);
+      }
+    });
+
+    if (filteredFinalData.length > 0) {
       logger.info(
-        `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responded with Success`
+        `${ip}: API /api/v1/master/data/filter | User: ${loggedin_user.name} | responnded with Success `
       );
-      return res.status(200).json({
-        data: finalFilteredData,
-        message: "Data retrieved successfully",
+      return await res.status(200).json({
+        data: filteredFinalData,
+        data_len: filteredFinalData.length,
+        message: "Data retrived successfully",
       });
     } else {
       logger.info(
-        `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responded with Empty, i.e., Data was not found`
+        `${ip}: API /api/v1/master/data/filter | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
       );
-      return res.status(200).json({
-        data: [],
+      return await res.status(200).json({
         message: "Data Not Found",
+        data: [],
       });
     }
   } else {
     logger.error(
-      `${ip}: API /api/v1/inquiry/data/filter | User: ${loggedin_user.name} | responded with User is not Authorized`
+      `${ip}: API /api/v1/master/data/filter | User: ${loggedin_user.name} | responnded with User is not Autherized `
     );
-    return res.status(401).send({ message: "User is not Authorized" });
+    res.status(401).send({ message: "User is not Autherized" });
   }
 };
 
