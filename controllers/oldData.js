@@ -157,24 +157,10 @@ const getFilterData = async (req, res) => {
     status,
     whatsapp,
     exhibitor_type,
+    keyword,
   } = req.body;
 
   if (loggedin_user) {
-    /* console.log(
-      company_name,
-      email,
-      website,
-      product,
-      category,
-      source,
-      contact,
-      designation,
-      tel,
-      mobile,
-      country,
-      region,
-      status
-    ); */
     const filterQuery = {};
 
     if (company_name) {
@@ -231,19 +217,42 @@ const getFilterData = async (req, res) => {
       filterQuery.exhibitor_type = exhibitor_type;
     }
 
-    if (region) {
+    if (region != "1") {
       filterQuery.region = region;
     }
 
     if (designation) {
       filterQuery.designation = designation;
     }
+    if (keyword) {
+      //console.log("keyword");
+      //console.log(keyword);
+      const keywordRegex = new RegExp(`.*${keyword}.*`, "i");
+      const keywordFields = [
+        "company_name",
+        "website",
+        "email",
+        "category",
+        "status",
+        "country",
+        "region",
+        "mobile",
+        "tel",
+        "exhibitor_type",
+        "address",
+        "comment",
+      ];
+      const orQuery = keywordFields.map((field) => ({
+        [field]: keywordRegex,
+      }));
+      filterQuery.$or = orQuery;
+    }
 
     //console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
-
+    //console.log(no_of_keys);
     let filteredData = [];
-    if (no_of_keys > 1) {
+    if (no_of_keys > 0) {
       filteredData = await OldData.find(filterQuery);
     }
 
@@ -261,6 +270,7 @@ const getFilterData = async (req, res) => {
       );
       return await res.status(200).json({
         message: "Data Not Found",
+        data: [],
       });
     }
   } else {

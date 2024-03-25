@@ -641,7 +641,7 @@ const getFilterData = async (req, res) => {
       filterQuery.country = country;
     }
 
-    if (region) {
+    if (region != "1") {
       filterQuery.region = region;
     }
 

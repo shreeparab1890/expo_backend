@@ -709,7 +709,7 @@ const getFilterData = async (req, res) => {
       filterQuery.country = country;
     }
 
-    if (region) {
+    if (region != "1") {
       filterQuery.region = region;
     }
 
@@ -753,7 +753,7 @@ const getFilterData = async (req, res) => {
       filterQuery.user = loggedin_user._id; //User Specific
     }
 
-    console.log(filterQuery);
+    //console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];
@@ -777,6 +777,7 @@ const getFilterData = async (req, res) => {
       );
       return await res.status(200).json({
         message: "Data Not Found",
+        data: [],
       });
     }
   } else {
@@ -867,7 +868,7 @@ const getRetriveFilterData = async (req, res) => {
       filterQuery.country = country;
     }
 
-    if (region) {
+    if (region != "1") {
       filterQuery.region = region;
     }
 
@@ -924,11 +925,11 @@ const getRetriveFilterData = async (req, res) => {
     ) {
       filterQuery.user = loggedin_user._id; //User Specific
     } */
-    //console.log(filterQuery);
+    console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];
-    if (no_of_keys > 1) {
+    if (no_of_keys >= 1) {
       filteredData = await Data.find(filterQuery)
         .populate("link")
         .populate("user")
