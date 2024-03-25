@@ -79,6 +79,9 @@ const InquiryDataSchema = new Schema({
   mobile: {
     type: String,
   },
+  whatsapp: {
+    type: String,
+  },
   city: {
     type: String,
   },

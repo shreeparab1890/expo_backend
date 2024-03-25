@@ -177,7 +177,7 @@ const bulkApproveData = async (req, res) => {
   const updatedData = {
     approved: true,
   };
-  console.log(dataIds);
+  //console.log(dataIds);
   const results = await Promise.all(
     dataIds.map(async (dataId) => {
       const result = await Data.findByIdAndUpdate(dataId, updatedData, {
