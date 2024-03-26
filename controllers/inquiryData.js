@@ -1083,7 +1083,7 @@ const getCombinedFilterData = async (req, res) => {
     const no_of_keys = Object.keys(filterDataQuery).length;
 
     let filteredData = [];
-    if (no_of_keys > 1) {
+    if (no_of_keys >= 1) {
       filteredData = await Data.find(filterDataQuery)
         .populate("link")
         .populate("user")

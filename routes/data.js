@@ -32,6 +32,8 @@ const {
   checkEmailDomain,
   updateStatusData,
   checkLinkDuplicate,
+  getDashboardDataTypeCount,
+  exportDashboardDataTypeCount,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -226,6 +228,18 @@ router.post("/check/email/domain", validateToken, checkEmailDomain);
 //@route GET /api/v1/data/update/status/:id
 //@access private: login required
 router.post("/status/update/:id", validateToken, updateStatusData);
+
+router.post(
+  "/dashboard/data/type/count",
+  validateToken,
+  getDashboardDataTypeCount
+);
+
+router.post(
+  "/export/dashboard/data/type/count",
+  validateToken,
+  exportDashboardDataTypeCount
+);
 
 router.get(
   "/duplicate/check/link/:dataId/:linkId",

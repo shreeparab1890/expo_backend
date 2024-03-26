@@ -1928,6 +1928,188 @@ const checkLinkDuplicate = async (req, res) => {
   }
 };
 
+//@desc update status by data id
+//@route POST /api/v1/data/dashboard/data/type/count
+//@access private: login required
+const getDashboardDataTypeCount = async (req, res) => {
+  try {
+    const user = req.user;
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    const { created_from, created_to } = req.body;
+    //console.log(created_from, created_to);
+
+    if (user) {
+      //Get Data created in the date range given
+      const data = await Data.find({
+        createDate: { $gte: created_from, $lte: created_to },
+      });
+
+      if (data) {
+        //get unique links linked to the created data
+        let uniqueLinks = [];
+        data.forEach((item) => {
+          if (item.link && Array.isArray(item.link)) {
+            item.link.forEach((link) => {
+              if (link && !uniqueLinks.includes(link)) {
+                uniqueLinks.push(link.toString());
+              }
+            });
+          }
+        });
+        const uniqueLinksSet = new Set(uniqueLinks);
+        const uniqueLinksArray = Array.from(uniqueLinksSet);
+        //console.log(uniqueLinksArray);
+        let leaderboardNew = [];
+        let leaderboardOld = [];
+        // Get all users
+        const allUsers = await User.find();
+
+        // get new data count
+
+        for (const currentUser of allUsers) {
+          let newDataCount = 0;
+          for (const link of uniqueLinksArray) {
+            const newData = await Data.find({
+              "link.0": link,
+              user: currentUser._id,
+              createDate: { $gte: created_from, $lte: created_to },
+            });
+
+            newDataCount += newData.length;
+          }
+          leaderboardNew.push({ user: currentUser.name, newDataCount });
+
+          // get old data count
+          let oldDataCount = 0;
+          for (const link of uniqueLinksArray) {
+            const oldData = await Data.find({
+              "link.0": { $ne: link },
+              link: {
+                $elemMatch: { $eq: link },
+              },
+              user: currentUser._id,
+              createDate: { $gte: created_from, $lte: created_to },
+            });
+
+            oldDataCount += oldData.length;
+          }
+          leaderboardOld.push({ user: currentUser.name, oldDataCount });
+        }
+        return res.status(200).json({
+          newDataLeaderboard: leaderboardNew,
+          oldDataLeaderboard: leaderboardOld,
+        });
+      }
+    } else {
+      logger.error(
+        `${ip}: API /api/v1/data/dashboard/data/type/count | User: ${loggedin_user.name} | responnded with User is not Autherized `
+      );
+      return res.status(401).send({ message: "User is not Autherized" });
+    }
+  } catch (err) {
+    return res.status(500).json({ err, message: "Error!" });
+  }
+};
+
+//@desc update status by data id
+//@route POST /api/v1/data/export/dashboard/data/type/count
+//@access private: login required
+const exportDashboardDataTypeCount = async (req, res) => {
+  try {
+    const user = req.user;
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    const { created_from, created_to } = req.body;
+
+    if (user) {
+      //Get Data created in the date range given
+      const data = await Data.find({
+        createDate: { $gte: created_from, $lte: created_to },
+      });
+
+      if (data) {
+        //get unique links linked to the created data
+        let uniqueLinks = [];
+        data.forEach((item) => {
+          if (item.link && Array.isArray(item.link)) {
+            item.link.forEach((link) => {
+              if (link && !uniqueLinks.includes(link)) {
+                uniqueLinks.push(link.toString());
+              }
+            });
+          }
+        });
+        const uniqueLinksSet = new Set(uniqueLinks);
+        const uniqueLinksArray = Array.from(uniqueLinksSet);
+        //console.log(uniqueLinksArray);
+        let leaderboardNew = [];
+        let leaderboardOld = [];
+        let leaderboardOverall = [];
+        let leaderboard = [];
+        // Get all users
+        const allUsers = await User.find();
+
+        // get new data count
+
+        for (const currentUser of allUsers) {
+          let overallDataCount = 0;
+          for (const link of uniqueLinksArray) {
+            const overallData = await Data.find({
+              user: currentUser._id,
+              createDate: { $gte: created_from, $lte: created_to },
+            });
+
+            overallDataCount += overallData.length;
+          }
+
+          let newDataCount = 0;
+          for (const link of uniqueLinksArray) {
+            const newData = await Data.find({
+              "link.0": link,
+              user: currentUser._id,
+              createDate: { $gte: created_from, $lte: created_to },
+            });
+
+            newDataCount += newData.length;
+          }
+          //leaderboardNew.push({ user: currentUser.name, newDataCount });
+
+          // get old data count
+          let oldDataCount = 0;
+          for (const link of uniqueLinksArray) {
+            const oldData = await Data.find({
+              "link.0": { $ne: link },
+              link: {
+                $elemMatch: { $eq: link },
+              },
+              user: currentUser._id,
+              createDate: { $gte: created_from, $lte: created_to },
+            });
+
+            oldDataCount += oldData.length;
+          }
+          //leaderboardOld.push({ user: currentUser.name, oldDataCount });
+          leaderboard.push({
+            user: currentUser.name,
+            overALl: overallDataCount,
+            newData: newDataCount,
+            oldData: oldDataCount,
+          });
+        }
+        return res.status(200).json({
+          data: leaderboard,
+        });
+      }
+    } else {
+      logger.error(
+        `${ip}: API /api/v1/data/export/dashboard/data/type/count | User: ${loggedin_user.name} | responnded with User is not Autherized `
+      );
+      return res.status(401).send({ message: "User is not Autherized" });
+    }
+  } catch (err) {
+    return res.status(500).json({ err, message: "Error!" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -1960,4 +2142,6 @@ module.exports = {
   checkEmailDomain,
   updateStatusData,
   checkLinkDuplicate,
+  getDashboardDataTypeCount,
+  exportDashboardDataTypeCount,
 };
