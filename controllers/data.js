@@ -757,7 +757,7 @@ const getFilterData = async (req, res) => {
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];
-    if (no_of_keys > 1) {
+    if (no_of_keys >= 1) {
       filteredData = await Data.find(filterQuery)
         .populate("link")
         .populate("user");
@@ -2040,16 +2040,19 @@ const exportDashboardDataTypeCount = async (req, res) => {
         });
         const uniqueLinksSet = new Set(uniqueLinks);
         const uniqueLinksArray = Array.from(uniqueLinksSet);
-        //console.log(uniqueLinksArray);
+
         let leaderboardNew = [];
         let leaderboardOld = [];
         let leaderboardOverall = [];
         let leaderboard = [];
+
         // Get all users
-        const allUsers = await User.find();
+        const allUsers = await User.find({
+          active: true,
+          approved: true,
+        });
 
         // get new data count
-
         for (const currentUser of allUsers) {
           let overallDataCount = 0;
           for (const link of uniqueLinksArray) {
@@ -2089,10 +2092,10 @@ const exportDashboardDataTypeCount = async (req, res) => {
           }
           //leaderboardOld.push({ user: currentUser.name, oldDataCount });
           leaderboard.push({
-            user: currentUser.name,
-            overALl: overallDataCount,
-            newData: newDataCount,
-            oldData: oldDataCount,
+            Staff: currentUser.name,
+            Excel_Data: overallDataCount,
+            New_Data: newDataCount,
+            Duplicates: oldDataCount,
           });
         }
         return res.status(200).json({

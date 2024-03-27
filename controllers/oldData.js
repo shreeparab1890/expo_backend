@@ -194,19 +194,39 @@ const getFilterData = async (req, res) => {
     }
 
     if (mobile) {
-      filterQuery.mobile = { $regex: new RegExp(`.*${mobile}.*`, "i") };
+      //filterQuery.mobile = { $regex: new RegExp(`.*${mobile}.*`, "i") };
+      const escapedMobile = mobile.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+      filterQuery.mobile = {
+        $regex: new RegExp(`.*${escapedMobile}.*`, "i"),
+      };
     }
 
     if (whatsapp) {
-      filterQuery.whatsapp = { $regex: new RegExp(`.*${whatsapp}.*`, "i") };
+      //filterQuery.whatsapp = { $regex: new RegExp(`.*${whatsapp}.*`, "i") };
+      const escapedWhatsapp = whatsapp.replace(
+        /[-[\]{}()*+?.,\\^$|#\s]/g,
+        "\\$&"
+      );
+      filterQuery.whatsapp = {
+        $regex: new RegExp(`.*${escapedWhatsapp}.*`, "i"),
+      };
     }
 
     if (tel) {
-      filterQuery.tel = { $regex: new RegExp(`.*${tel}.*`, "i") };
+      //filterQuery.tel = { $regex: new RegExp(`.*${tel}.*`, "i") };
+      const escapedTel = tel.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+      filterQuery.tel = {
+        $regex: new RegExp(`.*${escapedTel}.*`, "i"),
+      };
     }
 
+    /* if (status != "1") {
+      filterQuery.status = status;
+    } */
     if (status != "1") {
       filterQuery.status = status;
+    } else if (status == "1") {
+      filterQuery.status = { $ne: "Removes" };
     }
 
     if (country != "1") {
@@ -227,7 +247,14 @@ const getFilterData = async (req, res) => {
     if (keyword) {
       //console.log("keyword");
       //console.log(keyword);
-      const keywordRegex = new RegExp(`.*${keyword}.*`, "i");
+      //const keywordRegex = new RegExp(`.*${keyword}.*`, "i");
+      const escapedKeyword = keyword.replace(
+        /[-[\]{}()*+?.,\\^$|#\s]/g,
+        "\\$&"
+      );
+      filterQuery.keyword = {
+        $regex: new RegExp(`.*${escapedKeyword}.*`, "i"),
+      };
       const keywordFields = [
         "company_name",
         "website",
@@ -243,16 +270,16 @@ const getFilterData = async (req, res) => {
         "comment",
       ];
       const orQuery = keywordFields.map((field) => ({
-        [field]: keywordRegex,
+        [field]: escapedKeyword,
       }));
       filterQuery.$or = orQuery;
     }
 
-    //console.log(filterQuery);
+    console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
     //console.log(no_of_keys);
     let filteredData = [];
-    if (no_of_keys > 0) {
+    if (no_of_keys >= 1) {
       filteredData = await OldData.find(filterQuery);
     }
 

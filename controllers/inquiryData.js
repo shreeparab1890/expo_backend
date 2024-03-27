@@ -633,8 +633,13 @@ const getFilterData = async (req, res) => {
       filterQuery.category = { $regex: new RegExp(`.*${category}.*`, "i") };
     }
 
+    /* if (status != "1") {
+      filterQuery.status = status;
+    } */
     if (status != "1") {
       filterQuery.status = status;
+    } else if (status == "1") {
+      filterQuery.status = { $ne: "Removes" };
     }
 
     if (country != "1") {
@@ -705,7 +710,7 @@ const getFilterData = async (req, res) => {
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];
-    if (no_of_keys > 0) {
+    if (no_of_keys >= 1) {
       filteredData = await InquiryData.find(filterQuery)
         .populate("inquired_event_name")
         .populate("consultant_name")
@@ -960,7 +965,7 @@ const getCombinedFilterData = async (req, res) => {
     approved_type,
     user,
   } = req.body;
-  console.log(status);
+  //console.log(status);
   /* console.log(
     event_name,
     website,
@@ -1089,8 +1094,8 @@ const getCombinedFilterData = async (req, res) => {
         .populate("user")
         .populate("update_user");
     }
-    console.log("Filter Data: ");
-    console.log(filteredData.length);
+    //console.log("Filter Data: ");
+    //console.log(filteredData.length);
     /*  if (filteredData.length > 0) {
      
     } */
@@ -1121,8 +1126,13 @@ const getCombinedFilterData = async (req, res) => {
       filterInqQuery.category = { $regex: new RegExp(`.*${category}.*`, "i") };
     }
 
-    if (status != "1") {
+    /* if (status != "1") {
       filterInqQuery.status = status;
+    } */
+    if (status != "1") {
+      filterQuery.status = status;
+    } else if (status == "1") {
+      filterQuery.status = { $ne: "Removes" };
     }
 
     if (country != "1") {
@@ -1198,7 +1208,7 @@ const getCombinedFilterData = async (req, res) => {
     const no_of_keys_inq = Object.keys(filterInqQuery).length;
 
     let filteredInqData = [];
-    if (no_of_keys_inq > 0) {
+    if (no_of_keys_inq >= 1) {
       filteredInqData = await InquiryData.find(filterInqQuery)
         .populate("inquired_event_name")
         .populate("consultant_name")
