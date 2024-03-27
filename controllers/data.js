@@ -99,6 +99,7 @@ const createData = async (req, res) => {
       user: data.user,
       link: data.link,
       source_user: user._id,
+      pooledOldData: data.pooledOldData,
     })
       .then((link) => {
         logger.info(
@@ -753,7 +754,6 @@ const getFilterData = async (req, res) => {
       filterQuery.user = loggedin_user._id; //User Specific
     }
 
-    //console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];

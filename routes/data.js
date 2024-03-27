@@ -73,6 +73,7 @@ router.post(
     body("comment1", "Enter a valid commnet1"),
     body("user", "Enter a valid User ID").notEmpty(),
     body("link", "Enter a valid link ID").notEmpty(),
+    body("pooledOldData", "Enter a valid link ID"),
   ],
   validateToken,
   createData

@@ -1130,9 +1130,9 @@ const getCombinedFilterData = async (req, res) => {
       filterInqQuery.status = status;
     } */
     if (status != "1") {
-      filterQuery.status = status;
+      filterInqQuery.status = status;
     } else if (status == "1") {
-      filterQuery.status = { $ne: "Removes" };
+      filterInqQuery.status = { $ne: "Removes" };
     }
 
     if (country != "1") {

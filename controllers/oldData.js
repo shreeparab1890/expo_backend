@@ -268,6 +268,10 @@ const getFilterData = async (req, res) => {
         "exhibitor_type",
         "address",
         "comment",
+        "product",
+        "contact",
+        "source",
+        "designation",
       ];
       const orQuery = keywordFields.map((field) => ({
         [field]: escapedKeyword,
