@@ -113,6 +113,10 @@ const InquiryDataSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  pooledOldData: {
+    type: Boolean,
+    default: false,
+  },
   active: {
     type: Boolean,
     default: true,

@@ -9,7 +9,7 @@ const validateToken = async (req, res, next) => {
 
     const currentDate = new Date().toISOString().split("T")[0];
 
-    const loginRestrictionDate = new Date("2024-03-31")
+    const loginRestrictionDate = new Date("2024-04-30")
       .toISOString()
       .split("T")[0];
     if (currentDate <= loginRestrictionDate) {

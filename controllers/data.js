@@ -279,9 +279,12 @@ const getDataByLinkId = async (req, res) => {
   if (loggedin_user) {
     const { id } = req.params;
     const data = await Data.find({
-      link: id,
+      //link: id,
+      approved: false,
+      "link.0": id,
     })
       .populate("user")
+      .populate("update_user")
       .populate("link");
 
     if (data.length > 0) {
@@ -484,6 +487,7 @@ const getDataByUserId = async (req, res) => {
   if (loggedin_user) {
     const data = await Data.find({
       user: loggedin_user._id,
+      //$or: [{ user: loggedin_user._id }, { update_user: loggedin_user._id }],
     })
       .populate("user")
       .populate("link");
@@ -751,7 +755,11 @@ const getFilterData = async (req, res) => {
       loggedin_user.roleType != "super_admin" &&
       loggedin_user.roleType != "admin"
     ) {
-      filterQuery.user = loggedin_user._id; //User Specific
+      //filterQuery.user = loggedin_user._id; //User Specific
+      filterQuery.$or = [
+        { user: loggedin_user._id },
+        { update_user: loggedin_user._id },
+      ];
     }
 
     const no_of_keys = Object.keys(filterQuery).length;
@@ -1242,7 +1250,7 @@ const getDataLeaderToday = async (req, res) => {
         $sort: { dataCount: -1 },
       },
       {
-        $limit: 10,
+        $limit: 50,
       },
     ];
 
@@ -1315,7 +1323,7 @@ const getDataLeaderYesterday = async (req, res) => {
         $sort: { dataCount: -1 },
       },
       {
-        $limit: 10,
+        $limit: 50,
       },
     ];
 
@@ -1392,7 +1400,7 @@ const getDataLeaderThisWeek = async (req, res) => {
         $sort: { dataCount: -1 },
       },
       {
-        $limit: 10,
+        $limit: 50,
       },
     ];
 
@@ -1471,7 +1479,7 @@ const getDataLeaderLastWeek = async (req, res) => {
         $sort: { dataCount: -1 },
       },
       {
-        $limit: 10,
+        $limit: 50,
       },
     ];
 
@@ -1551,7 +1559,7 @@ const getDataLeaderThisMonth = async (req, res) => {
         $sort: { dataCount: -1 },
       },
       {
-        $limit: 10,
+        $limit: 50,
       },
     ];
 
@@ -1631,7 +1639,7 @@ const getDataLeaderLastMonth = async (req, res) => {
         $sort: { dataCount: -1 },
       },
       {
-        $limit: 10,
+        $limit: 50,
       },
     ];
 
@@ -1668,6 +1676,8 @@ const getNewData = async (req, res) => {
     const { givenLink, data_type, created_from, created_to } = req.body;
 
     let filteredData = [];
+    let filteredData1 = [];
+    let combinedFilteredData = [];
     if ((created_from != "" && created_to) != "") {
       if (
         loggedin_user.roleType != "super_admin" &&
@@ -1688,8 +1698,9 @@ const getNewData = async (req, res) => {
             link: {
               $elemMatch: { $eq: givenLink },
             },
+            //pooledOldData: true,
             user: loggedin_user._id,
-            createDate: { $gte: created_from, $lte: created_to },
+            UpdatedDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
             .populate("update_user")
@@ -1705,6 +1716,24 @@ const getNewData = async (req, res) => {
             .populate("user")
             .populate("update_user")
             .populate("link");
+          filteredData1 = await Data.find({
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+            user: loggedin_user._id,
+            UpdatedDate: { $gte: created_from, $lte: created_to },
+          })
+            .populate("user")
+            .populate("update_user")
+            .populate("link");
+          filteredData = filteredData.concat(filteredData1);
+          let uniqueMap = new Map();
+          filteredData.forEach((obj) => {
+            uniqueMap.set(JSON.stringify(obj), obj);
+          });
+          let uniqueObjects = Array.from(uniqueMap.values());
+          //console.log(uniqueObjects);
+          filteredData = uniqueObjects;
         }
       } else {
         if (data_type == "new_data") {
@@ -1721,7 +1750,8 @@ const getNewData = async (req, res) => {
             link: {
               $elemMatch: { $eq: givenLink },
             },
-            createDate: { $gte: created_from, $lte: created_to },
+            //pooledOldData: true,
+            UpdatedDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
             .populate("update_user")
@@ -1736,6 +1766,24 @@ const getNewData = async (req, res) => {
             .populate("user")
             .populate("update_user")
             .populate("link");
+          filteredData1 = await Data.find({
+            link: {
+              $elemMatch: { $eq: givenLink },
+            },
+            UpdatedDate: { $gte: created_from, $lte: created_to },
+          })
+            .populate("user")
+            .populate("update_user")
+            .populate("link");
+
+          filteredData = filteredData.concat(filteredData1);
+          let uniqueMap = new Map();
+          filteredData.forEach((obj) => {
+            uniqueMap.set(JSON.stringify(obj), obj);
+          });
+          let uniqueObjects = Array.from(uniqueMap.values());
+          //console.log(uniqueObjects);
+          filteredData = uniqueObjects;
         }
       }
     } else {
@@ -1757,7 +1805,8 @@ const getNewData = async (req, res) => {
             link: {
               $elemMatch: { $eq: givenLink },
             },
-            user: loggedin_user._id,
+
+            update_user: loggedin_user._id,
           })
             .populate("user")
             .populate("update_user")
@@ -1767,7 +1816,15 @@ const getNewData = async (req, res) => {
             link: {
               $elemMatch: { $eq: givenLink },
             },
-            user: loggedin_user._id,
+            //user: loggedin_user._id,
+            $or: [
+              {
+                user: loggedin_user._id,
+              },
+              {
+                update_user: loggedin_user._id,
+              },
+            ],
           })
             .populate("user")
             .populate("update_user")
@@ -1777,12 +1834,22 @@ const getNewData = async (req, res) => {
         if (data_type == "new_data") {
           filteredData = await Data.find({
             "link.0": givenLink,
+            //pooledOldData: false,
           })
             .populate("user")
             .populate("update_user")
             .populate("link");
         } else if (data_type == "old_data") {
           filteredData = await Data.find({
+            /*  $or: [
+              {
+                "link.0": { $ne: givenLink },
+                link: {
+                  $elemMatch: { $eq: givenLink },
+                },
+              },
+              { pooledOldData: true },
+            ], */
             "link.0": { $ne: givenLink },
             link: {
               $elemMatch: { $eq: givenLink },
@@ -1971,6 +2038,7 @@ const getDashboardDataTypeCount = async (req, res) => {
           for (const link of uniqueLinksArray) {
             const newData = await Data.find({
               "link.0": link,
+              //pooledOldData: false,
               user: currentUser._id,
               createDate: { $gte: created_from, $lte: created_to },
             });
@@ -1979,18 +2047,28 @@ const getDashboardDataTypeCount = async (req, res) => {
           }
           leaderboardNew.push({ user: currentUser.name, newDataCount });
 
+          //
           // get old data count
           let oldDataCount = 0;
           for (const link of uniqueLinksArray) {
             const oldData = await Data.find({
+              /*  $or: [
+                {
+                  "link.0": { $ne: link },
+                  link: {
+                    $elemMatch: { $eq: link },
+                  },
+                },
+                { pooledOldData: true },
+              ], */
               "link.0": { $ne: link },
               link: {
                 $elemMatch: { $eq: link },
               },
-              user: currentUser._id,
-              createDate: { $gte: created_from, $lte: created_to },
+              update_user: currentUser._id,
+              UpdatedDate: { $gte: created_from, $lte: created_to },
             });
-
+            //console.log(oldData.length);
             oldDataCount += oldData.length;
           }
           leaderboardOld.push({ user: currentUser.name, oldDataCount });
@@ -2084,8 +2162,8 @@ const exportDashboardDataTypeCount = async (req, res) => {
               link: {
                 $elemMatch: { $eq: link },
               },
-              user: currentUser._id,
-              createDate: { $gte: created_from, $lte: created_to },
+              update_user: currentUser._id,
+              UpdatedDate: { $gte: created_from, $lte: created_to },
             });
 
             oldDataCount += oldData.length;

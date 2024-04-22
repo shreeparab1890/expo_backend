@@ -572,7 +572,7 @@ const getAllLinksData = async (req, res) => {
 //@route POST /api/v1/link/getall/data/qa
 //@access Private: Role Admin / superadmin
 const getAllLinksDataQA = async (req, res) => {
-  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  /* const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const user = req.user;
   if (user) {
     const datas = await Data.find({
@@ -620,6 +620,49 @@ const getAllLinksDataQA = async (req, res) => {
       `${ip}: API /api/v1/link/getall/data/qa | User: ${user.name} | responnded with User is not Autherized `
     );
     return res.status(401).send({ message: "User is not Autherized" });
+  } */
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const user = req.user;
+  if (user) {
+    const allLinks = await Link.find({ active: true });
+
+    const linkIds = allLinks.map((link) => link._id.toString());
+    const uniqueLinkIds = [...new Set(linkIds)];
+
+    const filteredLinkIds = [];
+
+    for (let i = 0; i < uniqueLinkIds.length; i++) {
+      const linkId = uniqueLinkIds[i];
+      const hasData = await Data.exists({
+        active: true,
+        approved: false,
+        "link.0": linkId,
+      });
+      if (hasData) {
+        filteredLinkIds.push(linkId);
+      }
+    }
+    console.log(filteredLinkIds);
+    const all_links_data = await Link.find({
+      active: true,
+      _id: { $in: filteredLinkIds },
+    })
+      .populate("assign_user")
+      .populate("source_user")
+      .populate("assign_user.user");
+
+    logger.info(
+      `${ip}: API /api/v1/link/getall/data/qa | User: ${user.name} | responded with Success`
+    );
+    return res.status(200).json({
+      data: all_links_data,
+      message: "QA Links with data retrieved successfully",
+    });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/link/getall/data/qa | User: ${user.name} | responded with User is not Authorized`
+    );
+    return res.status(401).send({ message: "User is not Authorized" });
   }
 };
 

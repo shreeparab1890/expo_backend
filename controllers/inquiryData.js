@@ -89,6 +89,7 @@ const createData = async (req, res) => {
       comment: data.comment,
       comment1: data.comment1,
       user: data.user,
+      pooledOldData: data.pooledOldData,
     })
       .then((data) => {
         logger.info(
@@ -605,6 +606,7 @@ const getFilterData = async (req, res) => {
     company_name,
     inquiry_type,
     inq_for,
+    exhi_for,
     keyword,
   } = req.body;
 
@@ -668,6 +670,12 @@ const getFilterData = async (req, res) => {
       };
     }
 
+    if (exhi_for != "1") {
+      filterQuery.exhi_for = {
+        $regex: new RegExp(`.*${exhi_for}.*`, "i"),
+      };
+    }
+
     if (keyword) {
       //console.log("keyword");
       //console.log(keyword);
@@ -706,7 +714,7 @@ const getFilterData = async (req, res) => {
       filterQuery.user = loggedin_user._id; //User Specific
     }
 
-    console.log(filterQuery);
+    //console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
 
     let filteredData = [];
@@ -988,6 +996,43 @@ const getCombinedFilterData = async (req, res) => {
     approved_type,
     user
   ); */
+
+  const data_filter_array = [
+    link_value,
+    data_type,
+    company_name,
+    website,
+    email,
+    category,
+    country,
+    region,
+    designation,
+    products,
+    created_to,
+    created_from,
+    approved_type,
+    user,
+    keyword,
+    status,
+  ];
+  const inq_filter_array = [
+    event_name,
+    company_name,
+    website,
+    email,
+    category,
+    status,
+    country,
+    region,
+    products,
+    created_from,
+    created_to,
+    inquiry_type,
+    inq_for,
+    exhi_for,
+    keyword,
+  ];
+
   if (loggedin_user) {
     // Filter Data
 
@@ -1024,17 +1069,17 @@ const getCombinedFilterData = async (req, res) => {
       filterDataQuery.category = { $regex: new RegExp(`.*${category}.*`, "i") };
     }
 
-    if (status != "1") {
+    /* if (status != "1") {
       filterDataQuery.status = status;
     } else if (status == "1") {
       filterDataQuery.status = { $ne: "Removes" };
-    }
+    } */
 
     if (country != "1") {
       filterDataQuery.country = country;
     }
 
-    if (region) {
+    if (region != "1") {
       filterDataQuery.region = region;
     }
 
@@ -1083,22 +1128,32 @@ const getCombinedFilterData = async (req, res) => {
       filterDataQuery.$or = orQuery;
     }
 
-    /* console.log("filterDataQuery:");
-    console.log(filterDataQuery); */
     const no_of_keys = Object.keys(filterDataQuery).length;
 
+    if (no_of_keys == 0) {
+      if (status != "1") {
+        filterDataQuery.status = status;
+      }
+    } else {
+      if (status != "1") {
+        filterDataQuery.status = status;
+      } else if (status == "1") {
+        filterDataQuery.status = { $ne: "Removes" };
+      }
+    }
+
+    const no_of_keys_postStatus = Object.keys(filterDataQuery).length;
+
+    console.log("filterDataQuery:");
+    console.log(filterDataQuery);
+
     let filteredData = [];
-    if (no_of_keys >= 1) {
+    if (no_of_keys_postStatus >= 1) {
       filteredData = await Data.find(filterDataQuery)
         .populate("link")
         .populate("user")
         .populate("update_user");
     }
-    //console.log("Filter Data: ");
-    //console.log(filteredData.length);
-    /*  if (filteredData.length > 0) {
-     
-    } */
 
     // Filter Inquiry Data
 
@@ -1129,17 +1184,17 @@ const getCombinedFilterData = async (req, res) => {
     /* if (status != "1") {
       filterInqQuery.status = status;
     } */
-    if (status != "1") {
+    /*  if (status != "1") {
       filterInqQuery.status = status;
-    } else if (status == "1") {
+    } */ /* else if (status == "1") {
       filterInqQuery.status = { $ne: "Removes" };
-    }
+    } */
 
     if (country != "1") {
       filterInqQuery.country = country;
     }
 
-    if (region) {
+    if (region != "1") {
       filterInqQuery.region = region;
     }
 
@@ -1203,23 +1258,68 @@ const getCombinedFilterData = async (req, res) => {
       filterInqQuery.user = loggedin_user._id; //User Specific
     }
 
-    /* console.log("filterInqQuery: ");
-    console.log(filterInqQuery); */
     const no_of_keys_inq = Object.keys(filterInqQuery).length;
 
+    if (no_of_keys_inq == 0) {
+      if (status != "1") {
+        filterInqQuery.status = status;
+      }
+    } else {
+      if (status != "1") {
+        filterInqQuery.status = status;
+      } else if (status == "1") {
+        filterInqQuery.status = { $ne: "Removes" };
+      }
+    }
+
+    const no_of_keys_inq_postStatus = Object.keys(filterInqQuery).length;
+    console.log("filterInqQuery");
+    console.log(filterInqQuery);
+
+    // After building filterDataQuery and filterInqQuery
+
+    const commonFilters = [
+      event_name,
+      company_name,
+      website,
+      email,
+      category,
+      status,
+      country,
+      region,
+      products,
+      created_from,
+      created_to,
+      keyword,
+    ];
+
     let filteredInqData = [];
-    if (no_of_keys_inq >= 1) {
+    if (no_of_keys_inq_postStatus >= 1) {
       filteredInqData = await InquiryData.find(filterInqQuery)
         .populate("inquired_event_name")
         .populate("consultant_name")
         .populate("user");
     }
 
-    console.log("Filter Inquiry Data:");
-    console.log(filteredInqData.length);
-    /*  if (filteredInqData.length > 0) {
-      
-    } */
+    const missingFilters = inq_filter_array.filter(
+      (filter) => !commonFilters.includes(filter)
+    );
+    console.log(missingFilters.length);
+
+    const missingFiltersInq = data_filter_array.filter(
+      (filter) => !commonFilters.includes(filter)
+    );
+    console.log(missingFiltersInq.length);
+
+    if (missingFilters.length > 0) {
+      // Set filteredData to an empty array if any filter is missing
+      //filteredData = [];
+      filteredInqData = [];
+    } else if (missingFiltersInq.length > 0) {
+      //filteredInqData = [];
+      filteredData = [];
+    }
+
     const finalData = [];
 
     // Merge data based on email field
@@ -1240,16 +1340,7 @@ const getCombinedFilterData = async (req, res) => {
     // Add remaining data from filteredInqData
 
     filteredInqData.forEach((data) => {
-      /* console.log(
-          !filteredFinalData.some((item) => {
-            console.log("item: ", item.email);
-            console.log("data: ", data.email);
-            item.email === data.email;
-          })
-        ); */
       if (!filteredFinalData.some((item) => item.email === data.email)) {
-        /* console.log("in Data");
-          console.log(data); */
         filteredFinalData.push(data);
       }
     });

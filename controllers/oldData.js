@@ -252,7 +252,7 @@ const getFilterData = async (req, res) => {
         /[-[\]{}()*+?.,\\^$|#\s]/g,
         "\\$&"
       );
-      filterQuery.keyword = {
+      const keywordRegex = {
         $regex: new RegExp(`.*${escapedKeyword}.*`, "i"),
       };
       const keywordFields = [
@@ -274,12 +274,13 @@ const getFilterData = async (req, res) => {
         "designation",
       ];
       const orQuery = keywordFields.map((field) => ({
-        [field]: escapedKeyword,
+        [field]: keywordRegex,
       }));
       filterQuery.$or = orQuery;
     }
 
-    console.log(filterQuery);
+    /* console.log("filterQuery");
+    console.log(filterQuery); */
     const no_of_keys = Object.keys(filterQuery).length;
     //console.log(no_of_keys);
     let filteredData = [];
