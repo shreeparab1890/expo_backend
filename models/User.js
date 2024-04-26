@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Department = require("../models/Department.js");
+const Team = require("../models/Team.js");
 
 const { Schema } = mongoose;
 
@@ -24,6 +25,10 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
+  },
+  team: {
+    type: "ObjectId",
+    ref: Team,
   },
   department: {
     type: "ObjectId",

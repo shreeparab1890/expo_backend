@@ -24,6 +24,7 @@ app.get("/api/v1/", (req, res) => {
 app.use("/api/v1/user", require("./routes/user.js"));
 app.use("/api/v1/role", require("./routes/role.js"));
 app.use("/api/v1/department", require("./routes/department.js"));
+app.use("/api/v1/team", require("./routes/team.js"));
 app.use("/api/v1/link", require("./routes/link.js"));
 app.use("/api/v1/data", require("./routes/data.js"));
 app.use("/api/v1/inquiry/data", require("./routes/inquiryData.js"));

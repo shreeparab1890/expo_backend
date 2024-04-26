@@ -461,6 +461,7 @@ const getAllLinks = async (req, res) => {
     logger.info(
       `${ip}: API /api/v1/link/getall | User: ${user.name} | responnded with Success `
     );
+
     return await res.status(200).json({
       data: links,
       message: "Links retrived successfully",

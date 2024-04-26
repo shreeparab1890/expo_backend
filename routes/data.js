@@ -21,6 +21,7 @@ const {
   getDataByEmail,
   verifyWhatsappNumber,
   getDataLeaderboard,
+  getApprovedDataLeader,
   getDataLeaderToday,
   getDataLeaderYesterday,
   getDataLeaderThisWeek,
@@ -34,6 +35,8 @@ const {
   checkLinkDuplicate,
   getDashboardDataTypeCount,
   exportDashboardDataTypeCount,
+  getCategoryDataCount,
+  uploadData,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -189,6 +192,12 @@ router.post("/get/byemail/cat", validateToken, getDataByEmail);
 //@route get /api/v1/data/get/leader
 //@access private: login required
 router.post("/get/leader", validateToken, getDataLeaderboard);
+router.post("/get/cat/count", validateToken, getCategoryDataCount);
+
+//@desc get add data leader board
+//@route get /api/v1/data/get/leader
+//@access private: login required
+router.post("/get/approved/leader", validateToken, getApprovedDataLeader);
 
 //@desc get add data leader board today
 //@route post /api/v1/data/get/leader/today
@@ -247,5 +256,10 @@ router.get(
   validateToken,
   checkLinkDuplicate
 );
+
+//@desc upload data
+//@route GET /api/v1/data/upload
+//@access private: login required
+router.post("/upload", validateToken, uploadData);
 
 module.exports = router;

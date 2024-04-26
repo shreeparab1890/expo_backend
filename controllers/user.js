@@ -64,6 +64,7 @@ const createUser = async (req, res) => {
       roleType: data.roleType,
       joining_date: data.joining_date,
       department: data.department,
+      team: data.team,
       userUIEnable: data.userUIEnable,
       roleUIEnable: data.roleUIEnable,
       departmentUIEnable: data.departmentUIEnable,
@@ -104,7 +105,9 @@ const getUsers = async (req, res) => {
     if (user) {
       const users = await User.find({
         active: true,
-      }).populate("department");
+      })
+        .populate("department")
+        .populate("team");
       logger.info(
         `${ip}: API /api/v1/user/getall | User: ${user.name} | responnded with Success `
       );
@@ -140,7 +143,9 @@ const getUser = async (req, res) => {
       const { id } = req.params;
       const user = await User.find({
         _id: id,
-      }).populate("department");
+      })
+        .populate("department")
+        .populate("team");
       if (user.length > 0) {
         logger.info(
           `${ip}: API /api/v1/user/get/:${id} | User: ${loggedin_user.name} | responnded with Success `
@@ -183,6 +188,7 @@ const updateUser = async (req, res) => {
     joining_date,
     roleType,
     department,
+    team,
     userUIEnable,
     roleUIEnable,
     departmentUIEnable,
@@ -214,6 +220,7 @@ const updateUser = async (req, res) => {
         joining_date,
         roleType,
         department,
+        team,
         userUIEnable,
         roleUIEnable,
         departmentUIEnable,
@@ -322,7 +329,9 @@ const logIn = async (req, res) => {
   const password = data.password;
 
   try {
-    const oldUser = await User.findOne({ email });
+    const oldUser = await User.findOne({ email })
+      .populate("department")
+      .populate("team");
 
     if (!oldUser) {
       logger.error(
@@ -380,7 +389,9 @@ const getCurrent = async (req, res) => {
   try {
     const user = await User.find({
       _id: req.user._id,
-    });
+    })
+      .populate("department")
+      .populate("team");
     if (user.length > 0) {
       logger.info(
         `${ip}: API /api/v1/user/getCurrent/:${req.user._id}  responnded with Success `

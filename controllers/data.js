@@ -3,6 +3,7 @@ const dotenv = require("dotenv").config();
 const { validationResult, matchedData } = require("express-validator");
 const Data = require("../models/Data");
 const User = require("../models/User.js");
+const Link = require("../models/Link.js");
 const logger = require("../config/logger.js");
 var axios = require("axios");
 
@@ -219,6 +220,7 @@ const getAllData = async (req, res) => {
     logger.info(
       `${ip}: API /api/v1/data/getall | User: ${user.name} | responnded with Success `
     );
+    //console.log(all_data);
     return await res.status(200).json({
       data: all_data,
       message: "Data retrived successfully",
@@ -763,7 +765,7 @@ const getFilterData = async (req, res) => {
     }
 
     const no_of_keys = Object.keys(filterQuery).length;
-
+    console.log(filterQuery);
     let filteredData = [];
     if (no_of_keys >= 1) {
       filteredData = await Data.find(filterQuery)
@@ -1092,7 +1094,7 @@ const getDataByEmail = async (req, res) => {
 };
 
 //@desc get add data leader board
-//@route get /api/v1/link/get/data/leader
+//@route get /api/v1/data/get/leader
 //@access private: login required
 const getDataLeaderboard = async (req, res) => {
   const loggedin_user = req.user;
@@ -1110,6 +1112,66 @@ const getDataLeaderboard = async (req, res) => {
       },
       {
         $unwind: "$datas",
+      },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          dataCount: { $sum: 1 },
+        },
+      },
+      {
+        $sort: { dataCount: -1 },
+      },
+      {
+        $limit: 10,
+      },
+    ];
+
+    User.aggregate(pipeline)
+      .then((leaderboard) => {
+        logger.info(
+          `${ip}: API /api/v1/data/get/leader | User: ${loggedin_user.name} | responnded with leaderboard `
+        );
+        return res.status(201).send({ leaderboard });
+      })
+      .catch((err) => {
+        console.error(err);
+        logger.error(
+          `${ip}: API /api/v1/data/get/leader | User: ${loggedin_user.name} | responnded with Error `
+        );
+        return res.status(401).send({ message: "Error", error: err });
+      });
+  } else {
+    logger.error(
+      `${ip}: API /api/v1/data/get/leader | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
+//@desc get add data leader board
+//@route get /api/v1/data/get/approved/leader
+//@access private: login required
+const getApprovedDataLeader = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  if (loggedin_user) {
+    const pipeline = [
+      {
+        $lookup: {
+          from: "datas",
+          localField: "_id",
+          foreignField: "user",
+          as: "datas",
+        },
+      },
+      {
+        $unwind: "$datas",
+      },
+      {
+        $match: { "datas.approved": true },
       },
       {
         $group: {
@@ -2191,6 +2253,81 @@ const exportDashboardDataTypeCount = async (req, res) => {
   }
 };
 
+const getCategoryDataCount = async () => {
+  try {
+    const categoryCount = await Data.aggregate([
+      { $group: { _id: "$category", count: { $sum: 1 } } },
+    ]);
+
+    console.log(categoryCount);
+    return categoryCount;
+  } catch (err) {
+    console.error("Error getting category data count:", err);
+    throw err;
+  }
+};
+
+const uploadData = async (req, res) => {
+  const user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const { upload_data } = req.body;
+  try {
+    if (user) {
+      for (let i = 0; i < upload_data.length; i++) {
+        console.log("Row", i + 1);
+        const added_link = await Link.find({
+          value: upload_data[i].link_url,
+        }).populate({
+          path: "assign_user.user",
+        });
+        //console.log(added_link);
+        const oldData = await Data.findOne({ email: upload_data[i].email });
+        if (!oldData) {
+          //const upload_cat = upload_data[i].category.split(",").join(", ");
+          const data = {
+            email: upload_data[i].email,
+            company_name: upload_data[i].company_name,
+            website: upload_data[i].website,
+            category: upload_data[i].category,
+            status: upload_data[i].status,
+            country: upload_data[i].country,
+            region: upload_data[i].region,
+            contact_person: upload_data[i].contact_person,
+            designation: upload_data[i].designation,
+            products: upload_data[i].products,
+            tel: upload_data[i].tel,
+            mobile: upload_data[i].mobile,
+            whatsApp: upload_data[i].whatsApp,
+            city: upload_data[i].city,
+            exhibitor_type: upload_data[i].exhibitor_type,
+            address: upload_data[i].address,
+            comment: upload_data[i].comment,
+            comment1: upload_data[i].comment1,
+            user: user._id,
+            link: [added_link[0]._id],
+          };
+          console.log(data);
+
+          await Data.create(data);
+        } else {
+          console.log("Email already present: ", upload_data[i].email);
+        }
+      }
+      logger.info(
+        `${ip}: API /api/v1/data/upload_data | User: ${user.name} | responnded with Success `
+      );
+      return res.status(200).send({ message: "Data Uploaded" });
+    } else {
+      logger.error(
+        `${ip}: API /api/v1/data/upload_data | User: ${user.name} | responnded with User is not Autherized `
+      );
+      return res.status(401).send({ message: "User is not Autherized" });
+    }
+  } catch (err) {
+    console.error("Error getting category data count:", err);
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -2211,6 +2348,7 @@ module.exports = {
   getDataByEmail,
   verifyWhatsappNumber,
   getDataLeaderboard,
+  getApprovedDataLeader,
   //getNewDataLeaderboard,
   getDataLeaderToday,
   getDataLeaderYesterday,
@@ -2225,4 +2363,6 @@ module.exports = {
   checkLinkDuplicate,
   getDashboardDataTypeCount,
   exportDashboardDataTypeCount,
+  getCategoryDataCount,
+  uploadData,
 };

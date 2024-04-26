@@ -35,6 +35,7 @@ router.post(
     body("roleType", "Select a valid role type").notEmpty(),
     body("joining_date", "Enter a Valid Joining Date").notEmpty(),
     body("department", "Enter a Valid Department").notEmpty(),
+    body("team", "Enter a Valid Team").notEmpty(),
     body("linkUIEnable"),
     body("userUIEnable"),
     body("roleUIEnable"),
@@ -69,6 +70,7 @@ router.put(
     body("joining_date", "Enter a Valid Joining Date").notEmpty(),
     body("roleType", "Enter a Valid Role").notEmpty(),
     body("department", "Enter a Valid Department").notEmpty(),
+    body("team", "Enter a Valid Team").notEmpty(),
   ],
   validateToken,
   updateUser

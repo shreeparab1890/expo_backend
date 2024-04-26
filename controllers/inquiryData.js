@@ -1154,7 +1154,7 @@ const getCombinedFilterData = async (req, res) => {
         .populate("user")
         .populate("update_user");
     }
-
+    console.log(filteredData);
     // Filter Inquiry Data
 
     const filterInqQuery = {};
@@ -1300,28 +1300,30 @@ const getCombinedFilterData = async (req, res) => {
         .populate("consultant_name")
         .populate("user");
     }
+    console.log(filteredInqData);
 
     const missingFilters = inq_filter_array.filter(
       (filter) => !commonFilters.includes(filter)
     );
+    console.log(missingFilters);
     console.log(missingFilters.length);
 
     const missingFiltersInq = data_filter_array.filter(
       (filter) => !commonFilters.includes(filter)
     );
+    console.log(missingFiltersInq);
     console.log(missingFiltersInq.length);
 
-    if (missingFilters.length > 0) {
-      // Set filteredData to an empty array if any filter is missing
-      //filteredData = [];
+    if (missingFiltersInq.length > 0) {
       filteredInqData = [];
-    } else if (missingFiltersInq.length > 0) {
-      //filteredInqData = [];
+    } else if (missingFilters.length > 0) {
       filteredData = [];
     }
 
     const finalData = [];
 
+    console.log(filteredData);
+    console.log(filteredInqData);
     // Merge data based on email field
     filteredData.forEach((data1) => {
       let data2 = filteredInqData.find((data) => {
@@ -1335,6 +1337,8 @@ const getCombinedFilterData = async (req, res) => {
       }
     });
 
+    console.log(finalData);
+
     // Extract only the _doc field from finalData
     const filteredFinalData = finalData.map((item) => item._doc);
     // Add remaining data from filteredInqData
@@ -1344,6 +1348,7 @@ const getCombinedFilterData = async (req, res) => {
         filteredFinalData.push(data);
       }
     });
+    console.log(filteredFinalData);
 
     if (filteredFinalData.length > 0) {
       logger.info(
