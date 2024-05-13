@@ -4,6 +4,7 @@ const { validationResult, matchedData } = require("express-validator");
 const Data = require("../models/Data");
 const User = require("../models/User.js");
 const Link = require("../models/Link.js");
+const Inquiry_data = require("../models/Inquiry_data.js");
 const logger = require("../config/logger.js");
 var axios = require("axios");
 
@@ -141,6 +142,7 @@ const approveData = async (req, res) => {
   const data = matchedData(req);
   const updatedData = {
     approved: true,
+    approving_user: user._id,
   };
 
   const result = await Data.findByIdAndUpdate(dataId, updatedData, {
@@ -178,6 +180,7 @@ const bulkApproveData = async (req, res) => {
   }
   const updatedData = {
     approved: true,
+    approving_user: user._id,
   };
   //console.log(dataIds);
   const results = await Promise.all(
@@ -425,7 +428,7 @@ const updateData = async (req, res) => {
         comment,
         comment1,
         UpdatedDate: Date.now(),
-        update_user: loggedin_user._id,
+        update_user: [...new Set([...olddata.update_user, loggedin_user._id])],
       };
     } else {
       updateddata = {
@@ -448,7 +451,7 @@ const updateData = async (req, res) => {
         comment,
         comment1,
         UpdatedDate: Date.now(),
-        update_user: loggedin_user._id,
+        update_user: [...new Set([...olddata.update_user, loggedin_user._id])],
         link: [...new Set([...olddata.link, link])],
       };
     }
@@ -1062,7 +1065,7 @@ const getDataByEmail = async (req, res) => {
 
   if (loggedin_user) {
     const data = await Data.find({
-      category: { $regex: new RegExp(category, "i") },
+      //category: { $regex: new RegExp(category, "i") },
       email,
     })
       .populate("user")
@@ -1158,12 +1161,40 @@ const getApprovedDataLeader = async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
   if (loggedin_user) {
-    const pipeline = [
+    const leaderboard = await Data.aggregate([
+      { $match: { approving_user: { $ne: null } } }, // Filter documents with non-null approving_user
+      {
+        $group: {
+          _id: "$approving_user", // Group by approving_user
+          count: { $sum: 1 }, // Count the number of documents for each approving_user
+        },
+      },
+      { $sort: { count: -1 } }, // Sort by count in descending order
+      {
+        $lookup: {
+          from: "users", // Assuming your users collection is named "users"
+          localField: "_id",
+          foreignField: "_id",
+          as: "user_info",
+        },
+      },
+      { $unwind: "$user_info" }, // Unwind the array created by $lookup
+      {
+        $project: {
+          _id: 0, // Exclude the default _id field
+          user: "$user_info.name", // Get the username of the user
+          count: 1, // Include the count field
+        },
+      },
+    ]);
+
+    return res.status(201).send({ leaderboard });
+    /* const pipeline = [
       {
         $lookup: {
           from: "datas",
           localField: "_id",
-          foreignField: "user",
+          foreignField: "approving_user",
           as: "datas",
         },
       },
@@ -1201,7 +1232,7 @@ const getApprovedDataLeader = async (req, res) => {
           `${ip}: API /api/v1/data/get/leader | User: ${loggedin_user.name} | responnded with Error `
         );
         return res.status(401).send({ message: "Error", error: err });
-      });
+      }); */
   } else {
     logger.error(
       `${ip}: API /api/v1/data/get/leader | User: ${loggedin_user.name} | responnded with User is not Autherized `
@@ -1749,6 +1780,14 @@ const getNewData = async (req, res) => {
           filteredData = await Data.find({
             "link.0": givenLink,
             user: loggedin_user._id,
+            /* $or: [
+              {
+                user: loggedin_user._id,
+              },
+              {
+                update_user: loggedin_user._id,
+              },
+            ], */
             createDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
@@ -1761,7 +1800,17 @@ const getNewData = async (req, res) => {
               $elemMatch: { $eq: givenLink },
             },
             //pooledOldData: true,
-            user: loggedin_user._id,
+            //update_user: loggedin_user._id,
+            update_user: { $in: loggedin_user._id },
+
+            /* $or: [
+              {
+                user: loggedin_user._id,
+              },
+              {
+                update_user: loggedin_user._id,
+              },
+            ], */
             UpdatedDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
@@ -1772,7 +1821,15 @@ const getNewData = async (req, res) => {
             link: {
               $elemMatch: { $eq: givenLink },
             },
-            user: loggedin_user._id,
+            //user: loggedin_user._id,
+            $or: [
+              {
+                user: loggedin_user._id,
+              },
+              {
+                update_user: { $in: loggedin_user._id },
+              },
+            ],
             createDate: { $gte: created_from, $lte: created_to },
           })
             .populate("user")
@@ -1857,6 +1914,14 @@ const getNewData = async (req, res) => {
           filteredData = await Data.find({
             "link.0": givenLink,
             user: loggedin_user._id,
+            /* $or: [
+              {
+                user: loggedin_user._id,
+              },
+              {
+                update_user: loggedin_user._id,
+              },
+            ], */
           })
             .populate("user")
             .populate("update_user")
@@ -1868,7 +1933,16 @@ const getNewData = async (req, res) => {
               $elemMatch: { $eq: givenLink },
             },
 
-            update_user: loggedin_user._id,
+            update_user: { $in: loggedin_user._id },
+
+            /*  $or: [
+              {
+                user: loggedin_user._id,
+              },
+              {
+                update_user: loggedin_user._id,
+              },
+            ], */
           })
             .populate("user")
             .populate("update_user")
@@ -1884,7 +1958,7 @@ const getNewData = async (req, res) => {
                 user: loggedin_user._id,
               },
               {
-                update_user: loggedin_user._id,
+                update_user: { $in: loggedin_user._id },
               },
             ],
           })
@@ -2065,10 +2139,8 @@ const getDashboardDataTypeCount = async (req, res) => {
     const user = req.user;
     const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
     const { created_from, created_to } = req.body;
-    //console.log(created_from, created_to);
 
     if (user) {
-      //Get Data created in the date range given
       const data = await Data.find({
         createDate: { $gte: created_from, $lte: created_to },
       });
@@ -2087,31 +2159,31 @@ const getDashboardDataTypeCount = async (req, res) => {
         });
         const uniqueLinksSet = new Set(uniqueLinks);
         const uniqueLinksArray = Array.from(uniqueLinksSet);
-        //console.log(uniqueLinksArray);
+
         let leaderboardNew = [];
         let leaderboardOld = [];
         // Get all users
         const allUsers = await User.find();
 
         // get new data count
-
         for (const currentUser of allUsers) {
+          console.log(currentUser.name);
           let newDataCount = 0;
           for (const link of uniqueLinksArray) {
             const newData = await Data.find({
               "link.0": link,
-              //pooledOldData: false,
               user: currentUser._id,
               createDate: { $gte: created_from, $lte: created_to },
             });
-
+            //console.log(newData.length);
             newDataCount += newData.length;
           }
+          //console.log("newDataCount: ", newDataCount);
           leaderboardNew.push({ user: currentUser.name, newDataCount });
 
-          //
           // get old data count
           let oldDataCount = 0;
+          //console.log(uniqueLinksArray);
           for (const link of uniqueLinksArray) {
             const oldData = await Data.find({
               /*  $or: [
@@ -2127,12 +2199,14 @@ const getDashboardDataTypeCount = async (req, res) => {
               link: {
                 $elemMatch: { $eq: link },
               },
-              update_user: currentUser._id,
+              //update_user: currentUser._id,
+              update_user: { $elemMatch: { $in: currentUser._id } },
               UpdatedDate: { $gte: created_from, $lte: created_to },
             });
             //console.log(oldData.length);
             oldDataCount += oldData.length;
           }
+          //console.log("oldDataCount: ", oldDataCount);
           leaderboardOld.push({ user: currentUser.name, oldDataCount });
         }
         return res.status(200).json({
@@ -2233,7 +2307,7 @@ const exportDashboardDataTypeCount = async (req, res) => {
           //leaderboardOld.push({ user: currentUser.name, oldDataCount });
           leaderboard.push({
             Staff: currentUser.name,
-            Excel_Data: overallDataCount,
+            Excel_Data: newDataCount + oldDataCount,
             New_Data: newDataCount,
             Duplicates: oldDataCount,
           });
@@ -2328,6 +2402,89 @@ const uploadData = async (req, res) => {
   }
 };
 
+//@desc update inquiry Data by data id
+//@route put /api/v1/inquiry/data//update/domain
+//@access private: login required
+const updateDomainData = async (req, res) => {
+  const loggedin_user = req.user;
+  const { id } = req.params;
+  const {
+    category,
+    status,
+    consultant_name,
+    inquiry_type,
+    exhi_for,
+    exhibitor_date,
+
+    selected_ids,
+  } = req.body;
+
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  try {
+    for (let i = 0; i < selected_ids.length; i++) {
+      const olddata = await Data.findOne({ _id: selected_ids[i] });
+      if (olddata) {
+        const updateddata = {
+          category: olddata.category + ", " + category,
+          status,
+          updateDate: Date.now(),
+        };
+        const result = await Data.findByIdAndUpdate(
+          selected_ids[i],
+          updateddata,
+          {
+            new: true,
+          }
+        );
+      }
+    }
+
+    for (let i = 0; i < selected_ids.length; i++) {
+      const data = await Data.findOne({ _id: selected_ids[i] });
+
+      const oldData = await Inquiry_data.findOne({
+        email: data.email,
+      });
+      if (!oldData) {
+        await Inquiry_data.create({
+          company_name: data.company_name,
+          website: data.website,
+          email: data.email,
+          category: data.category,
+          status: data.status,
+          country: data.country,
+          region: data.region,
+          consultant_name: consultant_name,
+          inquiry_type: inquiry_type,
+          inquiry_source: "Added After Data Changed to Exhibitor",
+          exhi_for: exhi_for,
+          inquiry_date: exhibitor_date,
+          exhibitor_date: exhibitor_date,
+          contact_person: data.contact_person,
+          designation: data.designation,
+          products: data.products,
+          tel: data.tel,
+          mobile: data.mobile,
+          city: data.city,
+          address: data.address,
+          exhibitor_type: data.exhibitor_type,
+          comment: data.comment,
+          comment1: data.comment1,
+        });
+      }
+    }
+
+    return res
+      .status(201)
+      .json({ message: "Inquiry Data Updated Successfully" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ data: error, message: "Something went wrong" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -2365,4 +2522,5 @@ module.exports = {
   exportDashboardDataTypeCount,
   getCategoryDataCount,
   uploadData,
+  updateDomainData,
 };

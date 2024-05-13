@@ -87,13 +87,19 @@ const DataSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  update_user: {
-    type: "ObjectId",
-    ref: User,
-  },
+  update_user: [
+    {
+      type: "ObjectId",
+      ref: User,
+    },
+  ],
   approved: {
     type: Boolean,
     default: false,
+  },
+  approving_user: {
+    type: "ObjectId",
+    ref: User,
   },
   pooledOldData: {
     type: Boolean,

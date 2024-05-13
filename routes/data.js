@@ -37,6 +37,7 @@ const {
   exportDashboardDataTypeCount,
   getCategoryDataCount,
   uploadData,
+  updateDomainData,
 } = require("../controllers/data");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -262,4 +263,5 @@ router.get(
 //@access private: login required
 router.post("/upload", validateToken, uploadData);
 
+router.post("/update/domain", validateToken, updateDomainData);
 module.exports = router;

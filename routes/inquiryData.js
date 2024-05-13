@@ -19,6 +19,8 @@ const {
   getDataByEventID,
   checkEmailDomain,
   getCombinedFilterData,
+  getDataByEmailDomain,
+  updateDomainData,
 } = require("../controllers/inquiryData");
 const validateToken = require("../middleware/validateTokenHandler");
 
@@ -46,10 +48,10 @@ router.post(
     body("consultant_name", "Enter a valid Consultant Name").isLength({
       min: 2,
     }),
-    body("inquiry_type", "Enter a valid Inquiry Type").isLength({ min: 2 }),
-    body("inq_for", "Select a valid Inquiry Reason"),
-    body("exhi_for", "Select a valid Inquiry Reason"),
-    body("inquiry_source", "Enter a valid Inquiry Source").notEmpty(),
+    body("inquiry_type", "Enter a valid Inquiry Source").isLength({ min: 2 }),
+    body("inq_for", "Select a valid Inquiry Type"),
+    body("exhi_for", "Select a valid Exhibitor For"),
+    body("inquiry_source", "Enter a valid Data Source").notEmpty(),
     body("inquiry_date", "Enter a valid Inquiry Date").notEmpty(),
     body("exhibitor_date", "Enter a valid Exhibitor Date"),
     body("contact_person", "Enter a valid contact person"),
@@ -97,8 +99,8 @@ router.put(
     body("consultant_name", "Enter a valid Consultant Name").isLength({
       min: 2,
     }),
-    body("inquiry_type", "Enter a valid Inquiry Type").isLength({ min: 2 }),
-    body("inquiry_source", "Enter a valid Inquiry Source").notEmpty(),
+    body("inquiry_type", "Enter a valid Inquiry Source").isLength({ min: 2 }),
+    body("inquiry_source", "Enter a valid Data Source").notEmpty(),
     body("inquiry_date", "Enter a valid Inquiry Date").notEmpty(),
     body("exhibitor_date", "Enter a valid Exhibitor Date"),
     body("contact_person", "Enter a valid contact person"),
@@ -144,5 +146,8 @@ router.post("/get/byeventid", validateToken, getDataByEventID);
 //@route POST /api/v1/inquiry/data/check/email/domain
 //@access private: login required
 router.post("/check/email/domain", validateToken, checkEmailDomain);
+
+router.post("/bydomain", validateToken, getDataByEmailDomain);
+router.post("/update/domain", validateToken, updateDomainData);
 
 module.exports = router;

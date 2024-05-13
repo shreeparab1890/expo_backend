@@ -3,10 +3,12 @@ const dotenv = require("dotenv").config();
 const cors = require("cors");
 const logger = require("./config/logger.js");
 const connectToMongo = require("./config/db.js");
+const bodyParser = require("body-parser");
 
 connectToMongo();
 
 const app = express();
+app.use(bodyParser.json({ limit: "30mb" })); // Set the limit as needed
 app.use(express.json());
 app.use(cors());
 const port = process.env.PORT || 5001;

@@ -548,6 +548,53 @@ const getDataByEmail = async (req, res) => {
   }
 };
 
+//@desc Get inq Data by domain
+//@route POST /api/v1/inquiry/data/bydomain
+//@access private: login required
+const getDataByEmailDomain = async (req, res) => {
+  const loggedin_user = req.user;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const { emailDomain } = req.body;
+  if (loggedin_user) {
+    const Inqdata = await InquiryData.find({
+      email: { $regex: new RegExp(`.*${emailDomain}.*`, "i") },
+    })
+      .populate("user")
+      .populate("inquired_event_name")
+      .populate("consultant_name");
+
+    const data = await Data.find({
+      email: { $regex: new RegExp(`.*${emailDomain}.*`, "i") },
+    })
+      .populate("user")
+      .populate("link");
+
+    if (Inqdata.length > 0 || data.length > 0) {
+      logger.info(
+        `${ip}: API /api/v1//inquiry/data/bydomain | User: ${loggedin_user.name} | responnded with Success `
+      );
+
+      return await res.status(200).json({
+        data: data,
+        inq_data: Inqdata,
+        message: "Domain Data retrived successfully",
+      });
+    } else {
+      logger.info(
+        `${ip}: API /api/v1//inquiry/data/bydomain | User: ${loggedin_user.name} | responnded Empty i.e. Data was not found `
+      );
+      return await res.status(200).json({
+        message: "Data Not Found",
+      });
+    }
+  } else {
+    logger.error(
+      `${ip}: API /api/v1//inquiry/data/bydomain | User: ${loggedin_user.name} | responnded with User is not Autherized `
+    );
+    return res.status(401).send({ message: "User is not Autherized" });
+  }
+};
+
 //@desc Get inq Data by email
 //@route POST /api/v1/inquiry/data/get/byemail/1
 //@access private: login required
@@ -608,6 +655,7 @@ const getFilterData = async (req, res) => {
     inq_for,
     exhi_for,
     keyword,
+    consultant_name,
   } = req.body;
 
   if (loggedin_user) {
@@ -654,6 +702,10 @@ const getFilterData = async (req, res) => {
 
     if (products) {
       filterQuery.products = { $regex: new RegExp(`.*${products}.*`, "i") };
+    }
+
+    if (consultant_name != "1") {
+      filterQuery.consultant_name = consultant_name;
     }
 
     if (created_from && created_to) {
@@ -716,9 +768,9 @@ const getFilterData = async (req, res) => {
 
     //console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
-
+    // console.log(no_of_keys);
     let filteredData = [];
-    if (no_of_keys >= 1) {
+    if (no_of_keys > 1) {
       filteredData = await InquiryData.find(filterQuery)
         .populate("inquired_event_name")
         .populate("consultant_name")
@@ -952,7 +1004,7 @@ const getCombinedFilterData = async (req, res) => {
   const loggedin_user = req.user;
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const {
-    event_name,
+    inquired_event_name,
     website,
     email,
     category,
@@ -973,6 +1025,8 @@ const getCombinedFilterData = async (req, res) => {
     approved_type,
     user,
   } = req.body;
+  console.log("In COmbine");
+  console.log(inquired_event_name);
   //console.log(status);
   /* console.log(
     event_name,
@@ -1016,7 +1070,7 @@ const getCombinedFilterData = async (req, res) => {
     status,
   ];
   const inq_filter_array = [
-    event_name,
+    inquired_event_name,
     company_name,
     website,
     email,
@@ -1159,8 +1213,9 @@ const getCombinedFilterData = async (req, res) => {
 
     const filterInqQuery = {};
 
-    if (event_name != "0") {
-      filterInqQuery.inquired_event_name = { $in: event_name };
+    if (inquired_event_name != "0") {
+      filterInqQuery.inquired_event_name = { $in: inquired_event_name };
+      //filterInqQuery.inquired_event_name = { $elemMatch: { $in: event_name } };
     }
 
     if (company_name) {
@@ -1210,16 +1265,12 @@ const getCombinedFilterData = async (req, res) => {
       filterInqQuery.inquiry_type = inquiry_type;
     }
 
-    if (inq_for) {
-      filterInqQuery.inq_for = {
-        $regex: new RegExp(`.*${inq_for}.*`, "i"),
-      };
+    if (inq_for != "1") {
+      filterInqQuery.inq_for = inq_for;
     }
 
-    if (exhi_for) {
-      filterInqQuery.exhi_for = {
-        $regex: new RegExp(`.*${exhi_for}.*`, "i"),
-      };
+    if (exhi_for != "1") {
+      filterInqQuery.exhi_for = exhi_for;
     }
 
     if (keyword) {
@@ -1279,7 +1330,7 @@ const getCombinedFilterData = async (req, res) => {
     // After building filterDataQuery and filterInqQuery
 
     const commonFilters = [
-      event_name,
+      inquired_event_name,
       company_name,
       website,
       email,
@@ -1302,15 +1353,18 @@ const getCombinedFilterData = async (req, res) => {
     }
     console.log(filteredInqData);
 
-    const missingFilters = inq_filter_array.filter(
+    //const missingFilters = inq_filter_array.filter(
+    const missingFilters = data_filter_array.filter(
       (filter) => !commonFilters.includes(filter)
     );
     console.log(missingFilters);
     console.log(missingFilters.length);
 
-    const missingFiltersInq = data_filter_array.filter(
+    //const missingFiltersInq = data_filter_array.filter(
+    const missingFiltersInq = inq_filter_array.filter(
       (filter) => !commonFilters.includes(filter)
     );
+    console.log("Missing_filterINQ");
     console.log(missingFiltersInq);
     console.log(missingFiltersInq.length);
 
@@ -1376,6 +1430,57 @@ const getCombinedFilterData = async (req, res) => {
   }
 };
 
+//@desc update inquiry Data by data id
+//@route put /api/v1/inquiry/data//update/domain
+//@access private: login required
+const updateDomainData = async (req, res) => {
+  const loggedin_user = req.user;
+  const { id } = req.params;
+  const {
+    category,
+    status,
+    consultant_name,
+    inquiry_type,
+    exhi_for,
+    exhibitor_date,
+    selected_ids,
+  } = req.body;
+
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  try {
+    const updateddata = {
+      category,
+      status,
+      consultant_name,
+      inquiry_type,
+      exhi_for,
+      exhibitor_date,
+      updateDate: Date.now(),
+    };
+
+    for (let i = 0; i < selected_ids.length; i++) {
+      const olddata = await InquiryData.findOne({ _id: selected_ids[i] });
+      if (olddata) {
+        const result = await InquiryData.findByIdAndUpdate(
+          selected_ids[i],
+          updateddata,
+          {
+            new: true,
+          }
+        );
+      }
+    }
+    return res
+      .status(201)
+      .json({ message: "Inquiry Data Updated Successfully" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ data: error, message: "Something went wrong" });
+  }
+};
+
 module.exports = {
   testUserAPI,
   createData,
@@ -1394,4 +1499,6 @@ module.exports = {
   getDataByEventID,
   checkEmailDomain,
   getCombinedFilterData,
+  getDataByEmailDomain,
+  updateDomainData,
 };
