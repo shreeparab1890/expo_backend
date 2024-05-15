@@ -688,6 +688,7 @@ const getFilterData = async (req, res) => {
     } */
     if (status != "1") {
       filterQuery.status = status;
+      console.log(status);
     } else if (status == "1") {
       filterQuery.status = { $ne: "Removes" };
     }
@@ -766,11 +767,11 @@ const getFilterData = async (req, res) => {
       filterQuery.user = loggedin_user._id; //User Specific
     }
 
-    //console.log(filterQuery);
+    console.log(filterQuery);
     const no_of_keys = Object.keys(filterQuery).length;
-    // console.log(no_of_keys);
+    console.log(no_of_keys);
     let filteredData = [];
-    if (no_of_keys > 1) {
+    if (no_of_keys >= 1) {
       filteredData = await InquiryData.find(filterQuery)
         .populate("inquired_event_name")
         .populate("consultant_name")
